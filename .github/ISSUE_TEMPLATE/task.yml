@@ -1,0 +1,80 @@
+name: タスク / 開発チケット
+description: 開発タスクや実装内容を記録するためのテンプレートです。
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 📝 概要
+      description: このタスクで何をするかを簡潔に説明してください。
+      placeholder: 例）チャット画面にメッセージ送信ボタンを追加する
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 🎯 背景・目的
+      description: なぜこのタスクが必要なのかを説明してください。
+      placeholder: 例）現在はエンターキーでしか送信できないため、モバイル環境での操作性が悪い
+
+  - type: textarea
+    id: related_files
+    attributes:
+      label: 📁 関連ファイル・コンポーネント
+      description: 変更・参照が予想されるファイルやコンポーネントを記載してください。
+      placeholder: |
+        - App.tsx — セッション制御ロジック（startSession / stopSession）
+        - services/geminiService.ts — Gemini REST API 呼び出し
+        - components/ChatMessage.tsx — チャットメッセージの表示
+        - types.ts — ChatMessage / Feedback の型定義
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: ✅ 作業内容
+      description: 具体的な作業項目をリストアップしてください。
+      placeholder: |
+        - [ ] コンポーネントの実装
+        - [ ] スタイルの適用
+        - [ ] 動作確認
+      value: |
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: 🏁 完了条件
+      description: このタスクが「完了」とみなされる条件を記述してください。
+      placeholder: |
+        - ボタンをクリックするとメッセージが送信される
+        - ローディング中はボタンが非活性になる
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: 🔍 検証方法
+      description: 実装が正しく動作することを確認する手順を記載してください。
+      placeholder: |
+        1. `npm run dev` で開発サーバーを起動する
+        2. セッションを開始してマイクに話しかける
+        3. 沈黙 2500ms 後に文法訂正フィードバックがチャット欄に表示されることを確認する
+        4. ダークモード切替後も表示が崩れていないことを確認する
+
+  - type: textarea
+    id: reference_patterns
+    attributes:
+      label: 🧩 参考パターン
+      description: 実装時に参考にすべき既存コードのパターンやスタイルを記載してください。
+      placeholder: |
+        - UI カード: `index.html` の `.glass` クラス（backdrop-filter + 半透明ボーダー）
+        - ダークモード対応: `dark:` プレフィックスを Tailwind クラスに付与する
+        - フィードバック表示: `components/ChatMessage.tsx` の correction ブロック
+        - 型の追加: `types.ts` に新しい interface / type を追記する
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 🔗 参考情報
+      description: 関連する Issue、PR、ドキュメント、デザインなどのリンクを記載してください。
