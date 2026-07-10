@@ -1,6 +1,5 @@
 import clsx from 'clsx'
-import { forwardRef } from 'react'
-import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+import type { ComponentPropsWithRef, ElementType } from 'react'
 
 import { heading } from '../../../styled-system/recipes'
 
@@ -16,28 +15,26 @@ const SIZE_BY_LEVEL: Record<HeadingLevel, HeadingSize> = {
   h6: 'sm',
 }
 
-export interface HeadingProps extends ComponentPropsWithoutRef<'h1'> {
+export interface HeadingProps extends Omit<ComponentPropsWithRef<'h2'>, 'as' | 'size'> {
   as?: HeadingLevel
   size?: HeadingSize
-  children?: ReactNode
 }
 
-export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ as = 'h2', size, className, children, ...rest }, ref) => {
-    const Tag = as as ElementType
-    const resolvedSize = size ?? SIZE_BY_LEVEL[as]
+// React 19はrefを通常のpropとして受け取れるためforwardRefは不要（peerDependenciesがReact 19専用のため採用）
+export const Heading = ({ as = 'h2', size, className, children, ref, ...rest }: HeadingProps) => {
+  const Tag = as as ElementType
+  const resolvedSize = size ?? SIZE_BY_LEVEL[as]
 
-    return (
-      <Tag
-        ref={ref}
-        data-size={resolvedSize}
-        className={clsx(heading({ size: resolvedSize }), className)}
-        {...rest}
-      >
-        {children}
-      </Tag>
-    )
-  },
-)
+  return (
+    <Tag
+      ref={ref}
+      data-size={resolvedSize}
+      className={clsx(heading({ size: resolvedSize }), className)}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  )
+}
 
 Heading.displayName = 'Heading'
