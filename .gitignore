@@ -4,3 +4,4 @@ styled-system/
 .storybook-static/
 coverage/
 .husky/_/
+.cspellcache
