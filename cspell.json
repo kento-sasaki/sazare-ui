@@ -20,6 +20,7 @@
     "unrs",
     "rgba",
     "codegen",
+    "cssgen",
     "autodocs",
     "zag",
     "mabiki",
@@ -29,14 +30,14 @@
   ],
   "flagWords": [],
   "ignorePaths": [
-    "node_modules/**",
-    "dist/**",
-    "coverage/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
     ".git/**",
     "*.lock",
     "*.log",
-    ".storybook-static/**",
-    "styled-system/**",
+    "**/.storybook-static/**",
+    "**/styled-system/**",
     "pnpm-lock.yaml"
   ],
   "overrides": [

@@ -1,10 +1,11 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import js from '@eslint/js'
-import storybook from 'eslint-plugin-storybook'
-import importPlugin from 'eslint-plugin-import'
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
+import { importX } from 'eslint-plugin-import-x'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import storybook from 'eslint-plugin-storybook'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -21,7 +22,7 @@ export default tseslint.config(
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      import: importPlugin,
+      'import-x': importX,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -30,7 +31,7 @@ export default tseslint.config(
       'react/self-closing-comp': ['error', { component: true, html: true }],
       'react/jsx-boolean-value': ['error', 'never'],
       'react-hooks/exhaustive-deps': 'error',
-      'import/order': [
+      'import-x/order': [
         'error',
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
@@ -38,16 +39,13 @@ export default tseslint.config(
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'import/no-duplicates': 'error',
+      'import-x/no-duplicates': 'error',
     },
     settings: {
       react: {
         version: 'detect',
       },
-      'import/resolver': {
-        typescript: true,
-        node: true,
-      },
+      'import-x/resolver-next': [createTypeScriptImportResolver()],
     },
   },
   storybook.configs['flat/recommended'],
