@@ -58,4 +58,22 @@ describe('Heading', () => {
     )
     expect(screen.getByRole('heading', { level: 5 })).toHaveClass('custom-class')
   })
+
+  it('defaults to the "default" text color when color is omitted', () => {
+    render(<Heading>Title</Heading>)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-color', 'default')
+  })
+
+  it('applies the color specified by the color prop', () => {
+    render(<Heading color="secondary">Title</Heading>)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-color', 'secondary')
+  })
+
+  it.each(['default', 'white', 'secondary', 'disabled', 'link', 'inherit'] as const)(
+    'accepts the %s color token',
+    (color) => {
+      render(<Heading color={color}>Title</Heading>)
+      expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-color', color)
+    },
+  )
 })

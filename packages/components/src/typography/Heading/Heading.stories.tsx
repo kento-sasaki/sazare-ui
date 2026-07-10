@@ -14,6 +14,10 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg', 'xl', '2xl', '3xl'],
     },
+    color: {
+      control: 'select',
+      options: ['default', 'white', 'secondary', 'disabled', 'link', 'inherit'],
+    },
   },
   args: {
     children: 'The quick brown fox jumps over the lazy dog',
@@ -39,6 +43,35 @@ export const AllLevels: Story = {
       <Heading as="h4">Heading level 4</Heading>
       <Heading as="h5">Heading level 5</Heading>
       <Heading as="h6">Heading level 6</Heading>
+    </>
+  ),
+}
+
+export const AllColors: Story = {
+  render: () => (
+    <>
+      <Heading as="h3" color="default">
+        default
+      </Heading>
+      <Heading as="h3" color="secondary">
+        secondary
+      </Heading>
+      <Heading as="h3" color="disabled">
+        disabled
+      </Heading>
+      <Heading as="h3" color="link">
+        link
+      </Heading>
+      <div style={{ background: '#1F2937', padding: '8px' }}>
+        <Heading as="h3" color="white">
+          white
+        </Heading>
+      </div>
+      <span style={{ color: '#2563EB' }}>
+        <Heading as="h3" color="inherit">
+          inherit（親要素の色を継承）
+        </Heading>
+      </span>
     </>
   ),
 }
