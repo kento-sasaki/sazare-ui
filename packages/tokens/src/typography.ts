@@ -30,7 +30,3 @@ export const lineHeights = {
   tight: { value: '1.25' },
   normal: { value: '1.5' },
 }
-
-export const colors = {
-  text: { value: '#1F2937' },
-}
