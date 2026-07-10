@@ -29,4 +29,7 @@ export default defineConfig({
     },
   },
   outdir: 'styled-system',
+  // tsup(esbuild)が.mjs拡張子のディレクトリインデックスを解決できない既知の問題を回避する
+  // （Panda公式ドキュメント: guides/component-library.mdx Troubleshooting）。
+  outExtension: 'js',
 })
