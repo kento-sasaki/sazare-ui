@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "sazare",
+    "pandacss",
+    "pnpm",
+    "storybook",
+    "vite",
+    "vitest",
+    "eslint",
+    "prettier",
+    "husky",
+    "tsconfig",
+    "tsup",
+    "tsx",
+    "jsx",
+    "a11y",
+    "unrs",
+    "rgba",
+    "codegen",
+    "autodocs",
+    "zag",
+    "mabiki",
+    "Chakra",
+    "Astryx"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    ".git/**",
+    "*.lock",
+    "*.log",
+    ".storybook-static/**",
+    "styled-system/**",
+    "pnpm-lock.yaml"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.{ts,tsx,js,jsx}",
+      "language": "en,typescript"
+    },
+    {
+      "filename": "**/*.md",
+      "language": "en"
+    },
+    {
+      "filename": "**/package.json",
+      "language": "en"
+    }
+  ],
+  "dictionaries": ["typescript", "node", "html", "css", "npm"]
+}
