@@ -18,6 +18,10 @@ const meta = {
       control: 'select',
       options: ['default', 'white', 'secondary', 'disabled', 'link', 'inherit'],
     },
+    marginBottom: {
+      control: 'select',
+      options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+    },
   },
   args: {
     children: 'The quick brown fox jumps over the lazy dog',
@@ -72,6 +76,17 @@ export const AllColors: Story = {
           inherit（親要素の色を継承）
         </Heading>
       </span>
+    </>
+  ),
+}
+
+export const WithMarginBottom: Story = {
+  render: () => (
+    <>
+      <Heading as="h2" marginBottom="lg">
+        見出し
+      </Heading>
+      <p>marginBottomで指定したspacingトークンの分だけ下に余白が空く</p>
     </>
   ),
 }
