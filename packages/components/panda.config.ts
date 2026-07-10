@@ -4,6 +4,11 @@ import { colors, fonts, fontSizes, fontWeights, lineHeights } from '@sazare-ui/t
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 
 export default defineConfig({
+  // Storybookをリポジトリルートから起動する等、process.cwd()がこのパッケージの
+  // ディレクトリと一致しない場合でもinclude/outdirが正しく解決されるよう明示する。
+  // Pandaはこの設定ファイルをCJSとしてバンドル・評価するため__dirnameを使う
+  // （import.meta.urlはその評価コンテキストでは undefined になる）。
+  cwd: __dirname,
   preflight: true,
   include: ['./src/**/*.{ts,tsx}'],
   exclude: [],

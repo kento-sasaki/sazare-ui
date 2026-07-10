@@ -22,4 +22,7 @@ export const headingRecipe = defineRecipe({
   defaultVariants: {
     size: 'md',
   },
+  // sizeはasから実行時に解決するため（静的なリテラル引数ではない）、
+  // 静的解析だけでは一部のvariantしかCSSが生成されない。全variantを強制生成する。
+  staticCss: ['*'],
 })
