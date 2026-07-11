@@ -1,0 +1,61 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TextStories from './Text.stories'
+
+<Meta of={TextStories} />
+
+# Text
+
+本文を表示するコンポーネント。見出し（`Heading`）とは異なり文書のアウトライン上の意味を持たず、`as` prop でレンダリングする要素を切り替えられる。
+
+<Canvas of={TextStories.Default} />
+
+<Controls />
+
+## as（レンダリングする要素）
+
+- `as`: `'p'` / `'span'` / `'div'`。デフォルトは `'p'`
+- `'p'`: 本文の段落
+- `'span'`: インライン文脈での部分的な強調
+- `'div'`: 汎用コンテナとして使いたい場合
+
+<Canvas of={TextStories.AllElements} />
+
+## size
+
+- `size`: `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`。デフォルトは `md`
+- `Heading` と同じフォントサイズトークン（`fontSizes`）のスケールを共有する
+
+<Canvas of={TextStories.AllSizes} />
+
+## color
+
+- `color`: `default` / `white` / `secondary` / `disabled` / `link` / `inherit`。デザイントークンで定義された色のみ指定できる（任意のCSS色文字列は指定できない）
+- `Heading` と同じ `colors.text` を共有する
+
+<Canvas of={TextStories.AllColors} />
+
+## weight
+
+- `weight`: `normal` / `semibold` / `bold`。デフォルトは `normal`
+- 本文中の部分的な強調表現に使う
+
+<Canvas of={TextStories.AllWeights} />
+
+## className / style は受け付けない
+
+Textは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は必ず`size`/`color`/`weight`等、デザイントークンに制約されたpropsを通す。
+
+Textは自身の余白（margin）を持たない。複数のTextを並べてgapをあける等のレイアウト調整は`Box`/`Stack`（`Layout`カテゴリ）でTextを囲んで行う。
+
+## Do's / Don'ts
+
+- 見出しには`Text`を使わない。文書のアウトラインを表したい場合は`Heading`を使う
+- `color`はデザイントークンで定義された値からのみ選ぶ。インラインスタイルや任意の16進数カラーで上書きしない
+- 部分的な強調には`weight`を使う。文字サイズを大きくして強調を表現しない（`size`は本文の見た目のサイズであり、強調のための手段ではない）
+- 余白・複数要素の配置調整は`Box`/`Stack`で囲んで行う（`className`/`style`は受け付けない。Text自身に余白用propsはない）
+
+## アクセシビリティ
+
+- デフォルトの`as="p"`はブロックレベルの本文として、`as="span"`はインライン文脈として、スクリーンリーダーに自然に解釈される
+- 見出しとして読み上げさせたい場合は`Text`ではなく`Heading`を使うこと（`Text`はネイティブの見出しロールを持たない）
