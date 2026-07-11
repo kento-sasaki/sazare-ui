@@ -1,0 +1,58 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as RadioGroupStories from './RadioGroup.stories'
+
+<Meta of={RadioGroupStories} />
+
+# RadioGroup
+
+複数の選択肢から1個だけを選ばせるための、[RadioButton](../RadioButton/RadioButton.mdx)の集合コンポーネント。Ark UIの`RadioGroup.Root`は子孫の`RadioGroup.Item`（=RadioButton）に対して、`value`を介して選択状態を注入する。RadioGroupは内部でRadioButtonをそのまま再利用して実装している。
+
+<Canvas of={RadioGroupStories.Default} />
+
+<Controls />
+
+## label（グループの見出し）
+
+- `label`: `string`。必須
+- Ark UIの`RadioGroup.Root`は常に`aria-labelledby`で`RadioGroup.Label`要素のIDを参照する仕様のため、見出しを描画しないとID参照先が存在しないa11y違反（`aria-valid-attr-value`、Critical）になる。そのため必須propとした
+
+## options（選択肢）
+
+- `options`: `{ label: string; value: string; disabled?: boolean }[]`。必須
+- 各要素が1つのRadioButtonとして描画される。`value`は選択状態の識別に使うため、options内で一意にする
+- 選択肢ごとの`disabled`はグループ全体の`disabled`propと独立して指定できる
+
+<Canvas of={RadioGroupStories.Disabled} />
+
+## 選択状態（value / defaultValue / onValueChange）
+
+- `value`: `string`。指定するとcontrolledになり、状態変化は呼び出し側が`onValueChange`で管理する
+- `defaultValue`: 同じ型。uncontrolledな初期値
+- `onValueChange`: `(value: string | null) => void`
+
+<Canvas of={RadioGroupStories.WithDefaultValue} />
+
+## name / disabled（グループ全体への設定）
+
+- `name`: グループ内の全RadioButtonに同じ`name`を適用する。フォーム送信時の識別子
+- `disabled`: グループ全体を無効化する。個別の`option.disabled`と併用でき、いずれかが真であれば無効化される
+
+## レイアウト
+
+RadioGroupは見出しと選択肢を縦方向（`flexDirection: column`）に並べ、項目間に`spacing.sm`のgapを持つ。この余白はRadioGroup自身のrecipeに含まれており、利用側で調整するpropは無い。
+
+## className / style / children は受け付けない
+
+RadioGroupは`className`・`style`・`children`propを受け付けない（ADR 0012）。選択肢は`options`（配列）で指定する。
+
+## Do's / Don'ts
+
+- 複数選択肢から1つだけを選ばせたい場合はRadioGroupを使う。複数選択にしたい場合は[CheckboxGroup](../CheckboxGroup/CheckboxGroup.mdx)を使う
+- `options`の`value`はグループ内で重複させない。重複すると選択状態の判定が意図通りに機能しない
+
+## アクセシビリティ
+
+- Ark UIの`RadioGroup.Root`は`aria-labelledby`で`RadioGroup.Label`要素のIDを参照するため、`label`propは必須にしている
+- 個々の選択肢はRadioButton（ネイティブ`<input type="radio">`）で実装されているため、キーボード操作（矢印キーでの選択肢間移動を含む）やスクリーンリーダー対応はネイティブのradioグループの挙動に従う
+- `disabled`時はネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、クリックイベントも発火しない

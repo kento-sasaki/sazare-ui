@@ -10,7 +10,12 @@ import {
 } from '@sazare-ui/tokens'
 
 import { buttonRecipe } from './src/form/Button/Button.recipe'
+import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
+import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
 import { iconButtonRecipe } from './src/form/IconButton/IconButton.recipe'
+import { radioButtonRecipe } from './src/form/RadioButton/RadioButton.recipe'
+import { radioGroupRecipe } from './src/form/RadioGroup/RadioGroup.recipe'
+import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
@@ -43,6 +48,16 @@ export default defineConfig({
         textInput: textInputRecipe,
         heading: headingRecipe,
         text: textRecipe,
+      },
+      slotRecipes: {
+        checkbox: checkboxRecipe,
+        checkboxGroup: checkboxGroupRecipe,
+        radioButton: radioButtonRecipe,
+        radioGroup: radioGroupRecipe,
+        // "switch"はJavaScriptの予約語のため、生成される styled-system/recipes/switch.ts の
+        // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える
+        // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
+        switchField: switchRecipe,
       },
     },
   },
