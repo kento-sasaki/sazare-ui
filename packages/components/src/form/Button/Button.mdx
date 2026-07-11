@@ -1,0 +1,51 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as ButtonStories from './Button.stories'
+
+<Meta of={ButtonStories} />
+
+# Button
+
+ユーザーの操作（クリック）を促すコンポーネント。Ark UIにはbutton相当のヘッドレスプリミティブが存在しないため、セマンティックなHTMLの`<button>`要素にPanda recipeでスタイルを適用して実装している。
+
+<Canvas of={ButtonStories.Default} />
+
+<Controls />
+
+## variant（見た目のバリエーション）
+
+- `variant`: `'solid'` / `'outline'`。デフォルトは`'solid'`
+- `'solid'`: 主要なアクションに使う塗りつぶしスタイル
+- `'outline'`: 主要度が低いアクションに使う輪郭線スタイル
+
+<Canvas of={ButtonStories.AllVariants} />
+
+## size
+
+- `size`: `'sm'` / `'md'`。デフォルトは`'md'`
+- フォントサイズと余白（padding）を束ねたスケール
+
+<Canvas of={ButtonStories.AllSizes} />
+
+## disabled
+
+ネイティブの`disabled`属性をそのまま使う。クリックの抑止はブラウザのネイティブ挙動に委譲しており、Button側で独自の無効化ロジックは持たない。
+
+<Canvas of={ButtonStories.Disabled} />
+
+## className / style は受け付けない
+
+Buttonは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は必ず`variant`/`size`等、デザイントークンに制約されたpropsを通す。
+
+Buttonは自身の余白（margin）を持たない。複数のButtonを並べてgapをあける等のレイアウト調整は`Box`/`Stack`（`Layout`カテゴリ）でButtonを囲んで行う。
+
+## Do's / Don'ts
+
+- 主要なアクションには`variant="solid"`、補助的なアクションには`variant="outline"`を使う。1画面に複数の`solid`ボタンを並べて優先度を曖昧にしない
+- リンクとしての遷移には`Button`を使わない（`Button`は常に`<button>`要素であり`as`によるポリモーフィズムは持たない）。リンク用コンポーネントが必要な場合は別途追加を検討する
+- `outline`のhover時、背景色は変化しない（ニュートラルなsurfaceトークンが未整備のため）。ボーダー・文字色のみが濃くなる仕様であることを把握した上で使う
+
+## アクセシビリティ
+
+- ネイティブの`<button>`要素を使うため、キーボード操作（Tab/Enter/Space）やスクリーンリーダーでのロール認識は追加の実装なしにブラウザ標準の挙動に従う
+- `disabled`時は`aria-disabled`ではなくネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、クリックイベントも発火しない
