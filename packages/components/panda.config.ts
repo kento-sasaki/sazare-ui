@@ -2,6 +2,7 @@ import { defineConfig } from '@pandacss/dev'
 import { colors, fonts, fontSizes, fontWeights, lineHeights, spacing } from '@sazare-ui/tokens'
 
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
+import { textRecipe } from './src/typography/Text/Text.recipe'
 
 export default defineConfig({
   // Storybookをリポジトリルートから起動する等、process.cwd()がこのパッケージの
@@ -26,6 +27,7 @@ export default defineConfig({
       },
       recipes: {
         heading: headingRecipe,
+        text: textRecipe,
       },
     },
   },
