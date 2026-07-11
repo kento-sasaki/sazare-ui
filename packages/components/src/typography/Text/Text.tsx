@@ -14,27 +14,31 @@ export type TextWeight = keyof typeof fontWeights
 // className/styleは公開APIとして受け付けない。見た目の調整は必ずデザイントークンに
 // 制約されたprops（size/color/weight等）を通す（ADR 0012）。
 // 余白・複数要素の配置等のレイアウト合成はBox/Stackを使う（Textは自身の余白を持たない）。
-export interface TextProps extends Omit<
-  ComponentPropsWithRef<'p'>,
+// asの3値（p/span/div）はHeadingのh1〜h6と異なりDOMインターフェースがそれぞれ異なる
+// （HTMLParagraphElement/HTMLSpanElement/HTMLDivElement）ため、asの値に応じてref/属性の型が
+// 動的に解決されるようジェネリクスで定義する（Headingのasはh1〜h6全てHTMLHeadingElementに
+// 集約されるためこの問題が発生せず、単純な固定型で足りる）。
+export type TextProps<E extends TextElement = 'p'> = Omit<
+  ComponentPropsWithRef<E>,
   'as' | 'size' | 'color' | 'className' | 'style'
-> {
-  as?: TextElement
+> & {
+  as?: E
   size?: TextSize
   color?: TextColor
   weight?: TextWeight
 }
 
 // React 19はrefを通常のpropとして受け取れるためforwardRefは不要（peerDependenciesがReact 19専用のため採用）
-export const Text = ({
-  as = 'p',
+export const Text = <E extends TextElement = 'p'>({
+  as,
   size = 'md',
   color = 'default',
   weight = 'normal',
   children,
   ref,
   ...rest
-}: TextProps) => {
-  const Tag = as as ElementType
+}: TextProps<E>) => {
+  const Tag = (as ?? 'p') as ElementType
 
   return (
     <Tag
