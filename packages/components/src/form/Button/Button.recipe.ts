@@ -36,8 +36,16 @@ export const buttonRecipe = defineRecipe({
         },
       },
     },
+    size: {
+      sm: { fontSize: 'sm', paddingInline: 'sm', paddingBlock: 'xs' },
+      md: { fontSize: 'md', paddingInline: 'md', paddingBlock: 'sm' },
+    },
   },
   defaultVariants: {
     variant: 'solid',
+    size: 'md',
   },
+  // sizeは実行時propsから解決されるため、静的解析だけでは一部のvariantしかCSSが生成されない。
+  // 全variantを強制生成する（Text/Headingと同じ理由）
+  staticCss: ['*'],
 })

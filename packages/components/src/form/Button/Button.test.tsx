@@ -43,4 +43,14 @@ describe('Button', () => {
     render(<Button variant={variant}>Click</Button>)
     expect(screen.getByRole('button')).toHaveAttribute('data-variant', variant)
   })
+
+  it('defaults to the "md" size when size is omitted', () => {
+    render(<Button>Click</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('data-size', 'md')
+  })
+
+  it.each(['sm', 'md'] as const)('accepts the %s size', (size) => {
+    render(<Button size={size}>Click</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('data-size', size)
+  })
 })
