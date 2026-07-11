@@ -19,3 +19,6 @@ export { Box } from './layout/Box/Box'
 export type { BoxProps } from './layout/Box/Box'
 export { Stack } from './layout/Stack/Stack'
 export type { StackProps } from './layout/Stack/Stack'
+
+export { Button } from './form/Button/Button'
+export type { ButtonProps, ButtonSize, ButtonVariant } from './form/Button/Button'
