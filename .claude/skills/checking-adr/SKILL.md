@@ -11,7 +11,7 @@ description: >
 
 ## スコープ
 
-- 判定対象: 現在セッション（`${CLAUDE_SESSION_ID}`）の transcript のみ。複数セッションにまたがる作業は都度呼び直す
+- 判定対象: 現在セッション（`${CLAUDE_CODE_SESSION_ID}`）の transcript のみ。複数セッションにまたがる作業は都度呼び直す
 - 判定基準: **狭く（Recall 低め）**。既存 ADR（0011/0012 等）のパターン＝「複数選択肢を比較検討した設計方針の決定」に確実に該当するものだけ提案する。ノイズより見逃しを許容する
 - ADR の内容は自動生成しない。「必要」判定後は `AskUserQuestion` で 1 問ずつ確認しながら `docs/adr/_template.md` に沿って埋める
 
@@ -26,14 +26,15 @@ description: >
 ## Step 1: 現在セッションの transcript ファイルを特定
 
 Claude Code がセッションごとに自動保存している transcript（JSONL）を判定材料に使う。
-`transcript_path` は Skill には提供されないため、`${CLAUDE_SESSION_ID}` からヒューリスティックに特定する。
+`transcript_path` は Skill には提供されないため、環境変数 `CLAUDE_CODE_SESSION_ID` からヒューリスティックに特定する
+（`CLAUDE_SESSION_ID` ではない点に注意。Bash 環境に提供されるのは `CLAUDE_CODE_SESSION_ID`）。
 
 ```bash
-ls ~/.claude/projects/*/"${CLAUDE_SESSION_ID}".jsonl
+ls ~/.claude/projects/*/"${CLAUDE_CODE_SESSION_ID}".jsonl
 ```
 
 - 1 件見つかったらそのパスを `$TRANSCRIPT` として Step 2 へ。
-- **見つからない場合**は推測で進めず、以下を提示して終了する（手動指定の逃げ道を残す）。
+- **環境変数が空・ファイルが見つからない場合**は推測で進めず、以下を提示して終了する（手動指定の逃げ道を残す）。
 
   > 現在セッションの transcript が `~/.claude/projects/` 配下に見つかりませんでした。
   > transcript ファイルのパスが分かる場合は指定してください。分からない場合は ADR チェックをスキップします。
