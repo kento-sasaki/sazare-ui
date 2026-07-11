@@ -1,0 +1,64 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as CheckboxStories from './Checkbox.stories'
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+ユーザーが単一の項目に対して真偽値（または`indeterminate`の中間状態）を選択するためのコンポーネント。Ark UIのCheckbox（Root/HiddenInput/Control/Indicator/Labelの複合コンポーネント）を、Button/IconButtonと同じ方針（ADR 0012）で単一コンポーネントに完全ラップして実装している。
+
+<Canvas of={CheckboxStories.Default} />
+
+<Controls />
+
+## label（チェックボックスのラベル）
+
+- `label`: `string`。必須
+- Ark UIの`Checkbox.Root`はネイティブの`<label>`要素として描画されるため、ラベルテキストをクリックしてもクリック領域が自動的にhidden inputへ伝播し、追加のARIA属性なしにアクセシブルネームが解決される
+- Buttonと同様、`children`は受け付けず`label`に一本化している（デザインシステムが定義したスタイル・構造からの逸脱を防ぐため）
+
+## checked状態（checked / defaultChecked / onCheckedChange）
+
+- `checked`: `boolean` / `'indeterminate'`。指定するとcontrolledになり、状態変化は呼び出し側が`onCheckedChange`で管理する
+- `defaultChecked`: 同じ型。uncontrolledな初期値
+- `onCheckedChange`: `(details: { checked: boolean | 'indeterminate' }) => void`
+
+<Canvas of={CheckboxStories.Controlled} />
+
+## indeterminate（中間状態）
+
+- `checked="indeterminate"`（または`defaultChecked="indeterminate"`）で中間状態を表示する
+- 「一部の子項目だけ選択されている」ような、チェック済み/未チェックのどちらでもない状態を表現するための見た目（マイナスアイコン）。Checkbox自身は子要素の選択状態を計算するロジックを持たないため、判定は呼び出し側の責務
+- 内部的にはネイティブinputの`indeterminate` DOMプロパティ（HTML属性ではない）に反映される。スクリーンリーダーは「一部選択」として認識するが、フォーム送信上の`checked`値としては扱われない
+
+<Canvas of={CheckboxStories.Indeterminate} />
+
+## disabled
+
+ネイティブの`disabled`属性をそのまま使う。クリック・キーボード操作の抑止はブラウザのネイティブ挙動に委譲しており、Checkbox側で独自の無効化ロジックは持たない。
+
+<Canvas of={CheckboxStories.Disabled} />
+<Canvas of={CheckboxStories.DisabledChecked} />
+
+## フォーム連携（name / value / form / required / ref）
+
+- `name` / `value` / `form`: ネイティブの`<input type="checkbox">`と同じ意味で、hidden inputにそのまま渡る
+- `required`: ネイティブの`required`属性
+- `ref`: フォーム値を実際に持つhidden inputへ転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style / children は受け付けない
+
+Checkboxは`className`・`style`・`children`propを受け付けない（ADR 0012）。ラベルは`label`（string）で指定する。
+
+## Do's / Don'ts
+
+- 単一の真偽値を選択させたい場合はCheckboxを使う。複数の選択肢からの複数選択には[CheckboxGroup](../CheckboxGroup/CheckboxGroup.mdx)を使う
+- `indeterminate`は「一部選択」を見た目で表現するだけで、クリックしても自動的にchecked/uncheckedへ遷移するロジックは持たない。子要素の選択状態から`checked`propを都度計算して渡す
+
+## アクセシビリティ
+
+- Ark UIの`Checkbox.HiddenInput`（ネイティブの`<input type="checkbox">`）を使うため、キーボード操作（Tab/Space）やスクリーンリーダーでのロール認識は追加の実装なしにブラウザ標準の挙動に従う
+- Rootがネイティブの`<label>`要素であるため、ラベルテキストのクリックでもチェック状態が切り替わる
+- `indeterminate`はネイティブinputの`indeterminate` DOMプロパティに反映され、スクリーンリーダーは「一部選択」の状態として読み上げる
+- `disabled`時はネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、クリックイベントも発火しない
