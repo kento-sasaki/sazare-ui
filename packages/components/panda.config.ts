@@ -9,6 +9,7 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
 
@@ -35,6 +36,7 @@ export default defineConfig({
         radii,
       },
       recipes: {
+        button: buttonRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },
