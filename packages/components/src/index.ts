@@ -22,3 +22,10 @@ export type { StackProps } from './layout/Stack/Stack'
 
 export { Button } from './form/Button/Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './form/Button/Button'
+
+export { IconButton } from './form/IconButton/IconButton'
+export type {
+  IconButtonProps,
+  IconButtonSize,
+  IconButtonVariant,
+} from './form/IconButton/IconButton'
