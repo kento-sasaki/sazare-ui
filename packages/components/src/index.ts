@@ -22,3 +22,6 @@ export type { StackProps } from './layout/Stack/Stack'
 
 export { Button } from './form/Button/Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './form/Button/Button'
+
+export { Switch } from './form/Switch/Switch'
+export type { SwitchProps } from './form/Switch/Switch'

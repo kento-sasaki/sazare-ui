@@ -10,6 +10,7 @@ import {
 } from '@sazare-ui/tokens'
 
 import { buttonRecipe } from './src/form/Button/Button.recipe'
+import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
 
@@ -39,6 +40,12 @@ export default defineConfig({
         button: buttonRecipe,
         heading: headingRecipe,
         text: textRecipe,
+      },
+      slotRecipes: {
+        // "switch"はJavaScriptの予約語のため、生成される styled-system/recipes/switch.ts の
+        // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える
+        // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
+        switchField: switchRecipe,
       },
     },
   },
