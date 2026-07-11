@@ -22,3 +22,8 @@ export type { StackProps } from './layout/Stack/Stack'
 
 export { Button } from './form/Button/Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './form/Button/Button'
+
+export { Checkbox } from './form/Checkbox/Checkbox'
+export type { CheckboxProps } from './form/Checkbox/Checkbox'
+export { CheckboxGroup } from './form/Checkbox/CheckboxGroup'
+export type { CheckboxGroupOption, CheckboxGroupProps } from './form/Checkbox/CheckboxGroup'

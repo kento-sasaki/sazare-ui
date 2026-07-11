@@ -16,4 +16,9 @@ export const colors = {
     solid: { value: '#2F4C6B' },
     solidHover: { value: '#233A54' },
   },
+  // Checkbox等のコントロール系コンポーネントの枠線に使うニュートラルな装飾色（ADR 0013と同じ調達方針）。
+  // text.*のグレースケール（#1F2937/#6B7280/#9CA3AF）と明度が連続するよう中間階調を選んだ
+  border: {
+    default: { value: '#D1D5DB' },
+  },
 }
