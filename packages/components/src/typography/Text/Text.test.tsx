@@ -31,4 +31,37 @@ describe('Text', () => {
     expect(ref.current).toBeInstanceOf(HTMLParagraphElement)
     expect(ref.current?.tagName).toBe('P')
   })
+
+  it('defaults to the "md" size when size is omitted', () => {
+    render(<Text>Title</Text>)
+    expect(screen.getByText('Title')).toHaveAttribute('data-size', 'md')
+  })
+
+  it.each(['sm', 'md', 'lg', 'xl', '2xl', '3xl'] as const)('accepts the %s size token', (size) => {
+    render(<Text size={size}>Title</Text>)
+    expect(screen.getByText('Title')).toHaveAttribute('data-size', size)
+  })
+
+  it('defaults to the "default" text color when color is omitted', () => {
+    render(<Text>Title</Text>)
+    expect(screen.getByText('Title')).toHaveAttribute('data-color', 'default')
+  })
+
+  it.each(['default', 'white', 'secondary', 'disabled', 'link', 'inherit'] as const)(
+    'accepts the %s color token',
+    (color) => {
+      render(<Text color={color}>Title</Text>)
+      expect(screen.getByText('Title')).toHaveAttribute('data-color', color)
+    },
+  )
+
+  it('defaults to the "normal" weight when weight is omitted', () => {
+    render(<Text>Title</Text>)
+    expect(screen.getByText('Title')).toHaveAttribute('data-weight', 'normal')
+  })
+
+  it.each(['normal', 'semibold', 'bold'] as const)('accepts the %s weight token', (weight) => {
+    render(<Text weight={weight}>Title</Text>)
+    expect(screen.getByText('Title')).toHaveAttribute('data-weight', weight)
+  })
 })
