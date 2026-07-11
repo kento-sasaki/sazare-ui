@@ -23,7 +23,19 @@ export type { StackProps } from './layout/Stack/Stack'
 export { Button } from './form/Button/Button'
 export type { ButtonProps, ButtonSize, ButtonVariant } from './form/Button/Button'
 
+export { Checkbox } from './form/Checkbox/Checkbox'
+export type { CheckboxProps } from './form/Checkbox/Checkbox'
+export { CheckboxGroup } from './form/CheckboxGroup/CheckboxGroup'
+export type { CheckboxGroupOption, CheckboxGroupProps } from './form/CheckboxGroup/CheckboxGroup'
+
+export { IconButton } from './form/IconButton/IconButton'
+export type {
+  IconButtonProps,
+  IconButtonSize,
+  IconButtonVariant,
+} from './form/IconButton/IconButton'
+
 export { RadioButton } from './form/RadioButton/RadioButton'
 export type { RadioButtonProps } from './form/RadioButton/RadioButton'
-export { RadioGroup } from './form/RadioButton/RadioGroup'
-export type { RadioGroupOption, RadioGroupProps } from './form/RadioButton/RadioGroup'
+export { RadioGroup } from './form/RadioGroup/RadioGroup'
+export type { RadioGroupOption, RadioGroupProps } from './form/RadioGroup/RadioGroup'

@@ -1,0 +1,53 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as CheckboxGroupStories from './CheckboxGroup.stories'
+
+<Meta of={CheckboxGroupStories} />
+
+# CheckboxGroup
+
+複数の選択肢から0個以上を選ばせるための、[Checkbox](../Checkbox/Checkbox.mdx)の集合コンポーネント。Ark UIの`Checkbox.Group`は子孫の`Checkbox.Root`に対して`value`を介してchecked状態・`name`・`disabled`を自動的に注入するため（`useCheckboxGroupContext`経由）、CheckboxGroupは内部でCheckboxをそのまま再利用して実装している。
+
+<Canvas of={CheckboxGroupStories.Default} />
+
+<Controls />
+
+## options（選択肢）
+
+- `options`: `{ label: string; value: string; disabled?: boolean }[]`。必須
+- 各要素が1つのCheckboxとして描画される。`value`は選択状態の識別に使うため、options内で一意にする
+- 選択肢ごとの`disabled`はグループ全体の`disabled`propと独立して指定できる
+
+<Canvas of={CheckboxGroupStories.Disabled} />
+
+## 選択状態（value / defaultValue / onValueChange）
+
+- `value`: `string[]`。指定するとcontrolledになり、状態変化は呼び出し側が`onValueChange`で管理する
+- `defaultValue`: 同じ型。uncontrolledな初期値
+- `onValueChange`: `(value: string[]) => void`
+
+<Canvas of={CheckboxGroupStories.WithDefaultValue} />
+
+## name / disabled（グループ全体への設定）
+
+- `name`: グループ内の全Checkboxに同じ`name`を適用する。フォーム送信時に配列として送るための識別子
+- `disabled`: グループ全体を無効化する。個別の`option.disabled`と併用でき、いずれかが真であれば無効化される
+
+## レイアウト
+
+CheckboxGroupは選択肢を縦方向（`flexDirection: column`）に並べ、項目間に`spacing.sm`のgapを持つ。この余白はCheckboxGroup自身のrecipeに含まれており、利用側で調整するpropは無い。
+
+## className / style / children は受け付けない
+
+CheckboxGroupは`className`・`style`・`children`propを受け付けない（ADR 0012）。選択肢は`options`（配列）で指定する。
+
+## Do's / Don'ts
+
+- 複数選択肢からの複数選択にはCheckboxGroupを使う。単一の真偽値選択には[Checkbox](../Checkbox/Checkbox.mdx)を単体で使う
+- `options`の`value`はグループ内で重複させない。重複するとvalue配列による選択状態の判定が意図通りに機能しない
+
+## アクセシビリティ
+
+- Ark UIの`Checkbox.Group`は`role="group"`のdivとして描画されるため、スクリーンリーダーは選択肢の集合として認識する
+- グループ全体の見出し（`fieldset`/`legend`相当の説明文言）は現状持たない。選択肢グループの意味をユーザーに伝える必要がある場合は、利用側で見出しを別途用意する
+- 個々の選択肢はCheckboxと同じ実装（ネイティブ`<input type="checkbox">`とネイティブ`<label>`）のため、キーボード操作・スクリーンリーダー対応はCheckbox側の挙動に従う
