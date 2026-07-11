@@ -1,0 +1,59 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as SwitchStories from './Switch.stories'
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+ユーザーが単一の項目に対して真偽値（オン/オフ）を選択するためのコンポーネント。Ark UIのSwitch（Root/HiddenInput/Control/Thumb/Labelの複合コンポーネント）を、Checkboxと同じ方針（ADR 0012）で単一コンポーネントに完全ラップして実装している。
+
+<Canvas of={SwitchStories.Default} />
+
+<Controls />
+
+## Checkboxとの使い分け
+
+見た目（トラック+つまみ）が異なるだけで、公開propsや状態管理の仕組みはCheckboxとほぼ同じ真偽値選択コンポーネント。Ark UIのSwitchはネイティブの`<input type="checkbox">`をhidden inputとして使っており、`indeterminate`（中間状態）は持たない。一般的には、設定のON/OFFなど即時反映される操作にはSwitch、フォーム送信を伴う選択項目にはCheckboxを使う。
+
+## label（スイッチのラベル）
+
+- `label`: `string`。必須
+- Ark UIの`Switch.Root`はネイティブの`<label>`要素として描画されるため、ラベルテキストをクリックしてもクリック領域が自動的にhidden inputへ伝播し、追加のARIA属性なしにアクセシブルネームが解決される
+- Checkboxと同様、`children`は受け付けず`label`に一本化している（デザインシステムが定義したスタイル・構造からの逸脱を防ぐため）
+
+## checked状態（checked / defaultChecked / onCheckedChange）
+
+- `checked`: `boolean`。指定するとcontrolledになり、状態変化は呼び出し側が`onCheckedChange`で管理する
+- `defaultChecked`: `boolean`。uncontrolledな初期値
+- `onCheckedChange`: `(details: { checked: boolean }) => void`
+
+<Canvas of={SwitchStories.Controlled} />
+
+## disabled
+
+ネイティブの`disabled`属性をそのまま使う。クリック・キーボード操作の抑止はブラウザのネイティブ挙動に委譲しており、Switch側で独自の無効化ロジックは持たない。
+
+<Canvas of={SwitchStories.Disabled} />
+<Canvas of={SwitchStories.DisabledChecked} />
+
+## フォーム連携（name / value / form / required / ref）
+
+- `name` / `value` / `form`: ネイティブの`<input type="checkbox">`と同じ意味で、hidden inputにそのまま渡る
+- `required`: ネイティブの`required`属性
+- `ref`: フォーム値を実際に持つhidden inputへ転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style / children は受け付けない
+
+Switchは`className`・`style`・`children`propを受け付けない（ADR 0012）。ラベルは`label`（string）で指定する。
+
+## Do's / Don'ts
+
+- 単一の真偽値をその場で切り替えさせたい場合はSwitchを使う。中間状態（indeterminate）が必要な場合はSwitchではなく[Checkbox](../Checkbox/Checkbox.mdx)を使う
+- トラック内のつまみの位置は`justifyContent`の切り替え（`flex-start`/`flex-end`）で表現しているため、`Control`に子要素を追加してもレイアウトは反映されない
+
+## アクセシビリティ
+
+- Ark UIの`Switch.HiddenInput`はネイティブの`<input type="checkbox">`であり、ロールも`checkbox`として認識される（見た目はスイッチだが、ARIAの`switch`ロールではない）。キーボード操作（Tab/Space）は追加の実装なしにブラウザ標準の挙動に従う
+- Rootがネイティブの`<label>`要素であるため、ラベルテキストのクリックでもオン/オフが切り替わる
+- `disabled`時はネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、クリックイベントも発火しない

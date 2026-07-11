@@ -39,3 +39,6 @@ export { RadioButton } from './form/RadioButton/RadioButton'
 export type { RadioButtonProps } from './form/RadioButton/RadioButton'
 export { RadioGroup } from './form/RadioGroup/RadioGroup'
 export type { RadioGroupOption, RadioGroupProps } from './form/RadioGroup/RadioGroup'
+
+export { Switch } from './form/Switch/Switch'
+export type { SwitchProps } from './form/Switch/Switch'
