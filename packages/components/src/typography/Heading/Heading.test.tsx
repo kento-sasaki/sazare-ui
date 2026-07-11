@@ -4,6 +4,19 @@ import { describe, expect, it } from 'vitest'
 
 import { Heading } from './Heading'
 
+// className/styleは公開APIとして受け付けない（レイアウト調整はBox/Stackを使う、ADR 0012）。
+// 再びpropsとして受け付け可能になった場合、下記の@ts-expect-errorが
+// 「不要な指定」としてtsc（pnpm run typecheck）上のエラーになり回帰を検知できる。
+// この関数自体は実行されない（型チェックのみが目的）。
+function _typeOnlyGuardAgainstClassNameAndStyle() {
+  // @ts-expect-error className is not part of Heading's public props
+  const withClassName = <Heading className="not-allowed">Title</Heading>
+  // @ts-expect-error style is not part of Heading's public props
+  const withStyle = <Heading style={{ margin: '1px' }}>Title</Heading>
+  return [withClassName, withStyle]
+}
+void _typeOnlyGuardAgainstClassNameAndStyle
+
 describe('Heading', () => {
   it('renders an h2 element by default', () => {
     render(<Heading>Default heading</Heading>)
@@ -48,15 +61,6 @@ describe('Heading', () => {
     )
     expect(ref.current).toBeInstanceOf(HTMLHeadingElement)
     expect(ref.current?.tagName).toBe('H4')
-  })
-
-  it('merges a custom className with the generated styles', () => {
-    render(
-      <Heading as="h5" className="custom-class">
-        Title
-      </Heading>,
-    )
-    expect(screen.getByRole('heading', { level: 5 })).toHaveClass('custom-class')
   })
 
   it('defaults to the "default" text color when color is omitted', () => {

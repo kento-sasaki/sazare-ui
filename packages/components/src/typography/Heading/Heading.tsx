@@ -1,5 +1,4 @@
 import type { colors, fontSizes, spacing } from '@sazare-ui/tokens'
-import clsx from 'clsx'
 import type { ComponentPropsWithRef, ElementType } from 'react'
 
 import { heading } from '../../../styled-system/recipes'
@@ -22,9 +21,12 @@ const SIZE_BY_LEVEL: Record<HeadingLevel, HeadingSize> = {
   h6: 'sm',
 }
 
+// className/styleは公開APIとして受け付けない。見た目の調整は必ずデザイントークンに
+// 制約されたprops（size/color/marginBottom等）を通す（ADR 0012）。
+// レイアウトの合成（複数要素の配置・gap等）はBox/Stackを使う。
 export interface HeadingProps extends Omit<
   ComponentPropsWithRef<'h2'>,
-  'as' | 'size' | 'color' | 'marginBottom'
+  'as' | 'size' | 'color' | 'marginBottom' | 'className' | 'style'
 > {
   as?: HeadingLevel
   size?: HeadingSize
@@ -38,7 +40,6 @@ export const Heading = ({
   size,
   color = 'default',
   marginBottom = 'none',
-  className,
   children,
   ref,
   ...rest
@@ -52,7 +53,7 @@ export const Heading = ({
       data-size={resolvedSize}
       data-color={color}
       data-margin-bottom={marginBottom}
-      className={clsx(heading({ size: resolvedSize, color, marginBottom }), className)}
+      className={heading({ size: resolvedSize, color, marginBottom })}
       {...rest}
     >
       {children}
