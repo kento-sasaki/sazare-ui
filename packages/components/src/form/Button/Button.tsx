@@ -11,14 +11,20 @@ export type ButtonSize = 'sm' | 'md'
 
 // className/styleは公開APIとして受け付けない。見た目の調整は必ずデザイントークンに
 // 制約されたprops（variant/size等）を通す（ADR 0012）。
+// childrenも受け付けない。任意のReactNodeを許容するとデザインシステムが定義した
+// スタイル・構造（テキストのみのラベル）を逸脱できてしまうため、string型のlabelに一本化する。
 // 余白・複数要素の配置等のレイアウト合成はBox/Stackを使う（Buttonは自身の余白を持たない）。
-export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'className' | 'style'> {
+export interface ButtonProps extends Omit<
+  ComponentPropsWithRef<'button'>,
+  'className' | 'style' | 'children'
+> {
   variant?: ButtonVariant
   size?: ButtonSize
+  label: string
 }
 
 // React 19はrefを通常のpropとして受け取れるためforwardRefは不要（peerDependenciesがReact 19専用のため採用）
-export const Button = ({ variant = 'solid', size = 'md', children, ref, ...rest }: ButtonProps) => {
+export const Button = ({ variant = 'solid', size = 'md', label, ref, ...rest }: ButtonProps) => {
   return (
     <button
       {...rest}
@@ -27,7 +33,7 @@ export const Button = ({ variant = 'solid', size = 'md', children, ref, ...rest 
       data-size={size}
       className={button({ variant, size })}
     >
-      {children}
+      {label}
     </button>
   )
 }

@@ -16,7 +16,7 @@ const meta = {
     },
   },
   args: {
-    children: 'Button',
+    label: 'Button',
   },
 } satisfies Meta<typeof Button>
 
@@ -29,8 +29,8 @@ export const Default: Story = {}
 export const AllVariants: Story = {
   render: () => (
     <>
-      <Button variant="solid">variant="solid"</Button>
-      <Button variant="outline">variant="outline"</Button>
+      <Button variant="solid" label='variant="solid"' />
+      <Button variant="outline" label='variant="outline"' />
     </>
   ),
 }
@@ -38,8 +38,8 @@ export const AllVariants: Story = {
 export const AllSizes: Story = {
   render: () => (
     <>
-      <Button size="sm">size="sm"</Button>
-      <Button size="md">size="md"</Button>
+      <Button size="sm" label='size="sm"' />
+      <Button size="md" label='size="md"' />
     </>
   ),
 }

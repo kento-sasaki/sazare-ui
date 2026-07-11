@@ -12,6 +12,11 @@ import * as ButtonStories from './Button.stories'
 
 <Controls />
 
+## label（ボタンのラベル）
+
+- `label`: `string`。必須
+- `children`は受け付けない。任意の`ReactNode`を渡せてしまうとデザインシステムが定義したスタイル・構造（テキストのみのラベル）を逸脱できてしまうため、`label`に一本化している
+
 ## variant（見た目のバリエーション）
 
 - `variant`: `'solid'` / `'outline'`。デフォルトは`'solid'`
@@ -33,9 +38,9 @@ import * as ButtonStories from './Button.stories'
 
 <Canvas of={ButtonStories.Disabled} />
 
-## className / style は受け付けない
+## className / style / children は受け付けない
 
-Buttonは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は必ず`variant`/`size`等、デザイントークンに制約されたpropsを通す。
+Buttonは`className`・`style`・`children`propを受け付けない（ADR 0012）。見た目の調整は必ず`variant`/`size`等、デザイントークンに制約されたpropsを通す。ラベルは`label`（string）で指定する。
 
 Buttonは自身の余白（margin）を持たない。複数のButtonを並べてgapをあける等のレイアウト調整は`Box`/`Stack`（`Layout`カテゴリ）でButtonを囲んで行う。
 
