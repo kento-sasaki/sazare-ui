@@ -23,6 +23,15 @@ export const textInputRecipe = defineRecipe({
     // 視覚フィードバックが成立するようにする
     '&[aria-invalid="true"]': {
       borderColor: 'border.danger',
+      // 外側の_focus（outline: 'none'）だけだとinvalid×focus時に枠線色がaction.solidで
+      // 上書きされ、フォーカスの視覚化（WCAG 2.4.7）が失われる。invalid時はborderColorを
+      // ここで再指定して維持しつつoutlineで補う（詳細度・ソース順の両面で外側の_focusに
+      // 勝つ必要があるため、borderColorの再指定を省略しない）
+      _focus: {
+        borderColor: 'border.danger',
+        outline: '2px solid {colors.border.danger}',
+        outlineOffset: '1px',
+      },
     },
   },
   variants: {
