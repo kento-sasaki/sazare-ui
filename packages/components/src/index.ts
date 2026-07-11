@@ -27,3 +27,10 @@ export { Checkbox } from './form/Checkbox/Checkbox'
 export type { CheckboxProps } from './form/Checkbox/Checkbox'
 export { CheckboxGroup } from './form/Checkbox/CheckboxGroup'
 export type { CheckboxGroupOption, CheckboxGroupProps } from './form/Checkbox/CheckboxGroup'
+
+export { IconButton } from './form/IconButton/IconButton'
+export type {
+  IconButtonProps,
+  IconButtonSize,
+  IconButtonVariant,
+} from './form/IconButton/IconButton'
