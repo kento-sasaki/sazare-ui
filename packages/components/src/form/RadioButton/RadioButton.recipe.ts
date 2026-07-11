@@ -2,19 +2,9 @@ import { defineSlotRecipe } from '@pandacss/dev'
 
 export const radioButtonRecipe = defineSlotRecipe({
   className: 'radio-button',
-  description: 'The styles for the RadioButton/RadioGroup component',
-  slots: ['root', 'groupLabel', 'item', 'itemControl', 'itemText'],
+  description: 'The styles for the RadioButton component',
+  slots: ['item', 'itemControl', 'itemText'],
   base: {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'sm',
-    },
-    groupLabel: {
-      fontSize: 'md',
-      fontWeight: 'bold',
-      color: 'text.default',
-    },
     item: {
       display: 'inline-flex',
       alignItems: 'center',

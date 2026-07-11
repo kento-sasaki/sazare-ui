@@ -1,8 +1,7 @@
 import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group'
 
-import { radioButton } from '../../../styled-system/recipes'
-
-import { RadioButton } from './RadioButton'
+import { radioGroup } from '../../../styled-system/recipes'
+import { RadioButton } from '../RadioButton/RadioButton'
 
 export interface RadioGroupOption {
   label: string
@@ -31,7 +30,7 @@ export const RadioGroup = ({
   name,
   disabled,
 }: RadioGroupProps) => {
-  const styles = radioButton()
+  const styles = radioGroup()
 
   return (
     <ArkRadioGroup.Root
