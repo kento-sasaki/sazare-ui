@@ -16,6 +16,7 @@ import { iconButtonRecipe } from './src/form/IconButton/IconButton.recipe'
 import { radioButtonRecipe } from './src/form/RadioButton/RadioButton.recipe'
 import { radioGroupRecipe } from './src/form/RadioGroup/RadioGroup.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
+import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
 
@@ -44,6 +45,7 @@ export default defineConfig({
       recipes: {
         button: buttonRecipe,
         iconButton: iconButtonRecipe,
+        textInput: textInputRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },

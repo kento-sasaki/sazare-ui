@@ -16,10 +16,13 @@ export const colors = {
     solid: { value: '#2F4C6B' },
     solidHover: { value: '#233A54' },
   },
-  // Checkbox/RadioButton/Switch等のコントロール系コンポーネントの枠線・トラックに使うニュートラルな
-  // 装飾色（ADR 0013と同じ調達方針）。text.*のグレースケール（#1F2937/#6B7280/#9CA3AF）と
+  // Checkbox/RadioButton/Switch/TextInput等のコントロール系コンポーネントの枠線・トラックに使う
+  // ニュートラルな装飾色（ADR 0013と同じ調達方針）。text.*のグレースケール（#1F2937/#6B7280/#9CA3AF）と
   // 明度が連続するよう中間階調を選んだ
   border: {
     default: { value: '#D1D5DB' },
+    // invalid状態（aria-invalid）の枠線色。mabikiのパレットに依存せず、
+    // 業界で広く使われる汎用的な赤系（Tailwind red-600相当）を新規選定した
+    danger: { value: '#DC2626' },
   },
 }

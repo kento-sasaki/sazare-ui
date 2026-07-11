@@ -42,3 +42,6 @@ export type { RadioGroupOption, RadioGroupProps } from './form/RadioGroup/RadioG
 
 export { Switch } from './form/Switch/Switch'
 export type { SwitchProps } from './form/Switch/Switch'
+
+export { TextInput } from './form/TextInput/TextInput'
+export type { TextInputProps, TextInputSize } from './form/TextInput/TextInput'
