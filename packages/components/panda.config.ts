@@ -10,6 +10,7 @@ import {
 } from '@sazare-ui/tokens'
 
 import { buttonRecipe } from './src/form/Button/Button.recipe'
+import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
 
@@ -37,6 +38,7 @@ export default defineConfig({
       },
       recipes: {
         button: buttonRecipe,
+        textInput: textInputRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },
