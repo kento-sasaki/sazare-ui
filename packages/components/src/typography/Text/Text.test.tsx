@@ -4,6 +4,19 @@ import { describe, expect, it } from 'vitest'
 
 import { Text } from './Text'
 
+// className/styleは公開APIとして受け付けない（レイアウト調整はBox/Stackを使う、ADR 0012）。
+// 再びpropsとして受け付け可能になった場合、下記の@ts-expect-errorが
+// 「不要な指定」としてtsc（pnpm run typecheck）上のエラーになり回帰を検知できる。
+// この関数自体は実行されない（型チェックのみが目的）。
+function _typeOnlyGuardAgainstClassNameAndStyle() {
+  // @ts-expect-error className is not part of Text's public props
+  const withClassName = <Text className="not-allowed">Title</Text>
+  // @ts-expect-error style is not part of Text's public props
+  const withStyle = <Text style={{ margin: '1px' }}>Title</Text>
+  return [withClassName, withStyle]
+}
+void _typeOnlyGuardAgainstClassNameAndStyle
+
 describe('Text', () => {
   it('renders a p element by default', () => {
     render(<Text>Default text</Text>)
