@@ -6,6 +6,15 @@ export type {
   HeadingSize,
 } from './typography/Heading/Heading'
 
+export { Text } from './typography/Text/Text'
+export type {
+  TextColor,
+  TextElement,
+  TextProps,
+  TextSize,
+  TextWeight,
+} from './typography/Text/Text'
+
 export { Box } from './layout/Box/Box'
 export type { BoxProps } from './layout/Box/Box'
 export { Stack } from './layout/Stack/Stack'
