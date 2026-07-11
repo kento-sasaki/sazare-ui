@@ -33,4 +33,14 @@ describe('Button', () => {
     render(<Button ref={ref}>Click</Button>)
     expect(ref.current).toBeInstanceOf(HTMLButtonElement)
   })
+
+  it('defaults to the "solid" variant when variant is omitted', () => {
+    render(<Button>Click</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('data-variant', 'solid')
+  })
+
+  it.each(['solid', 'outline'] as const)('accepts the %s variant', (variant) => {
+    render(<Button variant={variant}>Click</Button>)
+    expect(screen.getByRole('button')).toHaveAttribute('data-variant', variant)
+  })
 })
