@@ -33,6 +33,14 @@ export const switchRecipe = defineSlotRecipe({
         bg: 'action.solid',
         justifyContent: 'flex-end',
       },
+      // キーボード操作時のフォーカスをRootではなくControlの枠線で示す
+      // （実際にフォーカスを受け取るのはHiddenInputだが、zag-jsがdata-focus-visible属性を
+      // Control等の各パーツにも反映するため、Panda標準の_focusVisibleで拾える）
+      _focusVisible: {
+        outline: '2px solid',
+        outlineColor: 'action.solid',
+        outlineOffset: '2px',
+      },
     },
     thumb: {
       width: '{spacing.sm}',
