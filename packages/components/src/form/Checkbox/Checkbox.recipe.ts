@@ -3,13 +3,8 @@ import { defineSlotRecipe } from '@pandacss/dev'
 export const checkboxRecipe = defineSlotRecipe({
   className: 'checkbox',
   description: 'The styles for the Checkbox component',
-  slots: ['root', 'control', 'indicator', 'label', 'group'],
+  slots: ['root', 'control', 'indicator', 'label'],
   base: {
-    group: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'sm',
-    },
     root: {
       display: 'inline-flex',
       alignItems: 'center',

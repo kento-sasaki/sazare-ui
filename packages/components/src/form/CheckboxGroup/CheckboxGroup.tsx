@@ -1,8 +1,7 @@
 import { Checkbox as ArkCheckbox } from '@ark-ui/react/checkbox'
 
-import { checkbox } from '../../../styled-system/recipes'
-
-import { Checkbox } from './Checkbox'
+import { checkboxGroup } from '../../../styled-system/recipes'
+import { Checkbox } from '../Checkbox/Checkbox'
 
 export interface CheckboxGroupOption {
   label: string
@@ -31,7 +30,7 @@ export const CheckboxGroup = ({
   name,
   disabled,
 }: CheckboxGroupProps) => {
-  const styles = checkbox()
+  const styles = checkboxGroup()
 
   return (
     <ArkCheckbox.Group
