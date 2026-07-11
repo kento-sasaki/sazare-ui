@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { createRef } from 'react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Button } from './Button'
 
@@ -52,5 +52,23 @@ describe('Button', () => {
   it.each(['sm', 'md'] as const)('accepts the %s size', (size) => {
     render(<Button size={size}>Click</Button>)
     expect(screen.getByRole('button')).toHaveAttribute('data-size', size)
+  })
+
+  it('calls onClick when clicked', () => {
+    const handleClick = vi.fn()
+    render(<Button onClick={handleClick}>Click</Button>)
+    fireEvent.click(screen.getByRole('button'))
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not call onClick when disabled', () => {
+    const handleClick = vi.fn()
+    render(
+      <Button disabled onClick={handleClick}>
+        Click
+      </Button>,
+    )
+    fireEvent.click(screen.getByRole('button'))
+    expect(handleClick).not.toHaveBeenCalled()
   })
 })
