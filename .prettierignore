@@ -1,0 +1,11 @@
+dist
+node_modules
+coverage
+styled-system
+.storybook-static
+pnpm-lock.yaml
+*.log
+.DS_Store
+
+# 既存ADR/要件ドキュメントは手書きの体裁（表の桁揃え等）を保持するため対象外にする
+docs/

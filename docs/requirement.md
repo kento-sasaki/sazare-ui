@@ -15,3 +15,8 @@
 - node のバージョン管理は mise を採用したい
 - まず最初のバージョンでは、必要なコンポーネントとデザイントークンを一通り実装して、後から少しずつ調整するようにしたい
   - 最初は Storybook の tags に `draft` というタグを設定しておいて、後から少しずつ調整したい
+- 参考となるデザインシステム
+  - https://ui.one-design-system.sansan.com/
+  - https://design.digital.go.jp/dads/introduction/
+  - https://github.com/kufu/smarthr-ui
+  - https://github.com/openameba/spindle

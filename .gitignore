@@ -1,1 +1,7 @@
 node_modules/
+dist/
+styled-system/
+.storybook-static/
+coverage/
+.husky/_/
+.cspellcache
