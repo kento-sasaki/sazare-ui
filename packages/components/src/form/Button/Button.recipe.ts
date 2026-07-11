@@ -22,6 +22,8 @@ export const buttonRecipe = defineRecipe({
         color: 'text.white',
         border: 'none',
         _hover: { bg: 'action.solidHover' },
+        // disabled時はhoverでのbg変化を打ち消し、無効化された見た目を一貫させる
+        _disabled: { _hover: { bg: 'action.solid' } },
       },
       // sazare-uiにはoutlineのhover背景に使えるニュートラルなsurfaceトークンがまだ無いため、
       // hoverでは背景を変えずボーダー・文字色のみ濃くする（Button.mdxの利用上の注意に追記する）
@@ -33,6 +35,10 @@ export const buttonRecipe = defineRecipe({
         _hover: {
           borderColor: 'action.solidHover',
           color: 'action.solidHover',
+        },
+        // disabled時はhoverでのボーダー・文字色変化を打ち消す
+        _disabled: {
+          _hover: { borderColor: 'action.solid', color: 'action.solid' },
         },
       },
     },

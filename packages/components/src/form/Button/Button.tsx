@@ -21,11 +21,11 @@ export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'clas
 export const Button = ({ variant = 'solid', size = 'md', children, ref, ...rest }: ButtonProps) => {
   return (
     <button
+      {...rest}
       ref={ref}
       data-variant={variant}
       data-size={size}
       className={button({ variant, size })}
-      {...rest}
     >
       {children}
     </button>
