@@ -27,21 +27,10 @@ export const headingRecipe = defineRecipe({
       link: { color: 'text.link' },
       inherit: { color: 'inherit' },
     },
-    // spacingトークンのみ許容する。任意のCSS値（px指定等）は指定できない
-    marginBottom: {
-      none: { marginBottom: 'none' },
-      xs: { marginBottom: 'xs' },
-      sm: { marginBottom: 'sm' },
-      md: { marginBottom: 'md' },
-      lg: { marginBottom: 'lg' },
-      xl: { marginBottom: 'xl' },
-      '2xl': { marginBottom: '2xl' },
-    },
   },
   defaultVariants: {
     size: 'md',
     color: 'default',
-    marginBottom: 'none',
   },
   // sizeはasから実行時に解決するため（静的なリテラル引数ではない）、
   // 静的解析だけでは一部のvariantしかCSSが生成されない。全variantを強制生成する。

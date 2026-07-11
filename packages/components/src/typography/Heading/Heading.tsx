@@ -1,4 +1,4 @@
-import type { colors, fontSizes, spacing } from '@sazare-ui/tokens'
+import type { colors, fontSizes } from '@sazare-ui/tokens'
 import type { ComponentPropsWithRef, ElementType } from 'react'
 
 import { heading } from '../../../styled-system/recipes'
@@ -9,8 +9,6 @@ export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 export type HeadingSize = keyof typeof fontSizes
 // text系semantic colorのみ許容する（SmartHR UIのText color相当）。任意のCSS色文字列は指定できない
 export type HeadingColor = keyof typeof colors.text | 'inherit'
-// spacingトークンのみ許容する。任意のCSS値（px指定等）は指定できない
-export type HeadingMarginBottom = keyof typeof spacing
 
 const SIZE_BY_LEVEL: Record<HeadingLevel, HeadingSize> = {
   h1: '3xl',
@@ -22,16 +20,15 @@ const SIZE_BY_LEVEL: Record<HeadingLevel, HeadingSize> = {
 }
 
 // className/styleは公開APIとして受け付けない。見た目の調整は必ずデザイントークンに
-// 制約されたprops（size/color/marginBottom等）を通す（ADR 0012）。
-// レイアウトの合成（複数要素の配置・gap等）はBox/Stackを使う。
+// 制約されたprops（size/color等）を通す（ADR 0012）。
+// 余白・複数要素の配置等のレイアウト合成はBox/Stackを使う（Headingは自身の余白を持たない）。
 export interface HeadingProps extends Omit<
   ComponentPropsWithRef<'h2'>,
-  'as' | 'size' | 'color' | 'marginBottom' | 'className' | 'style'
+  'as' | 'size' | 'color' | 'className' | 'style'
 > {
   as?: HeadingLevel
   size?: HeadingSize
   color?: HeadingColor
-  marginBottom?: HeadingMarginBottom
 }
 
 // React 19はrefを通常のpropとして受け取れるためforwardRefは不要（peerDependenciesがReact 19専用のため採用）
@@ -39,7 +36,6 @@ export const Heading = ({
   as = 'h2',
   size,
   color = 'default',
-  marginBottom = 'none',
   children,
   ref,
   ...rest
@@ -52,8 +48,7 @@ export const Heading = ({
       ref={ref}
       data-size={resolvedSize}
       data-color={color}
-      data-margin-bottom={marginBottom}
-      className={heading({ size: resolvedSize, color, marginBottom })}
+      className={heading({ size: resolvedSize, color })}
       {...rest}
     >
       {children}

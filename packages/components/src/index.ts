@@ -2,7 +2,6 @@ export { Heading } from './typography/Heading/Heading'
 export type {
   HeadingColor,
   HeadingLevel,
-  HeadingMarginBottom,
   HeadingProps,
   HeadingSize,
 } from './typography/Heading/Heading'

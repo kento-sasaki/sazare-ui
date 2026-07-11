@@ -80,25 +80,4 @@ describe('Heading', () => {
       expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-color', color)
     },
   )
-
-  it('defaults to no bottom margin when marginBottom is omitted', () => {
-    render(<Heading>Title</Heading>)
-    expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-margin-bottom', 'none')
-  })
-
-  it('applies the spacing token specified by the marginBottom prop', () => {
-    render(<Heading marginBottom="lg">Title</Heading>)
-    expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('data-margin-bottom', 'lg')
-  })
-
-  it.each(['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const)(
-    'accepts the %s spacing token for marginBottom',
-    (marginBottom) => {
-      render(<Heading marginBottom={marginBottom}>Title</Heading>)
-      expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute(
-        'data-margin-bottom',
-        marginBottom,
-      )
-    },
-  )
 })
