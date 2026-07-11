@@ -1,2 +1,13 @@
 export { Heading } from './typography/Heading/Heading'
-export type { HeadingLevel, HeadingProps, HeadingSize } from './typography/Heading/Heading'
+export type {
+  HeadingColor,
+  HeadingLevel,
+  HeadingMarginBottom,
+  HeadingProps,
+  HeadingSize,
+} from './typography/Heading/Heading'
+
+export { Box } from './layout/Box/Box'
+export type { BoxProps } from './layout/Box/Box'
+export { Stack } from './layout/Stack/Stack'
+export type { StackProps } from './layout/Stack/Stack'

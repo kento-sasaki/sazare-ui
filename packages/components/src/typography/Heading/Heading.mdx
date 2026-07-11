@@ -37,6 +37,12 @@ import * as HeadingStories from './Heading.stories'
 
 <Canvas of={HeadingStories.WithMarginBottom} />
 
+## className / style は受け付けない
+
+Headingは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は必ず`size`/`color`/`marginBottom`等、デザイントークンに制約されたpropsを通す。
+
+`marginBottom`以外のレイアウト調整（複数のHeadingを並べてgapをあける等）が必要な場合は、`Box`/`Stack`（`Layout`カテゴリ）でHeadingを囲んで配置する。`Box`/`Stack`のstyle props自体もトークン値のみを許容する（`strictTokens`設定）。
+
 ## Do's / Don'ts
 
 - 見た目のサイズを変えたいだけの場合は `size` を使う。`as` を「大きく見せたいから」という理由だけで変えない（文書のアウトラインが崩れる）
@@ -44,7 +50,7 @@ import * as HeadingStories from './Heading.stories'
 - 視覚的なレイアウト上の都合で見出しレベルをスキップしない（`h2` の次にいきなり `h4` を使う、など）。読み上げ順とインデントの手がかりが失われる
 - 見出しではない強調テキストには `Heading` を使わない（`Text` 等、本文用のコンポーネントを検討する）
 - `color` はデザイントークンで定義された値からのみ選ぶ。インラインスタイルや任意の16進数カラーで見出しの色を上書きしない（デザインの一貫性が崩れる）
-- 余白を調整したい場合は`marginBottom`（デザイントークン）を使う。`className`で任意のCSSマージンを直接上書きしない
+- 余白を調整したい場合は`marginBottom`（デザイントークン）を使う。複数要素の配置が必要な場合は`Box`/`Stack`で囲む（`className`/`style`は受け付けない）
 
 ## アクセシビリティ
 
