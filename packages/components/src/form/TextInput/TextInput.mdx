@@ -1,0 +1,61 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TextInputStories from './TextInput.stories'
+
+<Meta of={TextInputStories} />
+
+# TextInput
+
+ユーザーが1行のテキストを入力するためのコンポーネント。Ark UIにはinput相当のヘッドレスプリミティブが存在しないため、Buttonと同様にセマンティックなHTMLの`<input>`要素にPanda recipeでスタイルを適用して実装している。
+
+<Canvas of={TextInputStories.Default} />
+
+<Controls />
+
+## size
+
+- `size`: `'sm'` / `'md'`。デフォルトは`'md'`
+- フォントサイズと余白（padding）を束ねたスケール
+
+<Canvas of={TextInputStories.AllSizes} />
+
+## disabled
+
+ネイティブの`disabled`属性をそのまま使う。入力の抑止はブラウザのネイティブ挙動に委譲しており、TextInput側で独自の無効化ロジックは持たない。
+
+<Canvas of={TextInputStories.Disabled} />
+
+## invalid（aria-invalid）
+
+- `aria-invalid`: `'true'`を渡すと枠線色が`border.danger`に変わる
+- `label`/`helperText`/`errorText`のようなエラーメッセージの統合は持たない。フォームフィールド全体の組み立てはFormControl（Issue #38、未実装）が担当し、TextInputは`aria-invalid`単体でも視覚フィードバックが成立するようスタイル面のみを提供する
+- invalid×フォーカス時も、枠線色（`border.danger`）とoutlineの両方でフォーカスの視覚化（WCAG 2.4.7）を維持する
+
+<Canvas of={TextInputStories.Invalid} />
+
+## 値の制御（value / defaultValue / onChange）
+
+`value`/`defaultValue`/`onChange`はネイティブの`<input>`とまったく同じ意味で、そのまま転送される。controlled/uncontrolledの切り替えもネイティブのルールに従う。
+
+<Canvas of={TextInputStories.Controlled} />
+
+## フォーム連携（name / form / required / ref）
+
+- `name` / `form`: ネイティブの`<input>`と同じ意味でそのまま渡る
+- `required`: ネイティブの`required`属性
+- `ref`: ネイティブの`<input>`要素へそのまま転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style / type は受け付けない
+
+TextInputは`className`・`style`・`type`propを受け付けない（ADR 0012）。`type`は常に`"text"`に固定しており、email/password等の切り替えは持たない（それらは将来必要になった時点で別コンポーネントとして追加する）。ネイティブHTMLの`size`属性（表示文字数のnumber型）はvariant用の`size` prop（`'sm' | 'md'`）と名前が衝突するため公開しておらず、`size`は常にこちらの意味で解決される。
+
+## Do's / Don'ts
+
+- ラベルやエラーメッセージが必要な場合は、TextInput単体ではなくFormControl（Issue #38、未実装）でラップする。それまでの間は呼び出し側で`<label>`と`aria-describedby`を明示的に紐付ける
+- `aria-invalid`は枠線の見た目を変えるだけで、エラー内容をスクリーンリーダーに伝える手段（`aria-describedby`等）は別途呼び出し側で用意する必要がある
+
+## アクセシビリティ
+
+- ネイティブの`<input type="text">`要素を使うため、キーボード操作やスクリーンリーダーでのロール（`textbox`）認識は追加の実装なしにブラウザ標準の挙動に従う
+- `disabled`時は`aria-disabled`ではなくネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、入力イベントも発火しない
+- `aria-invalid="true"`時もフォーカスリング（outline）が消えないよう、通常時とは別に枠線色・outlineを明示的に再指定している（詳細はTextInput.recipe.tsのコメントを参照）
