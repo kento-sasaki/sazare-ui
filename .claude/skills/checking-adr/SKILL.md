@@ -46,7 +46,7 @@ ls ~/.claude/projects/*/"${CLAUDE_CODE_SESSION_ID}".jsonl
 
 エージェントへのプロンプトには以下を必ず含める。
 
-1. **transcript パス**: `$TRANSCRIPT`。巨大な場合に備え、`jq` 等で user / assistant のテキスト部分のみを抽出して読むよう指示する（thinking・tool_result は判定に不要）
+1. **transcript パス**: `$TRANSCRIPT`。巨大な場合に備え、`jq` 等（未インストールなら Python / Node.js のワンライナー等、環境で利用可能な手段）で user / assistant のテキスト部分のみを抽出して読むよう指示する（thinking・tool_result は判定に不要。ファイルが小さければ直接読んでもよい）
 2. **判定基準（狭く）**: 「複数の選択肢を比較検討した末に、設計方針・技術選定を決定した」やり取りだけを ADR 候補とする。以下は**対象外**と明記する
    - バグ修正・タイポ修正・リファクタリングなど、設計判断を含まない作業
    - 選択肢の比較がなく、既定のやり方に従っただけの実装
@@ -89,10 +89,10 @@ ADR の内容を**自動生成して一括提示しない**。`docs/adr/_templat
 
 ## Step 5: 採番してファイルを作成
 
-1. **採番**: `docs/adr/` の既存ファイル名（`NNNN-*.md`、`_template.md` を除く）の最大連番 +1 を 4 桁ゼロ埋めで採番する。
+1. **採番**: `docs/adr/` の既存ファイル名（`NNNN-*.md`、`_template.md` を除く）の最大連番 +1 を 4 桁ゼロ埋めで採番する。ディレクトリが存在しない場合や既存 ADR が 1 件もない（コマンドが何も返さない）場合は `0001` から開始する。
 
    ```bash
-   ls docs/adr/ | grep -E '^[0-9]{4}-' | sort | tail -1
+   mkdir -p docs/adr && ls docs/adr/ | grep -E '^[0-9]{4}-' | sort | tail -1 || true
    ```
 
 2. **ファイル名**: `docs/adr/NNNN-<slug>.md`。slug は既存 ADR に倣い英語ケバブケース（例: `token-constrained-props`）。
