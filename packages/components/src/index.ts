@@ -51,3 +51,23 @@ export type { TextareaProps, TextareaSize } from './form/Textarea/Textarea'
 
 export { TextInput } from './form/TextInput/TextInput'
 export type { TextInputProps, TextInputSize } from './form/TextInput/TextInput'
+
+export { Badge } from './feedback/Badge/Badge'
+export type { BadgeProps, BadgeTone } from './feedback/Badge/Badge'
+
+export { Banner } from './feedback/Banner/Banner'
+export type { BannerProps, BannerTone } from './feedback/Banner/Banner'
+
+export { Spinner } from './feedback/Spinner/Spinner'
+export type { SpinnerProps, SpinnerSize } from './feedback/Spinner/Spinner'
+
+export { StatusLabel } from './feedback/StatusLabel/StatusLabel'
+export type { StatusLabelProps, StatusLabelTone } from './feedback/StatusLabel/StatusLabel'
+
+export { createToaster, Toaster } from './feedback/Toast/Toast'
+export type {
+  CreateToasterProps,
+  CreateToasterReturn,
+  ToasterProps,
+  ToastOptions,
+} from './feedback/Toast/Toast'
