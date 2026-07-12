@@ -1,0 +1,54 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TooltipStories from './Tooltip.stories'
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+trigger要素へのホバー・フォーカスで短い説明を表示するコンポーネント。`@ark-ui/react/tooltip`をラップしている。
+
+Dialog/Drawerと同じく「単一コンポーネントへの完全ラップ・childrenなし」の原則の意図的例外として、`trigger`（トリガー要素の中身）と`content`（吹き出しの中身）を公開する。DialogやDrawerと異なりBackdrop/Title/Description/CloseTriggerに相当するものは無い（非モーダルで、マウスアウト・フォーカスアウトで自動的に閉じるため）。
+
+<Canvas of={TooltipStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Tooltip } from '@sazare-ui/components'
+
+function Example() {
+  return <Tooltip trigger="対象要素" content="補足の説明テキスト" />
+}
+```
+
+## props
+
+- `trigger`: `ReactNode`。必須。ホバー・フォーカス対象となる要素の中身
+- `content`: `ReactNode`。必須。吹き出しに表示する説明
+
+## trigger は「ボタンの中身」
+
+`trigger`はArk UIのTooltip.Trigger（常に`<button>`として描画される）の中身として渡される。そのため`Tooltip`はボタン以外の任意の要素（既存のリンクやアイコン等）にそのまま説明を付与する用途には向かない。文字列やアイコンなど、ボタンの中身として自然な要素を渡すこと。
+
+## 表示タイミング
+
+- ホバー: Ark UI既定で約400ms（`openDelay`）のディレイ後に表示、マウスアウト後は約150ms（`closeDelay`）で非表示になる
+- キーボードフォーカス: `Tab`キー等のキーボード操作でフォーカスした場合は即座に表示される（マウスクリックによるフォーカスでは表示されない。`@zag-js/focus-visible`によるキーボード操作判定）
+
+## className / style は受け付けない
+
+`Tooltip`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## Do's / Don'ts
+
+- 短い補足説明をホバー/フォーカスで示したい場合はTooltipを使う
+- ユーザーの操作（確認・入力等）が必要な場合はTooltipではなく[Dialog](../Dialog/Dialog.mdx)を使う
+- 重要な情報をTooltipだけに依存して伝えない（ホバーできないタッチデバイスでは表示されにくいため）
+
+## アクセシビリティ
+
+- `role="tooltip"`、`aria-describedby`はArk UIが自動的に配線する
+- キーボード操作（Tabでのフォーカス）でも表示され、Escapeキーで閉じられる（Ark UI標準の挙動）
