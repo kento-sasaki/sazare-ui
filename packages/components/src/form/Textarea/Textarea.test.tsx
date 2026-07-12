@@ -54,4 +54,19 @@ describe('Textarea', () => {
     expect(textarea).toHaveAttribute('rows', '10')
     expect(textarea).toHaveAttribute('cols', '40')
   })
+
+  it('reflects aria-invalid on the element', () => {
+    render(<Textarea aria-invalid="true" />)
+    expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('defaults to the "md" size when size is omitted', () => {
+    render(<Textarea />)
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-size', 'md')
+  })
+
+  it.each(['sm', 'md'] as const)('accepts the %s size', (size) => {
+    render(<Textarea size={size} />)
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-size', size)
+  })
 })
