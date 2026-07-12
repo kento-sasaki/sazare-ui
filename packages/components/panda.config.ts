@@ -15,6 +15,7 @@ import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.reci
 import { iconButtonRecipe } from './src/form/IconButton/IconButton.recipe'
 import { radioButtonRecipe } from './src/form/RadioButton/RadioButton.recipe'
 import { radioGroupRecipe } from './src/form/RadioGroup/RadioGroup.recipe'
+import { selectRecipe } from './src/form/Select/Select.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
@@ -56,6 +57,7 @@ export default defineConfig({
         checkboxGroup: checkboxGroupRecipe,
         radioButton: radioButtonRecipe,
         radioGroup: radioGroupRecipe,
+        select: selectRecipe,
         // "switch"はJavaScriptの予約語のため、生成される styled-system/recipes/switch.ts の
         // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える
         // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
