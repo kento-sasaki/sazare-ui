@@ -53,6 +53,23 @@ describe('Combobox', () => {
     })
   })
 
+  it('does not reset the filter when a content-equal but referentially new options array is passed', async () => {
+    const { rerender } = render(<Combobox label="Framework" options={options} />)
+    const input = screen.getByRole('combobox', { name: 'Framework' })
+    fireEvent.click(input)
+    await waitFor(() => screen.getByRole('option', { name: 'React' }))
+    fireEvent.change(input, { target: { value: 'vu' } })
+    await waitFor(() => {
+      expect(screen.getByRole('option', { name: 'Vue' })).toBeInTheDocument()
+      expect(screen.queryByRole('option', { name: 'React' })).not.toBeInTheDocument()
+    })
+    // 呼び出し側がoptionsを新しい配列参照（内容は同一）で渡して再レンダーしても、
+    // 絞り込み結果はリセットされない（インライン配列を渡すような呼び出し方を想定）
+    rerender(<Combobox label="Framework" options={[...options]} />)
+    expect(screen.getByRole('option', { name: 'Vue' })).toBeInTheDocument()
+    expect(screen.queryByRole('option', { name: 'React' })).not.toBeInTheDocument()
+  })
+
   it('calls onValueChange with the selected value when an option is clicked', async () => {
     const handleValueChange = vi.fn()
     render(<Combobox label="Framework" options={options} onValueChange={handleValueChange} />)

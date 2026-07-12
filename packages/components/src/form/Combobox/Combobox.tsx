@@ -1,7 +1,7 @@
 import { Combobox as ArkCombobox, useListCollection } from '@ark-ui/react/combobox'
 import { Portal } from '@ark-ui/react/portal'
 import type { Ref } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { combobox } from '../../../styled-system/recipes'
 
@@ -92,11 +92,28 @@ export const Combobox = ({
     filter: (itemText, filterText) => itemText.toLowerCase().includes(filterText.toLowerCase()),
   })
 
-  // optionsが差し替えられた場合（例: 非同期取得後の更新）に、
+  // 直近のoptionsをrefで保持する。set()側のuseEffectの依存はコンテンツキー
+  // （optionsKey）のみにし、optionsの「参照」が変わっただけでは発火させない。
+  // refの更新自体はレンダー中に行わずuseEffectで行う（react-hooks/refs対応）
+  const optionsRef = useRef(options)
+  useEffect(() => {
+    optionsRef.current = options
+  })
+
+  // optionsの中身（value/label/disabledの並び）を表す安定キー。呼び出し側がインライン配列
+  // 等でoptionsを参照不安定に渡しても、内容が同じならこのキーは変わらず後続のset()を
+  // 呼ばない。set()は絞り込み中のフィルタ文字列をリセットしてしまう
+  // （useListCollectionのsetがフィルタ状態を消去するため）ので、参照が変わっただけで
+  // 発火すると絞り込み中の表示とinputValueの状態が食い違ってしまう
+  const optionsKey = options
+    .map((option) => `${option.value}:${option.label}:${option.disabled ?? ''}`)
+    .join('|')
+
+  // optionsが実際に差し替えられた場合（例: 非同期取得後の更新）に、
   // useListCollectionが初回マウント時のinitialItemsしか保持しないため手動で反映する
   useEffect(() => {
-    set(options)
-  }, [options, set])
+    set(optionsRef.current)
+  }, [optionsKey, set])
 
   return (
     <ArkCombobox.Root
