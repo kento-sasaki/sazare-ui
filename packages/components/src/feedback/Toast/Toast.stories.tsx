@@ -4,7 +4,7 @@ import { Button } from '../../form/Button/Button'
 
 import { createToaster, Toaster } from './Toast'
 
-const toaster = createToaster({ placement: 'bottom-end' })
+const toaster = createToaster({ placement: 'top', duration: 5000 })
 
 const meta = {
   component: Toaster,
