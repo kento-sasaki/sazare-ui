@@ -9,6 +9,7 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
@@ -57,6 +58,7 @@ export default defineConfig({
         textarea: textareaRecipe,
         textInput: textInputRecipe,
         spinner: spinnerRecipe,
+        badge: badgeRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },

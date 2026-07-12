@@ -30,6 +30,13 @@ export const colors = {
   // 汎用性を保つ）。text/bgのペアを持つためネスト構造にし、toneの型はkeyof typeof colors.feedbackで
   // 機械的に導出できるようにする（ADR 0011）。errorTextはborder.dangerと同じ色相（Tailwind red-600）を流用
   feedback: {
+    // Badge/StatusLabelの既定tone。装飾色を持たないグレースケールだが、
+    // ADR 0011（トークンpropsはkeyof typeofで機械導出し任意値を混ぜない）に合わせて
+    // 他のtoneと同じネスト形状でここに定義する（text.secondaryに近いグレー系を採用）
+    neutral: {
+      text: { value: '#374151' },
+      bg: { value: '#F3F4F6' },
+    },
     success: {
       text: { value: '#15803D' },
       bg: { value: '#F0FDF4' },
