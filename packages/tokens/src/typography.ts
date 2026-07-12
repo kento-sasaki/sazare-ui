@@ -12,6 +12,9 @@ export const fonts = {
 }
 
 export const fontSizes = {
+  // Badge/Toast等の小さいラベル・通知テキスト用。Heading/Text用のsm以上のスケールでは
+  // 大きすぎるため、feedbackカテゴリ実装（Issue #42〜#46）で新規追加した
+  xs: { value: '0.75rem' },
   sm: { value: '1.125rem' },
   md: { value: '1.25rem' },
   lg: { value: '1.5rem' },
@@ -22,11 +25,16 @@ export const fontSizes = {
 
 export const fontWeights = {
   normal: { value: '400' },
+  // Badge等、boldほど強調せず本文よりは強めにしたいラベルテキスト用。
+  // feedbackカテゴリ実装（Issue #42〜#46）で新規追加した
+  medium: { value: '500' },
   semibold: { value: '600' },
   bold: { value: '700' },
 }
 
 export const lineHeights = {
+  // Badge等、単一行のラベルで行間を詰めたい場合用。feedbackカテゴリ実装で新規追加した
+  none: { value: '1' },
   tight: { value: '1.25' },
   normal: { value: '1.5' },
 }

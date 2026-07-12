@@ -11,6 +11,10 @@ export const bannerRecipe = defineSlotRecipe({
       gap: 'sm',
       borderRadius: 'md',
       padding: 'md',
+      // toneごとの塗りつぶし背景だけだと単調になるため、左にアクセントボーダーを添えて
+      // ステータスの強弱を視覚的に区別しやすくする（GitHub Primer Flash等で一般的なパターン）
+      borderLeftWidth: '4px',
+      borderLeftStyle: 'solid',
     },
     content: {
       flex: '1',
@@ -19,12 +23,12 @@ export const bannerRecipe = defineSlotRecipe({
       gap: 'xs',
     },
     title: {
-      fontSize: 'sm',
-      fontWeight: 'bold',
+      fontSize: 'xs',
+      fontWeight: 'semibold',
       margin: 0,
     },
     body: {
-      fontSize: 'sm',
+      fontSize: 'xs',
     },
     closeTrigger: {
       flexShrink: 0,
@@ -32,11 +36,41 @@ export const bannerRecipe = defineSlotRecipe({
   },
   variants: {
     tone: {
-      neutral: { root: { bg: 'feedback.neutral.bg', color: 'feedback.neutral.text' } },
-      success: { root: { bg: 'feedback.success.bg', color: 'feedback.success.text' } },
-      warning: { root: { bg: 'feedback.warning.bg', color: 'feedback.warning.text' } },
-      error: { root: { bg: 'feedback.error.bg', color: 'feedback.error.text' } },
-      info: { root: { bg: 'feedback.info.bg', color: 'feedback.info.text' } },
+      neutral: {
+        root: {
+          bg: 'feedback.neutral.bg',
+          color: 'feedback.neutral.text',
+          borderLeftColor: 'feedback.neutral.text',
+        },
+      },
+      success: {
+        root: {
+          bg: 'feedback.success.bg',
+          color: 'feedback.success.text',
+          borderLeftColor: 'feedback.success.text',
+        },
+      },
+      warning: {
+        root: {
+          bg: 'feedback.warning.bg',
+          color: 'feedback.warning.text',
+          borderLeftColor: 'feedback.warning.text',
+        },
+      },
+      error: {
+        root: {
+          bg: 'feedback.error.bg',
+          color: 'feedback.error.text',
+          borderLeftColor: 'feedback.error.text',
+        },
+      },
+      info: {
+        root: {
+          bg: 'feedback.info.bg',
+          color: 'feedback.info.text',
+          borderLeftColor: 'feedback.info.text',
+        },
+      },
     },
   },
   defaultVariants: {

@@ -11,6 +11,10 @@ export const headingRecipe = defineRecipe({
   },
   variants: {
     size: {
+      // feedbackカテゴリ実装（Issue #42〜#46）でfontSizesにxsを追加した際、
+      // HeadingSize = keyof typeof fontSizes（ADR 0011）に自動的に含まれるため、
+      // ここにも対応するvariantを追加する（追加しないとTypeScriptの型と食い違う）
+      xs: { fontSize: 'xs' },
       sm: { fontSize: 'sm' },
       md: { fontSize: 'md' },
       lg: { fontSize: 'lg' },

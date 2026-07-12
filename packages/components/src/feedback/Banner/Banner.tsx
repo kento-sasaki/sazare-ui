@@ -16,14 +16,16 @@ export interface BannerProps {
   onClose?: () => void
 }
 
-// widthとheightを明示しないとSVGの既定サイズのままflexアイテムを押し広げるため、
-// IconButtonのControl幅（Checkbox.tsxのCheckIconと同じ理由）に合わせて明示する
+// IconButton自体はwidth/heightを固定せずicon要素のサイズに追従する設計（IconButton.recipe.ts参照）
+// のため、widthとheightは絶対px指定にする（IconButton.stories.tsxのPlusIconと同じパターン。
+// 100%指定だとbutton自体にサイズが無く解決できず、SVGが既定サイズにフォールバックして
+// 巨大に表示されるバグを踏んだ）
 const CloseIcon = () => (
   <svg
     aria-hidden="true"
     focusable="false"
-    width="100%"
-    height="100%"
+    width="16"
+    height="16"
     viewBox="0 0 16 16"
     fill="none"
     stroke="currentColor"
