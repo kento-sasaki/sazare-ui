@@ -21,4 +21,6 @@ export const spinnerRecipe = defineRecipe({
   defaultVariants: {
     size: 'md',
   },
+  // sizeは実行時propsから解決されるため静的解析では生成されない。全variantを強制生成する
+  staticCss: ['*'],
 })
