@@ -25,4 +25,26 @@ export const colors = {
     // 業界で広く使われる汎用的な赤系（Tailwind red-600相当）を新規選定した
     danger: { value: '#DC2626' },
   },
+  // Banner/Badge/StatusLabel/Toast（feedbackカテゴリ）のtone variant用の装飾色。
+  // ADR 0013と同じ調達方針（値は業界で広く使われる汎用色を新規選定し、命名・構造はsazare-ui固有の
+  // 汎用性を保つ）。text/bgのペアを持つためネスト構造にし、toneの型はkeyof typeof colors.feedbackで
+  // 機械的に導出できるようにする（ADR 0011）。errorTextはborder.dangerと同じ色相（Tailwind red-600）を流用
+  feedback: {
+    success: {
+      text: { value: '#15803D' },
+      bg: { value: '#F0FDF4' },
+    },
+    warning: {
+      text: { value: '#B45309' },
+      bg: { value: '#FFFBEB' },
+    },
+    error: {
+      text: { value: '#DC2626' },
+      bg: { value: '#FEF2F2' },
+    },
+    info: {
+      text: { value: '#1D4ED8' },
+      bg: { value: '#EFF6FF' },
+    },
+  },
 }

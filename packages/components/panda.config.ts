@@ -9,6 +9,7 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
@@ -44,11 +45,18 @@ export default defineConfig({
         spacing,
         radii,
       },
+      keyframes: {
+        spin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+      },
       recipes: {
         button: buttonRecipe,
         iconButton: iconButtonRecipe,
         textarea: textareaRecipe,
         textInput: textInputRecipe,
+        spinner: spinnerRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },
