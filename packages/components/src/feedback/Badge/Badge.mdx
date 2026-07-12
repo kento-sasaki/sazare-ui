@@ -1,0 +1,45 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as BadgeStories from './Badge.stories'
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+自由なテキスト + tone variantで状態やカテゴリを表す汎用ラベル。Ark UIには対応するプリミティブが存在しないため、素のHTML（`span`）+ Panda CSSのrecipeで実装している。
+
+<Canvas of={BadgeStories.Neutral} />
+
+<Controls />
+
+## StatusLabelとの統合について
+
+当初Badge（Issue #45）とStatusLabel（Issue #46）は別コンポーネントとして実装する計画だったが、両者は用途が重なり（状態・カテゴリを示す小さいラベルという点で本質的に同じ）、tone variant + 自由なchildrenという同一API形状に集約できると判断し、StatusLabelは実装せず本コンポーネントに統合した。ステータス表示（対応中・対応済み等）にもBadgeをそのまま使う。
+
+## tone（色調）
+
+- `tone`: `'neutral' | 'success' | 'warning' | 'error' | 'info'`。デフォルトは`'neutral'`
+- デザイントークン（`@sazare-ui/tokens`の`colors.feedback`）から`keyof typeof`で機械導出しており（ADR 0011）、任意の色文字列は指定できない
+
+<Canvas of={BadgeStories.Success} />
+<Canvas of={BadgeStories.Warning} />
+<Canvas of={BadgeStories.ErrorTone} />
+<Canvas of={BadgeStories.Info} />
+
+## children（表示テキスト）
+
+- `children`: `ReactNode`。必須。自由なテキストを表示する
+
+## className / style は受け付けない
+
+Badgeは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は`tone`のみで行う。
+
+## Do's / Don'ts
+
+- 状態（対応中/完了等）・カテゴリ・カウント等、短いテキストをラベルとして目立たせたい場合はBadgeを使う
+- クリック可能な操作要素が必要な場合はBadgeではなく[Button](../../form/Button/Button.mdx)や[IconButton](../../form/IconButton/IconButton.mdx)を使う（Badgeはインタラクティブ要素ではない）
+
+## アクセシビリティ
+
+- 見た目上の色分けのみに依存せず、`children`のテキスト自体で状態が分かるようにする（tone色だけで意味を伝えない）
+- 背景色（`feedback.*.bg`）は元々Banner/Toastのような広い面積向けに選定した淡い色のため、Badgeでは同色系のborderで縁取り、淡い背景でも輪郭が視認できるようにしている
