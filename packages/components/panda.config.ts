@@ -30,6 +30,7 @@ import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { dialogRecipe } from './src/overlay/Dialog/Dialog.recipe'
 import { drawerRecipe } from './src/overlay/Drawer/Drawer.recipe'
+import { dropdownMenuRecipe } from './src/overlay/DropdownMenu/DropdownMenu.recipe'
 import { tooltipRecipe } from './src/overlay/Tooltip/Tooltip.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
@@ -91,6 +92,7 @@ export default defineConfig({
         toast: toastRecipe,
         dialog: dialogRecipe,
         drawer: drawerRecipe,
+        dropdownMenu: dropdownMenuRecipe,
         tooltip: tooltipRecipe,
       },
     },
