@@ -28,7 +28,7 @@ export const colors = {
   // Banner/Badge/StatusLabel/Toast（feedbackカテゴリ）のtone variant用の装飾色。
   // ADR 0013と同じ調達方針（値は業界で広く使われる汎用色を新規選定し、命名・構造はsazare-ui固有の
   // 汎用性を保つ）。text/bgのペアを持つためネスト構造にし、toneの型はkeyof typeof colors.feedbackで
-  // 機械的に導出できるようにする（ADR 0011）。errorTextはborder.dangerと同じ色相（Tailwind red-600）を流用
+  // 機械的に導出できるようにする（ADR 0011）。各toneのtext/bgペアはWCAG AA（4.5:1）を満たす組み合わせを選定した
   feedback: {
     // Badge/StatusLabelの既定tone。装飾色を持たないグレースケールだが、
     // ADR 0011（トークンpropsはkeyof typeofで機械導出し任意値を混ぜない）に合わせて
@@ -46,7 +46,9 @@ export const colors = {
       bg: { value: '#FFFBEB' },
     },
     error: {
-      text: { value: '#DC2626' },
+      // border.dangerと同系統だが、bg（#FEF2F2）とのコントラスト比がWCAG AA未達（4.41:1）だったため、
+      // より濃いTailwind red-700相当（#B91C1C）に調整した（axe-coreのcolor-contrastで検証済み）
+      text: { value: '#B91C1C' },
       bg: { value: '#FEF2F2' },
     },
     info: {
