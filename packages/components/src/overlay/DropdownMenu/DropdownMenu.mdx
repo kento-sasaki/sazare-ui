@@ -1,0 +1,57 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as DropdownMenuStories from './DropdownMenu.stories'
+
+<Meta of={DropdownMenuStories} />
+
+# DropdownMenu
+
+trigger要素のクリックでアクションの一覧を表示するコンポーネント。`@ark-ui/react/menu`をラップしている。
+
+Dialog/Drawer/Tooltipと同じく「単一コンポーネントへの完全ラップ・childrenなし」の原則の意図的例外として、`trigger`（トリガーボタンの中身）を公開する。ただし本文（メニュー項目）はDialog等のような自由なchildrenではなく、Selectの`options`と同型の`items`配列（closed API）で表現する。v0.1はフラットなアクションリストのみをスコープとし、checkbox item・radio item group・submenu・separatorには対応しない。
+
+<Canvas of={DropdownMenuStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { DropdownMenu } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <DropdownMenu
+      trigger="操作"
+      items={[
+        { label: '編集', value: 'edit', onSelect: () => {} },
+        { label: '削除', value: 'delete', onSelect: () => {} },
+      ]}
+    />
+  )
+}
+```
+
+## props
+
+- `trigger`: `ReactNode`。必須。トリガーボタンの中身
+- `items`: `{ label: string; value: string; onSelect?: () => void; disabled?: boolean }[]`。必須。メニュー項目の配列
+
+## trigger は「ボタンの中身」
+
+`trigger`はArk UIのMenu.Trigger（常に`<button>`として描画される）の中身として渡される。`Button`のような既に`<button>`を描画するコンポーネントを渡すとネストしてしまうため、文字列やアイコンなど、ボタンの中身として自然な要素を渡すこと。
+
+## className / style は受け付けない
+
+`DropdownMenu`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## Do's / Don'ts
+
+- 「⋯」ボタン等からの操作一覧（編集・複製・削除等）にはDropdownMenuを使う
+- 選択肢から1つを選ぶフォーム入力には[Select](../../form/Select/Select.mdx)を使う
+- 複数選択・単一選択の状態を持つメニュー項目が必要な場合は現時点でスコープ外（v0.1はフラットなアクションリストのみ）
+
+## アクセシビリティ
+
+- `role="menu"`/`role="menuitem"`、キーボード操作（矢印キーでの移動、Enter/Spaceでの選択、Escapeでの閉じる）はArk UI標準の挙動
+- `disabled`な項目は`aria-disabled`が付与され、選択・ハイライトの対象から除外される

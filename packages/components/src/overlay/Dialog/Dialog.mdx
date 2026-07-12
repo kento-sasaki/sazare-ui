@@ -1,0 +1,63 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as DialogStories from './Dialog.stories'
+
+<Meta of={DialogStories} />
+
+# Dialog
+
+画面中央にオーバーレイ表示し、ユーザーの操作を要求するモーダルコンポーネント。`@ark-ui/react/dialog`をラップしている。
+
+Dialogは本文が自由形式のJSXになるため、Checkbox/Select等で確立した「単一コンポーネントへの完全ラップ・childrenなし」の原則をそのまま適用できない。FormControl・Toastに続く3件目の意図的例外として、`trigger`（トリガーボタンの中身）と`children`（本文）のみ穴を開けている。
+
+<Canvas of={DialogStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Dialog } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Dialog trigger="開く" title="設定">
+      ダイアログの本文コンテンツ
+    </Dialog>
+  )
+}
+```
+
+## props
+
+- `trigger`: `ReactNode`。任意。指定するとDialog自身がトリガーボタンを描画する。省略した場合は`open`/`onOpenChange`で外部から開閉を制御する
+- `title`: `string`。必須。ダイアログの見出し。`aria-labelledby`で常に参照されるため必須にしている（Selectの`label`必須化と同じ理由）
+- `description`: `string`。任意。補足説明。指定すると`aria-describedby`で参照される
+- `children`: `ReactNode`。必須。ダイアログの本文
+- `open` / `defaultOpen` / `onOpenChange`: 制御/非制御コンポーネントとしての開閉状態管理
+
+## trigger は「ボタンの中身」
+
+`trigger`はArk UIのDialog.Trigger（常に`<button>`として描画される）の中身として渡される。そのため`trigger`に`Button`のような既に`<button>`を描画するコンポーネントを渡すと、`<button>`が二重にネストされてしまう。文字列やアイコンなど、ボタンの中身として自然な要素を渡すこと。
+
+## className / style は受け付けない
+
+`Dialog`は`className`・`style`propを受け付けない（ADR 0012）。本文（`children`）を除く見た目はコンポーネント内部に隠蔽されている。
+
+## Do's / Don'ts
+
+- ユーザーに操作の完了・確認を求める、画面中央でのモーダル表示にはDialogを使う
+- 画面端からのスライド表示が必要な場合はDialogではなく[Drawer](../Drawer/Drawer.mdx)を使う
+- 短いテキストのみをホバー/フォーカスで補足したい場合はDialogではなく[Tooltip](../Tooltip/Tooltip.mdx)を使う
+
+## アクセシビリティ
+
+- フォーカストラップ・Escapeキーでの閉じる操作・フォーカス復帰はすべてArk UI標準の挙動
+- `role="dialog"`、`aria-labelledby`（`title`）、`aria-describedby`（`description`）はArk UIが自動的に配線する
+- 閉じるボタンのアクセシブルネームは固定で「閉じる」
+
+### 既知の問題: axe-coreの`aria-hidden-focus`
+
+Dialogが開いている間、Ark UIは背景コンテンツを`aria-hidden="true"`にする（`dismissable-layer`）が、背景のtrigger要素は`pointer-events: none`になる一方で`tabIndex`は`0`のままになり、キーボードのTabで到達できてしまう。axe-core（wcag2a/wcag2aa）でこれが`aria-hidden-focus`（serious）として検出される。
+
+DrawerもDialogと同一のArk UI機構を使っているが、この事象はDrawerでは再現しない（DOM状態を比較したが差異を特定できておらず、Ark UI内部実装に起因すると推測している）。v0.1はdraftタグ付きで段階的に調整する方針（要件16番）のため、既知の問題として記録し、原因特定・対応は後続で行う。

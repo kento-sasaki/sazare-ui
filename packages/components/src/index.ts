@@ -86,3 +86,15 @@ export type {
   ToasterProps,
   ToastOptions,
 } from './feedback/Toast/Toast'
+
+export { Dialog } from './overlay/Dialog/Dialog'
+export type { DialogProps } from './overlay/Dialog/Dialog'
+
+export { Drawer } from './overlay/Drawer/Drawer'
+export type { DrawerPlacement, DrawerProps } from './overlay/Drawer/Drawer'
+
+export { Tooltip } from './overlay/Tooltip/Tooltip'
+export type { TooltipProps } from './overlay/Tooltip/Tooltip'
+
+export { DropdownMenu } from './overlay/DropdownMenu/DropdownMenu'
+export type { DropdownMenuItem, DropdownMenuProps } from './overlay/DropdownMenu/DropdownMenu'

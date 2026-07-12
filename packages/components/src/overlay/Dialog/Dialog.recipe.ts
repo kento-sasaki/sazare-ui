@@ -1,0 +1,85 @@
+import { defineSlotRecipe } from '@pandacss/dev'
+
+export const dialogRecipe = defineSlotRecipe({
+  className: 'dialog',
+  description: 'The styles for the Dialog component',
+  // Ark UIのDialog.Rootはコンテキストプロバイダのみでark.divを描画しないため、
+  // Select.recipe.tsとは異なりrootスロットは持たない
+  slots: ['trigger', 'backdrop', 'positioner', 'content', 'title', 'description', 'closeTrigger'],
+  base: {
+    trigger: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 'sm',
+      borderRadius: 'md',
+      border: '1px solid',
+      borderColor: 'border.default',
+      bg: 'text.white',
+      paddingInline: 'md',
+      paddingBlock: 'sm',
+      fontSize: 'md',
+      color: 'text.default',
+      cursor: 'pointer',
+      _focusVisible: {
+        outline: 'none',
+        borderColor: 'action.solid',
+      },
+    },
+    backdrop: {
+      position: 'fixed',
+      inset: 0,
+      bg: 'rgba(0, 0, 0, 0.5)',
+    },
+    positioner: {
+      position: 'fixed',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 'md',
+      zIndex: 1,
+    },
+    content: {
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 'sm',
+      width: '100%',
+      maxWidth: '28rem',
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      borderRadius: 'md',
+      bg: 'text.white',
+      padding: 'lg',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    },
+    title: {
+      fontSize: 'lg',
+      fontWeight: 'bold',
+      color: 'text.default',
+      margin: 0,
+    },
+    description: {
+      fontSize: 'md',
+      color: 'text.secondary',
+      margin: 0,
+    },
+    closeTrigger: {
+      position: 'absolute',
+      top: 'sm',
+      right: 'sm',
+      flexShrink: 0,
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      // WCAG 2.5.8 (Target Size Minimum, AA) の24px基準を満たすため{spacing.lg}(1.5rem=24px)にする
+      width: '{spacing.lg}',
+      height: '{spacing.lg}',
+      border: 'none',
+      bg: 'transparent',
+      cursor: 'pointer',
+      color: 'text.secondary',
+    },
+  },
+})
