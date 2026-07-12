@@ -13,6 +13,7 @@ import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
 import { statusLabelRecipe } from './src/feedback/StatusLabel/StatusLabel.recipe'
+import { toastRecipe } from './src/feedback/Toast/Toast.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
@@ -76,6 +77,7 @@ export default defineConfig({
         // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
         switchField: switchRecipe,
         banner: bannerRecipe,
+        toast: toastRecipe,
       },
     },
   },
