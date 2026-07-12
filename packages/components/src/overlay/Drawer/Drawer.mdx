@@ -1,0 +1,65 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as DrawerStories from './Drawer.stories'
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+画面の端からスライドして表示するオーバーレイコンポーネント。`@ark-ui/react/drawer`をラップしている。構造・公開APIの考え方はDialogとほぼ同じで、`placement`のみDrawer固有。
+
+DialogやFormControl・Toastと同じく「単一コンポーネントへの完全ラップ・childrenなし」の原則の意図的例外として、`trigger`（トリガーボタンの中身）と`children`（本文）を公開する。
+
+<Canvas of={DrawerStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Drawer } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Drawer trigger="開く" title="設定" placement="end">
+      ドロワーの本文コンテンツ
+    </Drawer>
+  )
+}
+```
+
+## props
+
+- `trigger`: `ReactNode`。任意。指定するとDrawer自身がトリガーボタンを描画する。省略した場合は`open`/`onOpenChange`で外部から開閉を制御する
+- `title`: `string`。必須。ドロワーの見出し（`aria-labelledby`で参照される）
+- `description`: `string`。任意。補足説明（`aria-describedby`で参照される）
+- `children`: `ReactNode`。必須。ドロワーの本文
+- `placement`: `'up' | 'down' | 'start' | 'end'`。ドロワーが出現する辺。デフォルトは`'end'`（LTRでは右端）。Ark UIの論理方向をそのまま採用しており、`dir="rtl"`環境では`start`/`end`が自動的に左右反転する
+- `open` / `defaultOpen` / `onOpenChange`: 制御/非制御コンポーネントとしての開閉状態管理
+
+<Canvas of={DrawerStories.Start} />
+<Canvas of={DrawerStories.Up} />
+<Canvas of={DrawerStories.Down} />
+
+## v0.1のスコープ外
+
+タッチスワイプで閉じる操作（Grabber/SwipeArea）はv0.1のスコープ外。Escapeキー・背景クリック・閉じるボタンでの操作のみサポートする。
+
+## trigger は「ボタンの中身」
+
+`trigger`はArk UIのDrawer.Trigger（常に`<button>`として描画される）の中身として渡される。`Button`のような既に`<button>`を描画するコンポーネントを渡すとネストしてしまうため、文字列やアイコンなど、ボタンの中身として自然な要素を渡すこと。
+
+## className / style は受け付けない
+
+`Drawer`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## Do's / Don'ts
+
+- 画面端からのスライド表示（ナビゲーション・フィルタ・詳細パネル等）にはDrawerを使う
+- 画面中央でのモーダル表示が必要な場合はDrawerではなく[Dialog](../Dialog/Dialog.mdx)を使う
+
+## アクセシビリティ
+
+- フォーカストラップ・Escapeキーでの閉じる操作・フォーカス復帰はすべてArk UI標準の挙動
+- `role="dialog"`、`aria-labelledby`（`title`）、`aria-describedby`（`description`）はArk UIが自動的に配線する
+- 閉じるボタンのアクセシブルネームは固定で「閉じる」

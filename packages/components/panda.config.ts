@@ -29,6 +29,7 @@ import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { dialogRecipe } from './src/overlay/Dialog/Dialog.recipe'
+import { drawerRecipe } from './src/overlay/Drawer/Drawer.recipe'
 import { headingRecipe } from './src/typography/Heading/Heading.recipe'
 import { textRecipe } from './src/typography/Text/Text.recipe'
 
@@ -88,6 +89,7 @@ export default defineConfig({
         banner: bannerRecipe,
         toast: toastRecipe,
         dialog: dialogRecipe,
+        drawer: drawerRecipe,
       },
     },
   },
