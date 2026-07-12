@@ -3,6 +3,7 @@ import { createRef } from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { DatePicker } from '../DatePicker/DatePicker'
+import { FileUpload } from '../FileUpload/FileUpload'
 import { TextInput } from '../TextInput/TextInput'
 
 import { FormControl } from './FormControl'
@@ -137,5 +138,18 @@ describe('FormControl', () => {
     expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
     fireEvent.click(screen.getByRole('button', { name: 'Open calendar' }))
     await waitFor(() => expect(screen.getByRole('application')).toBeInTheDocument())
+  })
+
+  it('wires label/errorText/aria-invalid through to a FileUpload child', () => {
+    render(
+      <FormControl label="Attachments" errorText="Required" invalid>
+        <FileUpload />
+      </FormControl>,
+    )
+    const trigger = screen.getByRole('button', { name: 'Choose files' })
+    expect(trigger).toHaveAttribute('aria-invalid', 'true')
+    const describedbyId = trigger.getAttribute('aria-describedby')
+    expect(describedbyId).toBeTruthy()
+    expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
   })
 })

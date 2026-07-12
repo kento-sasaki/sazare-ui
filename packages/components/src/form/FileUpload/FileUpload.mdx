@@ -1,0 +1,58 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as FileUploadStories from './FileUpload.stories'
+
+<Meta of={FileUploadStories} />
+
+# FileUpload
+
+ファイルを選択・アップロードするためのコンポーネント。Ark UIの`FileUpload`（Root/Dropzone/Label/Trigger/ItemGroup/Item/ItemName/ItemSizeText/ItemDeleteTrigger/HiddenInput等の複合コンポーネント）を単一の`FileUpload`コンポーネントに完全ラップして実装している。v0.1スコープでは画像プレビューは対象外とし、Dropzone+Trigger+選択済みファイル一覧（ファイル名/サイズ/削除ボタン）のみを実装する。
+
+<Canvas of={FileUploadStories.Default} />
+
+<Controls />
+
+## label は持たない
+
+Select/RadioGroup/Comboboxと異なり、Ark UIの`FileUpload`は`aria-labelledby`でLabel要素IDを必須参照する構造を持たない。そのためFileUploadは`label`を持たず、フォームフィールド全体の組み立てはFormControl（Issue #38）が担当する（TextInput/Textarea/DatePickerと同じ設計）。
+
+## id の配線について（アクセシビリティ上の注意）
+
+FormControlから注入される`id`は、trigger（実`<button>`）ではなくroot要素（`ids={{ root: id }}`）に配線している。`<button>`はlabelable要素のため、もし`id`をtriggerに直接設定しFormControlの`<label htmlFor>`がそれを参照すると、triggerのaccessible nameが「Choose files」からlabelのテキストへ上書きされてしまう（label-for関連付けはbutton自身のaccessible nameを乗っ取るため）。`aria-describedby`/`aria-invalid`はaccessible nameに影響しないため、そのままtriggerに配線している。
+
+## maxFiles
+
+選択可能な最大ファイル数。既定値は1（単一ファイル）。
+
+<Canvas of={FileUploadStories.MultipleFiles} />
+
+## 値の制御（value / defaultValue / onValueChange）
+
+- 公開APIは`File[]`。Ark UI内部の`acceptedFiles`/`defaultAcceptedFiles`/`onFileChange`にマッピングしている
+- `onFileChange`が返す`rejectedFiles`（サイズ超過等）はv0.1のスコープ外として公開していない
+
+## disabled
+
+<Canvas of={FileUploadStories.Disabled} />
+
+## aria-invalid
+
+FormControlのcloneElement注入契約に合わせ、`invalid`ではなく生の`aria-invalid`属性を受け付ける（TextInput/Textarea/DatePickerと同じ設計）。内部でArk UI Rootの`invalid`propへ変換している。
+
+<Canvas of={FileUploadStories.Invalid} />
+
+## フォーム連携（name / form / required / ref）
+
+- `name` / `form`: 隠しネイティブ`<input type="file">`（`FileUpload.HiddenInput`）に転送され、フォーム送信時の値として使われる
+- `required`: 隠しネイティブ`<input type="file">`に転送される
+- `ref`: 隠しネイティブ`<input type="file">`（`HTMLInputElement`）へ転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style / children は受け付けない
+
+FileUploadは`className`・`style`・`children`propを受け付けない（ADR 0012、メモリ: Ark UI複合コンポーネントの単一ラップ方針）。
+
+## アクセシビリティ
+
+- Dropzoneは`disableClick`を指定し、キーボードのタブ移動先から外している（ドラッグ&ドロップの受け皿としてのみ機能する）。ファイル選択の唯一のキーボード到達点はtriggerボタン
+- triggerボタンのアクセシブルネームは「Choose files」固定（Ark UI標準の`translations.trigger`ではなく、triggerに直接テキストを渡している）
+- 削除ボタンのアクセシブルネームは「delete file {ファイル名}」（Ark UI標準）

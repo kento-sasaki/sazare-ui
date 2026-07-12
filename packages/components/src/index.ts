@@ -31,6 +31,9 @@ export type { CheckboxGroupOption, CheckboxGroupProps } from './form/CheckboxGro
 export { DatePicker } from './form/DatePicker/DatePicker'
 export type { DatePickerProps } from './form/DatePicker/DatePicker'
 
+export { FileUpload } from './form/FileUpload/FileUpload'
+export type { FileUploadProps } from './form/FileUpload/FileUpload'
+
 export { FormControl } from './form/FormControl/FormControl'
 export type { FormControlChildProps, FormControlProps } from './form/FormControl/FormControl'
 
