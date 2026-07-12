@@ -10,6 +10,7 @@ import {
 } from '@sazare-ui/tokens'
 
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
+import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
 import { statusLabelRecipe } from './src/feedback/StatusLabel/StatusLabel.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
@@ -74,6 +75,7 @@ export default defineConfig({
         // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える
         // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
         switchField: switchRecipe,
+        banner: bannerRecipe,
       },
     },
   },
