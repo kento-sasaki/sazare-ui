@@ -11,6 +11,7 @@ import {
 
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
+import { statusLabelRecipe } from './src/feedback/StatusLabel/StatusLabel.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
@@ -59,6 +60,7 @@ export default defineConfig({
         textInput: textInputRecipe,
         spinner: spinnerRecipe,
         badge: badgeRecipe,
+        statusLabel: statusLabelRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },
