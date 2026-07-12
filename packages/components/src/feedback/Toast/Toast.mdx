@@ -1,0 +1,72 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as ToastStories from './Toast.stories'
+
+<Meta of={ToastStories} />
+
+# Toast
+
+一時的な操作結果（保存完了・エラー等）を画面の隅に通知するコンポーネント。
+
+Ark UIのToastはグローバルな`Toaster`（`createToaster`が生成するstore）+ 個別の`Toast.Root/Title/Description/CloseTrigger`という2層構造で、Checkbox/Switch等で確立した「単一コンポーネントへの完全ラップ」の原則がそのまま当てはまらない。そのため`createToaster`はArk UIのものをそのままre-exportし（DOMを持たないファクトリ関数のためADR 0012の対象外）、`Toaster`コンポーネント側で個別トーストの見た目をラップしている（FormControlに続く「単一コンポーネント完全ラップ」の2例目の例外）。
+
+<Canvas of={ToastStories.Default} />
+
+<Controls />
+
+## 使い方
+
+1. アプリのどこか（モジュールスコープ等）で一度だけ`createToaster`を呼び、`toaster`インスタンスを作る
+2. `<Toaster toaster={toaster} />`をレイアウトのルート付近に1つだけ配置する
+3. 任意の場所から`toaster.create({ title, description, type })`を呼ぶとトーストが表示される
+
+```tsx
+import { createToaster, Toaster } from '@sazare-ui/components'
+
+const toaster = createToaster({ placement: 'top' })
+
+function App() {
+  return (
+    <>
+      <button onClick={() => toaster.create({ title: '保存しました', type: 'success' })}>
+        保存
+      </button>
+      <Toaster toaster={toaster} />
+    </>
+  )
+}
+```
+
+## type（色調）とtoneの対応
+
+`toaster.create({ type })`の`type`（Ark UI由来で`'success' | 'error' | 'loading' | 'info' | 'warning'`や任意の文字列を許容する）を、内部でBadge等と同じtone（`neutral | success | warning | error | info`）にマッピングして着色する。`success`/`warning`/`error`/`info`はそのまま対応するtoneになり、`loading`や未知の文字列は`neutral`にフォールバックする。
+
+<Canvas of={ToastStories.WithDescription} />
+
+## title / description（表示内容）
+
+- `title`: `string`。任意。太字で表示される見出し
+- `description`: `string`。任意。本文
+
+## 複数トーストの表示と重なりの解消
+
+Ark UIの`Toast.Root`は`position: absolute`と`--x`/`--y`/`--opacity`/`--z-index`等のCSS変数をインラインstyleとして自動的に付与する。これらのCSS変数を実際のCSSプロパティ（`translate`/`opacity`/`zIndex`）にマッピングしないと、全トーストが同一座標に重なって表示されてしまう。`Toast.recipe.ts`の`root`スロットで`translate: 'var(--x) var(--y)'`等を割り当てることで、複数トーストが縦に正しくスタックされる。
+
+## アニメーション
+
+同じCSS変数（`--x`/`--y`/`--opacity`）に`transitionProperty`/`transitionDuration`を設定することで、マウント時・dismiss時にフェード + スライドのアニメーションがかかる。追加のJSアニメーション実装は不要で、Ark UIが状態遷移に応じてCSS変数の値を切り替えるだけで完結する。
+
+## className / style / children は受け付けない
+
+`Toaster`は`toaster`のみを受け付ける。個別トーストの見た目（Root/Title/Description/CloseTrigger）はコンポーネント内部に隠蔽されており、利用側からは調整できない（ADR 0012）。
+
+## Do's / Don'ts
+
+- 一時的な操作結果の通知で、自動的に消えてよい場合はToastを使う
+- ページ内の特定領域に対する継続的な通知・エラー表示にはToastではなく[Banner](../Banner/Banner.mdx)を使う
+- `<Toaster />`はアプリ内で1つだけ配置する。複数配置すると同じトーストが重複して表示される
+
+## アクセシビリティ
+
+- 各トーストの`Toast.Root`は`role="status"`として振る舞う（Ark UI標準）
+- 閉じるボタンのアクセシブルネームは固定で「閉じる」

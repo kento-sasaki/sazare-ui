@@ -1,0 +1,41 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as SpinnerStories from './Spinner.stories'
+
+<Meta of={SpinnerStories} />
+
+# Spinner
+
+処理中であることを示すローディングインジケーター。Ark UIには対応するプリミティブが存在しないため、セマンティックなHTML（`role="status"` + `aria-label`）とPanda CSSの`keyframes`による回転アニメーションのみで実装している。
+
+<Canvas of={SpinnerStories.Default} />
+
+<Controls />
+
+## size（大きさ）
+
+- `size`: `'sm' | 'md' | 'lg'`。デフォルトは`'md'`
+
+<Canvas of={SpinnerStories.Small} />
+<Canvas of={SpinnerStories.Large} />
+
+## label（アクセシブルネーム）
+
+- `label`: `string`。デフォルトは`「読み込み中」`
+- 視覚的なラベルテキストは表示しない。スクリーンリーダー向けのアクセシブルネームとしてのみ使う
+
+<Canvas of={SpinnerStories.CustomLabel} />
+
+## className / style / children は受け付けない
+
+Spinnerは`className`・`style`・`children`propを受け付けない（ADR 0012）。見た目の調整は`size`のみで行う。
+
+## Do's / Don'ts
+
+- ボタン内やページ内の一部領域が読み込み中であることを示したい場合はSpinnerを使う
+- 読み込み中であることをテキストでも明示したい場合は、Spinnerの`label`ではなく別途`Text`コンポーネント等で視覚的なテキストを併置する（`label`は視覚的には表示されない）
+
+## アクセシビリティ
+
+- `role="status"`はARIA仕様上`nameFrom`が`author`のみで、子要素のテキストコンテンツからはアクセシブルネームが自動計算されない。そのため`label`を`aria-label`として直接付与している
+- `role="status"`はライブリージョンとして扱われ、スクリーンリーダーに状態変化が通知される

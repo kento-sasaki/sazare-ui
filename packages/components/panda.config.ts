@@ -9,6 +9,10 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
+import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
+import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
+import { toastRecipe } from './src/feedback/Toast/Toast.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
@@ -49,11 +53,19 @@ export default defineConfig({
         spacing,
         radii,
       },
+      keyframes: {
+        spin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+      },
       recipes: {
         button: buttonRecipe,
         iconButton: iconButtonRecipe,
         textarea: textareaRecipe,
         textInput: textInputRecipe,
+        spinner: spinnerRecipe,
+        badge: badgeRecipe,
         heading: headingRecipe,
         text: textRecipe,
       },
@@ -72,6 +84,8 @@ export default defineConfig({
         // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える
         // （CSSクラス名は Switch.recipe.ts 側の className: 'switch' のままでよい）
         switchField: switchRecipe,
+        banner: bannerRecipe,
+        toast: toastRecipe,
       },
     },
   },

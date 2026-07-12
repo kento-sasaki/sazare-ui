@@ -1,0 +1,54 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as BannerStories from './Banner.stories'
+
+<Meta of={BannerStories} />
+
+# Banner
+
+タイトル + 本文 + tone variantでページ内の通知やエラー表示を行うコンポーネント。ErrorScreen相当のエラー表示も別コンポーネントに分けず、`tone="error"`として表現する。Ark UIには対応するプリミティブが存在しないため、素のHTML + Panda CSSのrecipeで実装している。
+
+<Canvas of={BannerStories.Neutral} />
+
+<Controls />
+
+## tone（色調）
+
+- `tone`: `'neutral' | 'success' | 'warning' | 'error' | 'info'`。デフォルトは`'neutral'`
+- デザイントークン（`@sazare-ui/tokens`の`colors.feedback`）から`keyof typeof`で機械導出しており（ADR 0011）、任意の色文字列は指定できない
+- 塗りつぶし背景だけだと単調になるため、左にtone色のアクセントボーダーを添えている
+
+<Canvas of={BannerStories.Success} />
+<Canvas of={BannerStories.Warning} />
+
+## ErrorScreen相当の使い方
+
+Issue #44の「ErrorScreen相当のエラー表示」は、`tone="error"`かつ`onClose`を指定しない（閉じられない）Bannerとして表現する。
+
+<Canvas of={BannerStories.ErrorScreen} />
+
+## title / children（本文）
+
+- `title`: `string`。任意。指定すると太字の見出しとして表示される
+- `children`: `ReactNode`。必須。本文
+
+## onClose（閉じるボタン）
+
+- `onClose`: `() => void`。指定した場合のみ、右上に閉じるボタン（[IconButton](../../form/IconButton/IconButton.mdx)）が表示される
+- 指定しない場合は閉じるボタンが表示されない。常時表示したいエラー通知等では`onClose`を渡さない
+
+<Canvas of={BannerStories.Closable} />
+
+## className / style は受け付けない
+
+Bannerは`className`・`style`propを受け付けない（ADR 0012）。見た目の調整は`tone`のみで行う。
+
+## Do's / Don'ts
+
+- ページ内の特定領域に対する通知・エラー・警告を表示したい場合はBannerを使う
+- 一時的な操作結果の通知（保存完了等）で、自動的に消える必要がある場合はBannerではなく[Toast](../Toast/Toast.mdx)を使う
+
+## アクセシビリティ
+
+- 閉じるボタンのアクセシブルネームは固定で「閉じる」
+- tone色だけに依存せず、`title`/`children`のテキスト自体で状況が伝わるようにする

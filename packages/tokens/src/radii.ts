@@ -5,4 +5,6 @@
 export const radii = {
   sm: { value: '4px' },
   md: { value: '6px' },
+  // 完全な円形にするためのトークン。Spinnerで使用
+  full: { value: '9999px' },
 }
