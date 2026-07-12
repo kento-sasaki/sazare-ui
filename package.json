@@ -16,6 +16,7 @@
     "test": "vitest run --passWithNoTests",
     "build": "pnpm -r run build",
     "storybook": "storybook dev -p 6006",
+    "storybook:restart": "lsof -ti:6006 | xargs kill -9 2>/dev/null; storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky"
   },
