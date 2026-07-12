@@ -17,9 +17,14 @@ import { toastRecipe } from './src/feedback/Toast/Toast.recipe'
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
+import { comboboxRecipe } from './src/form/Combobox/Combobox.recipe'
+import { datePickerRecipe } from './src/form/DatePicker/DatePicker.recipe'
+import { fileUploadRecipe } from './src/form/FileUpload/FileUpload.recipe'
+import { formControlRecipe } from './src/form/FormControl/FormControl.recipe'
 import { iconButtonRecipe } from './src/form/IconButton/IconButton.recipe'
 import { radioButtonRecipe } from './src/form/RadioButton/RadioButton.recipe'
 import { radioGroupRecipe } from './src/form/RadioGroup/RadioGroup.recipe'
+import { segmentedControlRecipe } from './src/form/SegmentedControl/SegmentedControl.recipe'
 import { selectRecipe } from './src/form/Select/Select.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
@@ -69,8 +74,13 @@ export default defineConfig({
       slotRecipes: {
         checkbox: checkboxRecipe,
         checkboxGroup: checkboxGroupRecipe,
+        combobox: comboboxRecipe,
+        datePicker: datePickerRecipe,
+        fileUpload: fileUploadRecipe,
+        formControl: formControlRecipe,
         radioButton: radioButtonRecipe,
         radioGroup: radioGroupRecipe,
+        segmentedControl: segmentedControlRecipe,
         select: selectRecipe,
         // "switch"はJavaScriptの予約語のため、生成される styled-system/recipes/switch.ts の
         // named export（変数宣言）が構文エラーになる。recipeのキー名のみswitchFieldに変える

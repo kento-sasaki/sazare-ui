@@ -1,0 +1,51 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as ComboboxStories from './Combobox.stories'
+
+<Meta of={ComboboxStories} />
+
+# Combobox
+
+ユーザーが選択肢の一覧をテキストでフィルタリングしながら1つ選ぶためのコンポーネント。Ark UIの`Combobox`（Root/Label/Control/Input/Trigger/Positioner/Content/Item等の複合コンポーネント）を単一の`Combobox`コンポーネントに完全ラップして実装している。ドロップダウンは`Portal`経由で`document.body`に描画される。
+
+<Canvas of={ComboboxStories.Default} />
+
+<Controls />
+
+## label（必須）
+
+Ark UIの`Combobox.Root`は常に`aria-labelledby`でLabel要素のIDを参照するため、`label`は必須propsにしている（Selectと同じ理由）。
+
+## options とフィルタリング
+
+`{ label, value, disabled? }`の配列。入力欄への文字入力に応じて`useListCollection`のフィルタ機能（大文字小文字を無視した部分一致）で候補を絞り込む。`options`propが差し替えられた場合も反映される。
+
+## freeSolo は不許容
+
+選択肢に存在しないテキストを入力してEnterで確定しようとしても、選択済みラベル（無ければ空）へ自動的に戻る。Ark UIの`allowCustomValue`（既定`false`）に依っている。Selectと同様、公開APIは`string | null`のみを扱う。
+
+## 値の制御（value / defaultValue / onValueChange）
+
+<Canvas of={ComboboxStories.WithDefaultValue} />
+
+## disabled
+
+<Canvas of={ComboboxStories.Disabled} />
+
+## invalid（aria-invalid）
+
+<Canvas of={ComboboxStories.Invalid} />
+
+## フォーム連携（name / form / required / ref）
+
+- `name` / `form` / `required`: Ark UIの`Combobox.Root`から入力欄（`Combobox.Input`）へ直接転送される
+- `ref`: 入力欄（`HTMLInputElement`）へ転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style は受け付けない
+
+Comboboxは`className`・`style`・`children`propを受け付けない（ADR 0012、メモリ: Ark UI複合コンポーネントの単一ラップ方針）。
+
+## アクセシビリティ
+
+- 入力欄は`role="combobox"`、ドロップダウンは`role="listbox"`、各optionは`role="option"`（Ark UI標準）
+- `aria-expanded`/`aria-controls`/`aria-autocomplete`はArk UIが自動的に配線する

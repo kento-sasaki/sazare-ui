@@ -28,6 +28,18 @@ export type { CheckboxProps } from './form/Checkbox/Checkbox'
 export { CheckboxGroup } from './form/CheckboxGroup/CheckboxGroup'
 export type { CheckboxGroupOption, CheckboxGroupProps } from './form/CheckboxGroup/CheckboxGroup'
 
+export { Combobox } from './form/Combobox/Combobox'
+export type { ComboboxOption, ComboboxProps } from './form/Combobox/Combobox'
+
+export { DatePicker } from './form/DatePicker/DatePicker'
+export type { DatePickerProps } from './form/DatePicker/DatePicker'
+
+export { FileUpload } from './form/FileUpload/FileUpload'
+export type { FileUploadProps } from './form/FileUpload/FileUpload'
+
+export { FormControl } from './form/FormControl/FormControl'
+export type { FormControlChildProps, FormControlProps } from './form/FormControl/FormControl'
+
 export { IconButton } from './form/IconButton/IconButton'
 export type {
   IconButtonProps,
@@ -39,6 +51,12 @@ export { RadioButton } from './form/RadioButton/RadioButton'
 export type { RadioButtonProps } from './form/RadioButton/RadioButton'
 export { RadioGroup } from './form/RadioGroup/RadioGroup'
 export type { RadioGroupOption, RadioGroupProps } from './form/RadioGroup/RadioGroup'
+
+export { SegmentedControl } from './form/SegmentedControl/SegmentedControl'
+export type {
+  SegmentedControlOption,
+  SegmentedControlProps,
+} from './form/SegmentedControl/SegmentedControl'
 
 export { Select } from './form/Select/Select'
 export type { SelectOption, SelectProps } from './form/Select/Select'

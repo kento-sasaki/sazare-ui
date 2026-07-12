@@ -1,0 +1,55 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as DatePickerStories from './DatePicker.stories'
+
+<Meta of={DatePickerStories} />
+
+# DatePicker
+
+単一の日付を選択するためのコンポーネント。Ark UIの`DatePicker`（Root/Control/Input/Trigger/Positioner/Content/View/Table等の複合コンポーネント）を単一の`DatePicker`コンポーネントに完全ラップして実装している。カレンダーは`Portal`経由で`document.body`に描画される。
+
+<Canvas of={DatePickerStories.Default} />
+
+<Controls />
+
+## label は持たない
+
+Select/RadioGroupと異なり、Ark UIの`DatePicker.Root`は`aria-labelledby`でLabel要素IDを必須参照する構造を持たない（Labelは`htmlFor`/`id`の通常のHTML関連付けのみ）。そのためDatePickerは`label`を持たず、フォームフィールド全体の組み立てはFormControl（Issue #38）が担当する（TextInput/Textareaと同じ設計）。
+
+## 値の制御（value / defaultValue / onValueChange）と単一選択のスコープ
+
+- 公開APIの境界は`Date | null`。Ark UI内部の値モデル（`DateValue[]`、`@internationalized/date`の`CalendarDate`）とはコンポーネント境界で変換している
+- 範囲選択・複数選択は対象外（v0.1「広く浅く」方針、Selectの単一選択スコープと同じ判断）
+
+<Canvas of={DatePickerStories.WithDefaultValue} />
+
+## min / max
+
+選択可能な日付の範囲を`Date`で指定する。
+
+## disabled
+
+<Canvas of={DatePickerStories.Disabled} />
+
+## aria-invalid
+
+FormControlのcloneElement注入契約に合わせ、`invalid`ではなく生の`aria-invalid`属性を受け付ける（TextInput/Textareaと同じ設計）。内部でArk UI Rootの`invalid`propへ変換している。
+
+<Canvas of={DatePickerStories.Invalid} />
+
+## フォーム連携（name / form / required / id / aria-describedby / ref）
+
+- `name` / `form`: 可視のテキスト入力（`DatePicker.Input`）に転送され、フォーム送信時の値として使われる
+- `required`: Ark UI Rootに転送される
+- `id` / `aria-describedby`: FormControlから注入されることを想定した生のHTML/ARIA属性。可視のテキスト入力へ直接設定する
+- `ref`: 可視のテキスト入力（`HTMLInputElement`）へ転送される
+
+## className / style / children は受け付けない
+
+DatePickerは`className`・`style`・`children`propを受け付けない（ADR 0012、メモリ: Ark UI複合コンポーネントの単一ラップ方針）。
+
+## アクセシビリティ
+
+- テキスト入力は`role="textbox"`、トリガーボタンは`role="button"`（アクセシブルネーム: "Open calendar" / "Close calendar"）
+- カレンダー本体は`role="application"`、各日付セルは`role="gridcell"`、日付ボタンは`role="button"`（Ark UI標準）
+- 本リポジトリで初めてフローティング要素を持つコンポーネントはSelectであり、Storybook上での表示に関する既知の問題と対処（`.storybook/preview.ts`のfocus固定）はDatePickerにも同様に有効
