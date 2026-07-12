@@ -12,6 +12,7 @@ import {
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
+import { formControlRecipe } from './src/form/FormControl/FormControl.recipe'
 import { iconButtonRecipe } from './src/form/IconButton/IconButton.recipe'
 import { radioButtonRecipe } from './src/form/RadioButton/RadioButton.recipe'
 import { radioGroupRecipe } from './src/form/RadioGroup/RadioGroup.recipe'
@@ -55,6 +56,7 @@ export default defineConfig({
       slotRecipes: {
         checkbox: checkboxRecipe,
         checkboxGroup: checkboxGroupRecipe,
+        formControl: formControlRecipe,
         radioButton: radioButtonRecipe,
         radioGroup: radioGroupRecipe,
         select: selectRecipe,

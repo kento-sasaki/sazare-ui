@@ -28,6 +28,9 @@ export type { CheckboxProps } from './form/Checkbox/Checkbox'
 export { CheckboxGroup } from './form/CheckboxGroup/CheckboxGroup'
 export type { CheckboxGroupOption, CheckboxGroupProps } from './form/CheckboxGroup/CheckboxGroup'
 
+export { FormControl } from './form/FormControl/FormControl'
+export type { FormControlChildProps, FormControlProps } from './form/FormControl/FormControl'
+
 export { IconButton } from './form/IconButton/IconButton'
 export type {
   IconButtonProps,
