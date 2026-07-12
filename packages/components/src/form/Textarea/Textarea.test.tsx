@@ -4,6 +4,19 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { Textarea } from './Textarea'
 
+// className/styleは公開APIとして受け付けない（ADR 0012）。
+// 再びpropsとして受け付け可能になった場合、下記の@ts-expect-errorが
+// 「不要な指定」としてtsc（pnpm run typecheck）上のエラーになり回帰を検知できる。
+// この関数自体は実行されない（型チェックのみが目的）。
+function _typeOnlyGuardAgainstDisallowedProps() {
+  // @ts-expect-error className is not part of Textarea's public props
+  const withClassName = <Textarea className="not-allowed" />
+  // @ts-expect-error style is not part of Textarea's public props
+  const withStyle = <Textarea style={{ margin: '1px' }} />
+  return [withClassName, withStyle]
+}
+void _typeOnlyGuardAgainstDisallowedProps
+
 describe('Textarea', () => {
   it('renders a textbox', () => {
     render(<Textarea />)
