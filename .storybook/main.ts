@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     { directory: '../packages/components/src/layout', titlePrefix: 'Layout' },
     { directory: '../packages/components/src/form', titlePrefix: 'Form' },
     { directory: '../packages/components/src/feedback', titlePrefix: 'Feedback' },
+    { directory: '../packages/components/src/overlay', titlePrefix: 'Overlay' },
   ],
   addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
   framework: {
