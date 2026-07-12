@@ -73,8 +73,9 @@ export const dialogRecipe = defineSlotRecipe({
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '{spacing.md}',
-      height: '{spacing.md}',
+      // WCAG 2.5.8 (Target Size Minimum, AA) の24px基準を満たすため{spacing.lg}(1.5rem=24px)にする
+      width: '{spacing.lg}',
+      height: '{spacing.lg}',
       border: 'none',
       bg: 'transparent',
       cursor: 'pointer',
