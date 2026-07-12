@@ -1,0 +1,179 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { createRef } from 'react'
+import { describe, expect, it } from 'vitest'
+
+import { DatePicker } from '../DatePicker/DatePicker'
+import { FileUpload } from '../FileUpload/FileUpload'
+import { TextInput } from '../TextInput/TextInput'
+
+import { FormControl } from './FormControl'
+
+// className/styleは公開APIとして受け付けない（ADR 0012）。
+// 再びpropsとして受け付け可能になった場合、下記の@ts-expect-errorが
+// 「不要な指定」としてtsc（pnpm run typecheck）上のエラーになり回帰を検知できる。
+// この関数自体は実行されない（型チェックのみが目的）。
+function _typeOnlyGuardAgainstDisallowedProps() {
+  const withClassName = (
+    // @ts-expect-error className is not part of FormControl's public props
+    <FormControl label="Username" className="not-allowed">
+      <TextInput />
+    </FormControl>
+  )
+  const withStyle = (
+    // @ts-expect-error style is not part of FormControl's public props
+    <FormControl label="Username" style={{ margin: '1px' }}>
+      <TextInput />
+    </FormControl>
+  )
+  return [withClassName, withStyle]
+}
+void _typeOnlyGuardAgainstDisallowedProps
+
+describe('FormControl', () => {
+  it('associates the label with the child field via htmlFor/id', () => {
+    render(
+      <FormControl label="Username">
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByRole('textbox', { name: 'Username' })).toBeInTheDocument()
+  })
+
+  it('shows the helper text when not invalid', () => {
+    render(
+      <FormControl label="Username" helperText="3-20 characters">
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByText('3-20 characters')).toBeInTheDocument()
+  })
+
+  it('shows the error text instead of the helper text when invalid', () => {
+    render(
+      <FormControl label="Username" helperText="3-20 characters" errorText="Required" invalid>
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByText('Required')).toBeInTheDocument()
+    expect(screen.queryByText('3-20 characters')).not.toBeInTheDocument()
+  })
+
+  it('propagates aria-invalid to the child field when invalid', () => {
+    render(
+      <FormControl label="Username" errorText="Required" invalid>
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('associates the error text with the child field via aria-describedby', () => {
+    render(
+      <FormControl label="Username" errorText="Required" invalid>
+        <TextInput />
+      </FormControl>,
+    )
+    const input = screen.getByRole('textbox')
+    const describedbyId = input.getAttribute('aria-describedby')
+    expect(describedbyId).toBeTruthy()
+    expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
+  })
+
+  it('merges the errorText id into an aria-describedby the child already had', () => {
+    render(
+      <FormControl label="Username" errorText="Required" invalid>
+        <TextInput aria-describedby="external-hint" />
+      </FormControl>,
+    )
+    const describedby = screen.getByRole('textbox').getAttribute('aria-describedby')
+    expect(describedby).toContain('external-hint')
+    const fieldDescribedbyId = describedby?.split(' ').find((token) => token !== 'external-hint')
+    expect(fieldDescribedbyId).toBeTruthy()
+    expect(document.getElementById(fieldDescribedbyId as string)).toHaveTextContent('Required')
+  })
+
+  it('propagates disabled to the child field', () => {
+    render(
+      <FormControl label="Username" disabled>
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByRole('textbox')).toBeDisabled()
+  })
+
+  it('propagates required to the child field', () => {
+    render(
+      <FormControl label="Username" required>
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByRole('textbox')).toBeRequired()
+  })
+
+  it('generates an id for the child field when none is specified', () => {
+    render(
+      <FormControl label="Username">
+        <TextInput />
+      </FormControl>,
+    )
+    expect(screen.getByRole('textbox')).toHaveAttribute('id')
+  })
+
+  it('preserves existing props on the child field', () => {
+    render(
+      <FormControl label="Username">
+        <TextInput placeholder="your-name" />
+      </FormControl>,
+    )
+    expect(screen.getByPlaceholderText('your-name')).toBeInTheDocument()
+  })
+
+  it('forwards the ref through to the underlying child element', () => {
+    const ref = createRef<HTMLInputElement>()
+    render(
+      <FormControl label="Username">
+        <TextInput ref={ref} />
+      </FormControl>,
+    )
+    expect(ref.current).toBeInstanceOf(HTMLInputElement)
+  })
+
+  it('wires label/errorText/aria-invalid through to a DatePicker child', async () => {
+    render(
+      <FormControl label="Birthday" errorText="Required" invalid>
+        <DatePicker />
+      </FormControl>,
+    )
+    const input = screen.getByRole('textbox', { name: 'Birthday' })
+    expect(input).toHaveAttribute('aria-invalid', 'true')
+    const describedbyId = input.getAttribute('aria-describedby')
+    expect(describedbyId).toBeTruthy()
+    expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
+    fireEvent.click(screen.getByRole('button', { name: 'Open calendar' }))
+    await waitFor(() => expect(screen.getByRole('application')).toBeInTheDocument())
+  })
+
+  it('wires label/errorText/aria-invalid through to a FileUpload child', () => {
+    render(
+      <FormControl label="Attachments" errorText="Required" invalid>
+        <FileUpload />
+      </FormControl>,
+    )
+    const trigger = screen.getByRole('button', { name: 'Choose files' })
+    expect(trigger).toHaveAttribute('aria-invalid', 'true')
+    const describedbyId = trigger.getAttribute('aria-describedby')
+    expect(describedbyId).toBeTruthy()
+    expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
+  })
+
+  it('associates the label with the FileUpload hidden input via the native label.control API', () => {
+    const { container } = render(
+      <FormControl label="Attachments">
+        <FileUpload />
+      </FormControl>,
+    )
+    const label = container.querySelector('label') as HTMLLabelElement
+    const hiddenInput = container.querySelector('input[type="file"]')
+    expect(label.control).toBe(hiddenInput)
+  })
+})

@@ -1,0 +1,44 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as SegmentedControlStories from './SegmentedControl.stories'
+
+<Meta of={SegmentedControlStories} />
+
+# SegmentedControl
+
+隣接する選択肢から1つを選ぶ、ボタンが横並びになったコンポーネント。Ark UIの`SegmentGroup`（`@zag-js/radio-group`基盤の複合コンポーネント）を単一の`SegmentedControl`コンポーネントに完全ラップして実装している。RadioGroup（Issue #32）とAPI形状は共通だが、対応する個別コンポーネント（RadioButtonのような）が存在しないため単一コンポーネントとして自己完結させている。
+
+<Canvas of={SegmentedControlStories.Default} />
+
+<Controls />
+
+## label（必須）
+
+Ark UIの`SegmentGroup.Root`は`@zag-js/radio-group`を基盤とし、常に`aria-labelledby`でLabel要素のIDを参照するため、`label`は必須propsにしている（Select/RadioGroupと同じ理由）。
+
+## options
+
+`{ label, value, disabled? }`の配列。個別のoptionに`disabled: true`を指定すると、そのoptionだけ選択不可になる。
+
+## 値の制御（value / defaultValue / onValueChange）
+
+RadioGroupと同じく`string | null`。境界変換は不要（Ark UI内部の値モデルもそのまま`string | null`）。
+
+<Canvas of={SegmentedControlStories.WithDefaultValue} />
+
+## disabled
+
+<Canvas of={SegmentedControlStories.Disabled} />
+
+## フォーム連携（name）
+
+`name`はグループ内の各隠しネイティブ`<input type="radio">`に共通で転送され、フォーム送信時の値として使われる（RadioGroupと同じ）。
+
+## className / style は受け付けない
+
+SegmentedControlは`className`・`style`・`children`propを受け付けない（ADR 0012、メモリ: Ark UI複合コンポーネントの単一ラップ方針）。
+
+## アクセシビリティ
+
+- グループ全体は`role="radiogroup"`、各optionは実質的に`role="radio"`（隠しネイティブ`<input type="radio">`、Ark UI標準）
+- 選択中のoptionを示す`Indicator`はスライドアニメーションする装飾要素で、`aria-hidden`相当のためスクリーンリーダーには影響しない

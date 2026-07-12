@@ -1,0 +1,42 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as FormControlStories from './FormControl.stories'
+
+<Meta of={FormControlStories} />
+
+# FormControl
+
+`label`・`helperText`・`errorText`をひとつのフィールドコンポーネント（`children`）と合成するコンポーネント。TextInput/Textarea/DatePicker/FileUploadのように自前でlabelを持たないコンポーネントと組み合わせて使う。Select/RadioGroup/Combobox/SegmentedControlのようにArk UIのRootが内部で`aria-labelledby`を必須参照するコンポーネントは自前で`label`を持つため、FormControlとは組み合わせない。
+
+<Canvas of={FormControlStories.Default} />
+
+<Controls />
+
+## children（必須・単一要素）
+
+sazare-uiの他コンポーネントは`children`を公開propsとして受け付けない方針（ADR 0012、メモリ: Ark UI複合コンポーネントの単一ラップ方針）だが、FormControlはその唯一の意図的な例外。FormControlの責務自体が「単一のフィールドコンポーネントとlabel/helperText/errorTextを合成すること」であり、Park UI公式リファレンス実装のField Closed Componentパターンと同じ考え方を採用している。
+
+Ark UIの`Field.Root`/`Field.Label`等のJSX複合パーツは一切公開せず、headlessな`useField`フックの戻り値のみを使って`children`へ`id`/`aria-describedby`/`aria-invalid`/`disabled`/`required`を注入する（`cloneElement`）。そのため`children`に渡すコンポーネントは、これらのpropsを受け付けられる必要がある（TextInput/Textarea/DatePicker/FileUploadはこの契約を満たす）。
+
+## label（必須）
+
+## helperText / errorText
+
+- `invalid`が`false`のとき`helperText`を表示する
+- `invalid`が`true`のとき（`errorText`があれば）`helperText`の代わりに`errorText`を表示する
+
+<Canvas of={FormControlStories.Invalid} />
+
+## disabled / required
+
+<Canvas of={FormControlStories.Disabled} />
+<Canvas of={FormControlStories.Required} />
+
+## className / style は受け付けない
+
+FormControlは`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- labelはchildrenの`id`と`htmlFor`/`id`で関連付く
+- invalid時、errorTextの`id`がchildrenの`aria-describedby`に反映される（Ark UIの`useField`フックが内部でMutationObserverによりDOM上の要素の有無を検知して配線する）
