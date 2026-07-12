@@ -1,0 +1,69 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as SelectStories from './Select.stories'
+
+<Meta of={SelectStories} />
+
+# Select
+
+ユーザーが選択肢の一覧から1つを選ぶためのコンポーネント。Ark UIの`Select`（Root/Control/Trigger/ValueText/Indicator/Positioner/Content/Item等の複合コンポーネント）を単一の`Select`コンポーネントに完全ラップして実装している。ドロップダウンは`Portal`経由で`document.body`に描画される。
+
+<Canvas of={SelectStories.Default} />
+
+<Controls />
+
+## label（必須）
+
+Ark UIの`Select.Root`は常に`aria-labelledby`でLabel要素のIDを参照するため、`label`は必須propsにしている。省略するとID参照先が存在しないa11y違反（`aria-valid-attr-value`）になる。
+
+## options
+
+`{ label, value, disabled? }`の配列。個別のoptionに`disabled: true`を指定すると、そのoptionだけ選択不可になる。
+
+## 値の制御（value / defaultValue / onValueChange）と単一選択のスコープ
+
+- Ark UI内部の値モデルは複数選択（`string[]`）に対応しているが、Selectの公開APIは`string | null`の単一選択のみをスコープにしている（TextInput/RadioGroup等、他の全form componentとの一貫性のため）。境界でArkの`string[]`モデルとの変換を行っている
+- `value`/`defaultValue`はstring、`onValueChange`は選択解除時に`null`を返す
+- controlled/uncontrolledの切り替えはネイティブの`<select>`のルールに準拠する
+
+<Canvas of={SelectStories.WithDefaultValue} />
+
+## placeholder
+
+未選択時にトリガーへ表示するテキスト。Ark UIの`Select.ValueText`にそのまま渡している。
+
+## disabled
+
+<Canvas of={SelectStories.Disabled} />
+
+## invalid（aria-invalid）
+
+- `invalid`: `true`を渡すと枠線色が`border.danger`に変わり、トリガーに`aria-invalid="true"`が反映される
+- `label`/`helperText`/`errorText`のようなエラーメッセージの統合は持たない。フォームフィールド全体の組み立てはFormControl（Issue #38、未実装）が担当する
+
+<Canvas of={SelectStories.Invalid} />
+
+## フォーム連携（name / form / required / ref）
+
+- `name` / `form`: 内部の隠しネイティブ`<select>`（`Select.HiddenSelect`）に転送され、フォーム送信時の値として使われる
+- `required`: トリガーに`aria-required`として反映される
+- `ref`: 隠しネイティブ`<select>`要素（`HTMLSelectElement`）へ転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## className / style は受け付けない
+
+Selectは`className`・`style`・`children`propを受け付けない（ADR 0012、およびメモリ: Ark UI複合コンポーネントの単一ラップ方針）。
+
+## 既知の制限（Storybookでのドロップダウン表示）
+
+Storybook上でトリガーをクリックしてドロップダウンを開くと、Storybookのプレビュー実行時ランタイムとArk UIの`@zag-js/focus-visible`が両方とも独立に`HTMLElement.prototype.focus`をパッチしようとして衝突し、`TypeError: Illegal invocation`が発生する。この例外によりArk UIのpopper位置計算処理が中断され、ドロップダウンが画面外（`translate3d(0, -100vh, 0)`）に配置されたまま表示されない。
+
+- **Select自体の実装には問題がない**。Storybookを介さない素のReact+Viteアプリで同じ実装を検証したところ、エラーなくトリガー直下の正しい位置に表示されることを確認済み。実消費側（mabiki等）では問題なく動作する見込み
+- Storybookの`Accessibility`タブでのa11yスキャン（axe-core）は`Violations: 0`（位置ズレはaxeの検出対象外のため、a11y上の「エラーなし」の基準は満たしている）
+- 本リポジトリで初めてフローティング要素（Positioner）を持つコンポーネントであるため今回顕在化した。zag-jsのCHANGELOGにも同種の"Illegal invocation"修正履歴があり、Storybook × Ark UI間の既知クラスの問題と考えられる
+- 今後Combobox/DatePicker等、同様にフローティング要素を持つコンポーネントを実装する際も同じ制限に注意すること
+
+## アクセシビリティ
+
+- トリガーは`role="combobox"`、ドロップダウンは`role="listbox"`、各optionは`role="option"`（Ark UI標準）
+- `aria-expanded`/`aria-haspopup`/`aria-controls`はArk UIが自動的に配線する
+- キーボード操作（矢印キーでのハイライト移動、Enter/Spaceでの選択、Escapeでのクローズ）はArk UI標準の挙動に従う
