@@ -28,6 +28,9 @@ export type { CheckboxProps } from './form/Checkbox/Checkbox'
 export { CheckboxGroup } from './form/CheckboxGroup/CheckboxGroup'
 export type { CheckboxGroupOption, CheckboxGroupProps } from './form/CheckboxGroup/CheckboxGroup'
 
+export { Combobox } from './form/Combobox/Combobox'
+export type { ComboboxOption, ComboboxProps } from './form/Combobox/Combobox'
+
 export { DatePicker } from './form/DatePicker/DatePicker'
 export type { DatePickerProps } from './form/DatePicker/DatePicker'
 

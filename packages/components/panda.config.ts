@@ -12,6 +12,7 @@ import {
 import { buttonRecipe } from './src/form/Button/Button.recipe'
 import { checkboxRecipe } from './src/form/Checkbox/Checkbox.recipe'
 import { checkboxGroupRecipe } from './src/form/CheckboxGroup/CheckboxGroup.recipe'
+import { comboboxRecipe } from './src/form/Combobox/Combobox.recipe'
 import { datePickerRecipe } from './src/form/DatePicker/DatePicker.recipe'
 import { fileUploadRecipe } from './src/form/FileUpload/FileUpload.recipe'
 import { formControlRecipe } from './src/form/FormControl/FormControl.recipe'
@@ -58,6 +59,7 @@ export default defineConfig({
       slotRecipes: {
         checkbox: checkboxRecipe,
         checkboxGroup: checkboxGroupRecipe,
+        combobox: comboboxRecipe,
         datePicker: datePickerRecipe,
         fileUpload: fileUploadRecipe,
         formControl: formControlRecipe,
