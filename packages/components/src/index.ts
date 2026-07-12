@@ -79,9 +79,6 @@ export type { BannerProps, BannerTone } from './feedback/Banner/Banner'
 export { Spinner } from './feedback/Spinner/Spinner'
 export type { SpinnerProps, SpinnerSize } from './feedback/Spinner/Spinner'
 
-export { StatusLabel } from './feedback/StatusLabel/StatusLabel'
-export type { StatusLabelProps, StatusLabelTone } from './feedback/StatusLabel/StatusLabel'
-
 export { createToaster, Toaster } from './feedback/Toast/Toast'
 export type {
   CreateToasterProps,
