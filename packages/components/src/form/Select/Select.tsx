@@ -56,8 +56,8 @@ export interface SelectProps {
   label: string
   options: SelectOption[]
   placeholder?: string
-  value?: string
-  defaultValue?: string
+  value?: string | null
+  defaultValue?: string | null
   onValueChange?: (value: string | null) => void
   disabled?: boolean
   invalid?: boolean
@@ -99,8 +99,10 @@ export const Select = ({
     <ArkSelect.Root
       className={styles.root}
       collection={collection}
-      value={value !== undefined ? [value] : undefined}
-      defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
+      value={value === undefined ? undefined : value === null ? [] : [value]}
+      defaultValue={
+        defaultValue === undefined ? undefined : defaultValue === null ? [] : [defaultValue]
+      }
       onValueChange={
         onValueChange ? (details) => onValueChange(details.value[0] ?? null) : undefined
       }

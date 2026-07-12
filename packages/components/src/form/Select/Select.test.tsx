@@ -77,6 +77,19 @@ describe('Select', () => {
     expect(screen.getByRole('option', { name: 'Banana' })).toHaveAttribute('aria-selected', 'false')
   })
 
+  it('supports null as a controlled value to represent no selection', () => {
+    render(
+      <Select
+        label="Fruit"
+        options={options}
+        value={null}
+        onValueChange={() => {}}
+        placeholder="Select a fruit"
+      />,
+    )
+    expect(screen.getByRole('combobox', { name: 'Fruit' })).toHaveTextContent('Select a fruit')
+  })
+
   it('disables an individual option via the option-level disabled flag', async () => {
     render(<Select label="Fruit" options={options} />)
     fireEvent.click(screen.getByRole('combobox', { name: 'Fruit' }))
