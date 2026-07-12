@@ -74,4 +74,15 @@ describe('DropdownMenu', () => {
     fireEvent.click(screen.getByRole('menuitem', { name: '無効' }))
     expect(handleSelect).not.toHaveBeenCalled()
   })
+
+  it('supports a fully controlled open state', async () => {
+    const handleOpenChange = vi.fn()
+    const { rerender } = render(
+      <DropdownMenu trigger="操作" items={items} open={false} onOpenChange={handleOpenChange} />,
+    )
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+
+    rerender(<DropdownMenu trigger="操作" items={items} open onOpenChange={handleOpenChange} />)
+    await waitFor(() => expect(screen.getByRole('menu')).toBeInTheDocument())
+  })
 })

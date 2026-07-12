@@ -11,13 +11,20 @@ import { tooltip } from '../../../styled-system/recipes'
 export interface TooltipProps {
   trigger: ReactNode
   content: ReactNode
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-export const Tooltip = ({ trigger, content }: TooltipProps) => {
+export const Tooltip = ({ trigger, content, open, defaultOpen, onOpenChange }: TooltipProps) => {
   const styles = tooltip()
 
   return (
-    <ArkTooltip.Root>
+    <ArkTooltip.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange ? (details) => onOpenChange(details.open) : undefined}
+    >
       <ArkTooltip.Trigger className={styles.trigger}>{trigger}</ArkTooltip.Trigger>
       <Portal>
         <ArkTooltip.Positioner className={styles.positioner}>

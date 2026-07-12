@@ -20,13 +20,25 @@ export interface DropdownMenuItem {
 export interface DropdownMenuProps {
   trigger: ReactNode
   items: DropdownMenuItem[]
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-export const DropdownMenu = ({ trigger, items }: DropdownMenuProps) => {
+export const DropdownMenu = ({
+  trigger,
+  items,
+  open,
+  defaultOpen,
+  onOpenChange,
+}: DropdownMenuProps) => {
   const styles = dropdownMenu()
 
   return (
     <ArkMenu.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange ? (details) => onOpenChange(details.open) : undefined}
       onSelect={(details) => items.find((item) => item.value === details.value)?.onSelect?.()}
     >
       <ArkMenu.Trigger className={styles.trigger}>{trigger}</ArkMenu.Trigger>

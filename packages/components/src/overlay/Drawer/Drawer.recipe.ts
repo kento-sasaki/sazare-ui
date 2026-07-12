@@ -44,8 +44,8 @@ export const drawerRecipe = defineSlotRecipe({
       zIndex: 1,
       '&[data-swipe-direction="right"]': { justifyContent: 'flex-end' },
       '&[data-swipe-direction="left"]': { justifyContent: 'flex-start' },
-      '&[data-swipe-direction="up"]': { alignItems: 'flex-end' },
-      '&[data-swipe-direction="down"]': { alignItems: 'flex-start' },
+      '&[data-swipe-direction="up"]': { alignItems: 'flex-start' },
+      '&[data-swipe-direction="down"]': { alignItems: 'flex-end' },
     },
     content: {
       position: 'relative',

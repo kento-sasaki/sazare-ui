@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Tooltip } from './Tooltip'
 
@@ -52,5 +52,21 @@ describe('Tooltip', () => {
 
     fireEvent.blur(trigger)
     await waitFor(() => expect(screen.queryByRole('tooltip')).not.toBeInTheDocument())
+  })
+
+  it('supports a fully controlled open state', async () => {
+    const handleOpenChange = vi.fn()
+    const { rerender } = render(
+      <Tooltip
+        trigger="対象"
+        content="説明テキスト"
+        open={false}
+        onOpenChange={handleOpenChange}
+      />,
+    )
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+    rerender(<Tooltip trigger="対象" content="説明テキスト" open onOpenChange={handleOpenChange} />)
+    await waitFor(() => expect(screen.getByRole('tooltip')).toHaveTextContent('説明テキスト'))
   })
 })
