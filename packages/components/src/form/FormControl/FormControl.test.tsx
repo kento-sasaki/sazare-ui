@@ -79,6 +79,19 @@ describe('FormControl', () => {
     expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
   })
 
+  it('merges the errorText id into an aria-describedby the child already had', () => {
+    render(
+      <FormControl label="Username" errorText="Required" invalid>
+        <TextInput aria-describedby="external-hint" />
+      </FormControl>,
+    )
+    const describedby = screen.getByRole('textbox').getAttribute('aria-describedby')
+    expect(describedby).toContain('external-hint')
+    const fieldDescribedbyId = describedby?.split(' ').find((token) => token !== 'external-hint')
+    expect(fieldDescribedbyId).toBeTruthy()
+    expect(document.getElementById(fieldDescribedbyId as string)).toHaveTextContent('Required')
+  })
+
   it('propagates disabled to the child field', () => {
     render(
       <FormControl label="Username" disabled>
@@ -151,5 +164,16 @@ describe('FormControl', () => {
     const describedbyId = trigger.getAttribute('aria-describedby')
     expect(describedbyId).toBeTruthy()
     expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
+  })
+
+  it('associates the label with the FileUpload hidden input via the native label.control API', () => {
+    const { container } = render(
+      <FormControl label="Attachments">
+        <FileUpload />
+      </FormControl>,
+    )
+    const label = container.querySelector('label') as HTMLLabelElement
+    const hiddenInput = container.querySelector('input[type="file"]')
+    expect(label.control).toBe(hiddenInput)
   })
 })

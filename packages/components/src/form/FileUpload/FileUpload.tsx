@@ -23,10 +23,13 @@ const TrashIcon = () => (
 // labelは持たない。FormControl(#38)がlabel/helperText/errorTextの統合を担当する
 // （メモリ: file-uploadのLabelはhtmlFor/idの通常HTML関連付けのみで、Select/RadioGroupと違い
 // aria-labelledbyの必須参照が無いため、TextInput/Textarea/DatePickerと同じ設計にできる）。
-// ただしDatePicker/TextInputと異なり、idはtrigger（実<button>）ではなくroot要素に配線する。
-// buttonはlabelable要素のため、FormControlの<label htmlFor>がidで直接参照すると
+// idはtrigger（実<button>）ではなくHiddenInput（実<input type="file">、labelable要素）に配線する。
+// buttonはlabelable要素のため、FormControlの<label htmlFor>がidでtriggerを直接参照すると
 // accessible nameが「Choose files」からlabelのテキストへ上書きされてしまう
-// （label-for関連付けはbutton自身のaccessible nameを乗っ取る）。
+// （label-for関連付けはbutton自身のaccessible nameを乗っ取る）一方、root（div）はlabelable要素
+// ではないため<label for>の参照先として無効になる。HiddenInputは視覚的に隠されているだけ
+// （display:noneではないCSSクリップ手法）なのでnative labelのクリック委譲は機能し、
+// labelクリックでファイル選択ダイアログが正しく起動する（Gemini Code Assistレビュー指摘対応）
 // aria-describedby/aria-invalidはaccessible nameに影響しないためtriggerに配線してよい
 export interface FileUploadProps {
   accept?: string
@@ -69,7 +72,6 @@ export const FileUpload = ({
   return (
     <ArkFileUpload.Root
       className={styles.root}
-      ids={id ? { root: id } : undefined}
       accept={accept}
       maxFiles={maxFiles}
       maxFileSize={maxFileSize}
@@ -106,7 +108,7 @@ export const FileUpload = ({
           }
         </ArkFileUpload.Context>
       </ArkFileUpload.ItemGroup>
-      <ArkFileUpload.HiddenInput ref={ref} form={form} />
+      <ArkFileUpload.HiddenInput ref={ref} id={id} form={form} />
     </ArkFileUpload.Root>
   )
 }

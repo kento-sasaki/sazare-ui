@@ -79,9 +79,10 @@ describe('FileUpload', () => {
     )
   })
 
-  it('reflects an explicit id on the root element', () => {
+  it('reflects an explicit id on the hidden input so a native label can activate it', () => {
     const { container } = render(<FileUpload id="attachments-field" />)
-    expect(container.querySelector('#attachments-field')).toBeInTheDocument()
+    const hiddenInput = container.querySelector('input[type="file"]')
+    expect(hiddenInput).toHaveAttribute('id', 'attachments-field')
   })
 
   it('reflects an explicit aria-describedby on the trigger', () => {

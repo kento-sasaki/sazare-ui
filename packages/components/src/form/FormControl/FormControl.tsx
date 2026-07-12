@@ -45,9 +45,18 @@ export const FormControl = ({
   const styles = formControl()
   const field = useField({ id, invalid, required, disabled })
 
+  // id/disabled/required/aria-invalidはFormControlが唯一の情報源として上書きする
+  // （FormControlのlabel/errorText/helperTextはfield.ids.control等、FormControl側が
+  // 生成した値を参照して描画するため、子要素側の値を優先すると関連付けが崩れる）。
+  // aria-describedbyのみ、子要素が独自に持つ値（例: 呼び出し側が付けた補足説明）を
+  // 保持したまま連結する（aria-describedbyは複数idをスペース区切りで指定できる仕様のため）
+  const mergedAriaDescribedby = [children.props['aria-describedby'], field.ariaDescribedby]
+    .filter(Boolean)
+    .join(' ')
+
   const child = cloneElement(children, {
     id: field.ids.control,
-    'aria-describedby': field.ariaDescribedby,
+    'aria-describedby': mergedAriaDescribedby || undefined,
     'aria-invalid': field.invalid ? true : undefined,
     disabled: field.disabled,
     required: field.required,
