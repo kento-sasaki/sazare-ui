@@ -55,3 +55,9 @@ function Example() {
 - フォーカストラップ・Escapeキーでの閉じる操作・フォーカス復帰はすべてArk UI標準の挙動
 - `role="dialog"`、`aria-labelledby`（`title`）、`aria-describedby`（`description`）はArk UIが自動的に配線する
 - 閉じるボタンのアクセシブルネームは固定で「閉じる」
+
+### 既知の問題: axe-coreの`aria-hidden-focus`
+
+Dialogが開いている間、Ark UIは背景コンテンツを`aria-hidden="true"`にする（`dismissable-layer`）が、背景のtrigger要素は`pointer-events: none`になる一方で`tabIndex`は`0`のままになり、キーボードのTabで到達できてしまう。axe-core（wcag2a/wcag2aa）でこれが`aria-hidden-focus`（serious）として検出される。
+
+DrawerもDialogと同一のArk UI機構を使っているが、この事象はDrawerでは再現しない（DOM状態を比較したが差異を特定できておらず、Ark UI内部実装に起因すると推測している）。v0.1はdraftタグ付きで段階的に調整する方針（要件16番）のため、既知の問題として記録し、原因特定・対応は後続で行う。
