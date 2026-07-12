@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@ark-ui/react": "^5.37.2",
+    "@internationalized/date": "^3.12.2",
     "@sazare-ui/tokens": "workspace:*"
   },
   "devDependencies": {

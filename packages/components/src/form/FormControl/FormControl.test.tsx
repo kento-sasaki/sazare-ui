@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { createRef } from 'react'
 import { describe, expect, it } from 'vitest'
 
+import { DatePicker } from '../DatePicker/DatePicker'
 import { TextInput } from '../TextInput/TextInput'
 
 import { FormControl } from './FormControl'
@@ -121,5 +122,20 @@ describe('FormControl', () => {
       </FormControl>,
     )
     expect(ref.current).toBeInstanceOf(HTMLInputElement)
+  })
+
+  it('wires label/errorText/aria-invalid through to a DatePicker child', async () => {
+    render(
+      <FormControl label="Birthday" errorText="Required" invalid>
+        <DatePicker />
+      </FormControl>,
+    )
+    const input = screen.getByRole('textbox', { name: 'Birthday' })
+    expect(input).toHaveAttribute('aria-invalid', 'true')
+    const describedbyId = input.getAttribute('aria-describedby')
+    expect(describedbyId).toBeTruthy()
+    expect(document.getElementById(describedbyId as string)).toHaveTextContent('Required')
+    fireEvent.click(screen.getByRole('button', { name: 'Open calendar' }))
+    await waitFor(() => expect(screen.getByRole('application')).toBeInTheDocument())
   })
 })
