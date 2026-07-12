@@ -1,0 +1,66 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TextareaStories from './Textarea.stories'
+
+<Meta of={TextareaStories} />
+
+# Textarea
+
+ユーザーが複数行のテキストを入力するためのコンポーネント。Ark UIにはtextarea相当の単体ヘッドレスプリミティブが存在しない（`Field.Textarea`はField複合コンポーネントの一部としてのみ提供される）ため、TextInputと同様にセマンティックなHTMLの`<textarea>`要素にPanda recipeでスタイルを適用して実装している。
+
+<Canvas of={TextareaStories.Default} />
+
+<Controls />
+
+## size
+
+- `size`: `'sm'` / `'md'`。デフォルトは`'md'`
+- フォントサイズと余白（padding）を束ねたスケール
+
+<Canvas of={TextareaStories.AllSizes} />
+
+## disabled
+
+ネイティブの`disabled`属性をそのまま使う。入力の抑止はブラウザのネイティブ挙動に委譲しており、Textarea側で独自の無効化ロジックは持たない。
+
+<Canvas of={TextareaStories.Disabled} />
+
+## invalid（aria-invalid）
+
+- `aria-invalid`: `'true'`を渡すと枠線色が`border.danger`に変わる
+- `label`/`helperText`/`errorText`のようなエラーメッセージの統合は持たない。フォームフィールド全体の組み立てはFormControl（Issue #38、未実装）が担当し、Textareaは`aria-invalid`単体でも視覚フィードバックが成立するようスタイル面のみを提供する
+- invalid×フォーカス時も、枠線色（`border.danger`）とoutlineの両方でフォーカスの視覚化（WCAG 2.4.7）を維持する
+
+<Canvas of={TextareaStories.Invalid} />
+
+## 値の制御（value / defaultValue / onChange）
+
+`value`/`defaultValue`/`onChange`はネイティブの`<textarea>`とまったく同じ意味で、そのまま転送される。controlled/uncontrolledの切り替えもネイティブのルールに従う。
+
+<Canvas of={TextareaStories.Controlled} />
+
+## フォーム連携（name / form / required / rows / cols / ref）
+
+- `name` / `form`: ネイティブの`<textarea>`と同じ意味でそのまま渡る
+- `required`: ネイティブの`required`属性
+- `rows` / `cols`: ネイティブの`<textarea>`と同じ意味でそのまま渡る。sazare-ui側でデフォルト値の上書きは行わない（ブラウザ標準は`rows`省略時2行）
+- `ref`: ネイティブの`<textarea>`要素へそのまま転送される。react-hook-form等、refベースの外部フォームライブラリとの連携を想定している
+
+## リサイズ（resize）
+
+縦方向のリサイズのみを許可する（`resize: vertical`）。横方向のリサイズはフォームレイアウトを崩しやすいため制限している。自動的な高さ調整（auto-resize）は持たない。
+
+## className / style は受け付けない
+
+Textareaは`className`・`style`propを受け付けない（ADR 0012）。
+
+## Do's / Don'ts
+
+- ラベルやエラーメッセージが必要な場合は、Textarea単体ではなくFormControl（Issue #38、未実装）でラップする。それまでの間は呼び出し側で`<label>`と`aria-describedby`を明示的に紐付ける
+- `aria-invalid`は枠線の見た目を変えるだけで、エラー内容をスクリーンリーダーに伝える手段（`aria-describedby`等）は別途呼び出し側で用意する必要がある
+
+## アクセシビリティ
+
+- ネイティブの`<textarea>`要素を使うため、キーボード操作やスクリーンリーダーでのロール（`textbox`）認識は追加の実装なしにブラウザ標準の挙動に従う
+- `disabled`時は`aria-disabled`ではなくネイティブの`disabled`属性を使う。フォーカス移動の対象から除外され、入力イベントも発火しない
+- `aria-invalid="true"`時もフォーカスリング（outline）が消えないよう、通常時とは別に枠線色・outlineを明示的に再指定している（詳細はTextarea.recipe.tsのコメントを参照）
