@@ -52,6 +52,12 @@ export type { RadioButtonProps } from './form/RadioButton/RadioButton'
 export { RadioGroup } from './form/RadioGroup/RadioGroup'
 export type { RadioGroupOption, RadioGroupProps } from './form/RadioGroup/RadioGroup'
 
+export { SegmentedControl } from './form/SegmentedControl/SegmentedControl'
+export type {
+  SegmentedControlOption,
+  SegmentedControlProps,
+} from './form/SegmentedControl/SegmentedControl'
+
 export { Select } from './form/Select/Select'
 export type { SelectOption, SelectProps } from './form/Select/Select'
 
