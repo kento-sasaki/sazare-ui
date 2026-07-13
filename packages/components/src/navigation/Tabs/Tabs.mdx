@@ -1,0 +1,52 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TabsStories from './Tabs.stories'
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+同じ階層にある複数のコンテンツを切り替えて表示するコンポーネント。`@ark-ui/react/tabs`をラップしている。
+
+<Canvas of={TabsStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Tabs } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Tabs
+      items={[
+        { value: 'account', label: 'アカウント', content: 'アカウント設定の内容です。' },
+        { value: 'notifications', label: '通知', content: '通知設定の内容です。' },
+      ]}
+    />
+  )
+}
+```
+
+## props
+
+- `items`: `{ value: string; label: string; content: ReactNode; disabled?: boolean }[]`。必須。表示順に並べる
+- `value` / `defaultValue` / `onValueChange`: 制御/非制御コンポーネントとしての選択タブ管理。両方省略した場合は`items`の先頭を既定選択にする
+
+### `items`が非同期で変化する場合の注意
+
+`defaultValue`（および両方省略時に補完される`items[0]?.value`）はマウント時にのみ評価される。`items`が初期状態では空で、後から非同期にデータが注入されるケースでは、マウント時点の先頭タブが自動選択されない（あるいは存在しないタブが選択されたままになる）。`items`が動的に変化しうる場合は、`value`/`onValueChange`による制御コンポーネントとして扱うこと。
+
+## v0.1のスコープ
+
+水平方向のタブのみをサポートする。垂直方向（`orientation`）は必要になった時点で追加する（YAGNI）。
+
+## className / style は受け付けない
+
+`Tabs`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- `role="tablist"`/`role="tab"`/`role="tabpanel"`、`aria-selected`、非選択パネルの`hidden`属性はArk UIが自動的に配線する
+- キーボード操作（矢印キーでのタブ移動、Tabキーでのフォーカス移動）はArk UI標準の挙動

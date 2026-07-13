@@ -28,6 +28,12 @@ import { selectRecipe } from './src/form/Select/Select.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
+import { accordionRecipe } from './src/navigation/Accordion/Accordion.recipe'
+import { breadcrumbRecipe } from './src/navigation/Breadcrumb/Breadcrumb.recipe'
+import { linkRecipe } from './src/navigation/Link/Link.recipe'
+import { paginationRecipe } from './src/navigation/Pagination/Pagination.recipe'
+import { stepperRecipe } from './src/navigation/Stepper/Stepper.recipe'
+import { tabsRecipe } from './src/navigation/Tabs/Tabs.recipe'
 import { dialogRecipe } from './src/overlay/Dialog/Dialog.recipe'
 import { drawerRecipe } from './src/overlay/Drawer/Drawer.recipe'
 import { dropdownMenuRecipe } from './src/overlay/DropdownMenu/DropdownMenu.recipe'
@@ -72,6 +78,7 @@ export default defineConfig({
         badge: badgeRecipe,
         heading: headingRecipe,
         text: textRecipe,
+        link: linkRecipe,
       },
       slotRecipes: {
         checkbox: checkboxRecipe,
@@ -90,10 +97,15 @@ export default defineConfig({
         switchField: switchRecipe,
         banner: bannerRecipe,
         toast: toastRecipe,
+        breadcrumb: breadcrumbRecipe,
         dialog: dialogRecipe,
         drawer: drawerRecipe,
         dropdownMenu: dropdownMenuRecipe,
         tooltip: tooltipRecipe,
+        tabs: tabsRecipe,
+        pagination: paginationRecipe,
+        accordion: accordionRecipe,
+        stepper: stepperRecipe,
       },
     },
   },
