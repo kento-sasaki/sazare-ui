@@ -1,0 +1,35 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as LinkStories from './Link.stories'
+
+<Meta of={LinkStories} />
+
+# Link
+
+テキストリンクを表示するコンポーネント。Ark UIに対応するプリミティブが無いため、プレーンな`<a>`のラップとして実装している。
+
+<Canvas of={LinkStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Link } from '@sazare-ui/components'
+
+function Example() {
+  return <Link href="/about">About us</Link>
+}
+```
+
+## props
+
+`className`/`style`を除く`<a>`のネイティブ属性（`href`/`target`/`rel`/`onClick`等）をすべてそのまま受け付ける。`children`は必須
+
+## v0.1のスコープ
+
+Next.js Link・react-router Linkなどルーティングライブラリの`<Link>`との統合（`asChild`/render propパターン）は対応しない。variant/sizeも持たない単一スタイル。必要になった時点で追加する（YAGNI）
+
+## className / style は受け付けない
+
+`Link`は`className`・`style`propを受け付けない（ADR 0012）。

@@ -30,6 +30,7 @@ import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
 import { accordionRecipe } from './src/navigation/Accordion/Accordion.recipe'
 import { breadcrumbRecipe } from './src/navigation/Breadcrumb/Breadcrumb.recipe'
+import { linkRecipe } from './src/navigation/Link/Link.recipe'
 import { paginationRecipe } from './src/navigation/Pagination/Pagination.recipe'
 import { stepperRecipe } from './src/navigation/Stepper/Stepper.recipe'
 import { tabsRecipe } from './src/navigation/Tabs/Tabs.recipe'
@@ -77,6 +78,7 @@ export default defineConfig({
         badge: badgeRecipe,
         heading: headingRecipe,
         text: textRecipe,
+        link: linkRecipe,
       },
       slotRecipes: {
         checkbox: checkboxRecipe,
