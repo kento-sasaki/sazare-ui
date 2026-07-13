@@ -31,7 +31,7 @@ export const Stepper = ({ steps, step, defaultStep, onStepChange, linear }: Step
     >
       <ArkSteps.List className={styles.list}>
         {steps.map((item, index) => (
-          <ArkSteps.Item key={index} index={index} className={styles.item}>
+          <ArkSteps.Item key={`${item.label}-${index}`} index={index} className={styles.item}>
             <ArkSteps.Trigger className={styles.trigger}>
               <ArkSteps.Indicator className={styles.indicator}>{index + 1}</ArkSteps.Indicator>
               {item.label}

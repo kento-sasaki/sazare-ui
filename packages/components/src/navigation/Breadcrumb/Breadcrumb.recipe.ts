@@ -3,7 +3,7 @@ import { defineSlotRecipe } from '@pandacss/dev'
 export const breadcrumbRecipe = defineSlotRecipe({
   className: 'breadcrumb',
   description: 'The styles for the Breadcrumb component',
-  slots: ['nav', 'list', 'item', 'link', 'current'],
+  slots: ['nav', 'list', 'item', 'link', 'current', 'text'],
   base: {
     list: {
       display: 'flex',
@@ -36,6 +36,11 @@ export const breadcrumbRecipe = defineSlotRecipe({
     },
     current: {
       color: 'text.default',
+    },
+    // hrefを持たない中間項目（current pageではない）用。currentと見た目の意味が異なるため
+    // スロットを分け、将来currentに強調スタイルを追加しても中間項目に波及しないようにする
+    text: {
+      color: 'text.secondary',
     },
   },
 })

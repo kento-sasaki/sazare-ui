@@ -33,7 +33,7 @@ export const Breadcrumb = ({ items, 'aria-label': ariaLabel = 'Breadcrumb' }: Br
                   {item.label}
                 </a>
               ) : (
-                <span className={styles.current}>{item.label}</span>
+                <span className={styles.text}>{item.label}</span>
               )}
             </li>
           )
