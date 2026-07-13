@@ -12,8 +12,12 @@ export const Divider = ({ orientation = 'horizontal', label }: DividerProps) => 
   const styles = separator({ orientation })
 
   return (
-    <div role="separator" aria-orientation={orientation} className={styles.root}>
-      {label && <span className={styles.label}>{label}</span>}
+    <div role="separator" aria-orientation={orientation} aria-label={label} className={styles.root}>
+      {label && (
+        <span aria-hidden="true" className={styles.label}>
+          {label}
+        </span>
+      )}
     </div>
   )
 }

@@ -24,7 +24,7 @@ export const Timeline = ({ items }: TimelineProps) => {
           </div>
           <div className={styles.content}>
             <p className={styles.title}>{item.title}</p>
-            {item.timestamp && <p className={styles.meta}>{item.timestamp}</p>}
+            {item.timestamp && <time className={styles.meta}>{item.timestamp}</time>}
             {item.description && <p className={styles.description}>{item.description}</p>}
           </div>
         </li>
