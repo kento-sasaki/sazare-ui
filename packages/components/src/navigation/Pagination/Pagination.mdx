@@ -1,0 +1,46 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as PaginationStories from './Pagination.stories'
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+複数ページに分割されたデータの現在位置を示し、ページ間の移動を行うコンポーネント。`@ark-ui/react/pagination`をラップしている。
+
+<Canvas of={PaginationStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Pagination } from '@sazare-ui/components'
+
+function Example() {
+  return <Pagination count={100} pageSize={10} onPageChange={(page) => console.log(page)} />
+}
+```
+
+## props
+
+- `count`: `number`。必須。データの総件数
+- `pageSize` / `defaultPageSize`: 1ページあたりの件数（既定10件）
+- `page` / `defaultPage` / `onPageChange`: 制御/非制御コンポーネントとしての現在ページ管理
+- `siblingCount`: 現在ページの前後に表示するページ番号の数
+- `aria-label`: ナビゲーションランドマークのアクセシブルネーム。既定値は`"Pagination"`
+
+## v0.1のスコープ
+
+前へ/次へトリガーとページ番号のみをサポートする。先頭ページ/最終ページへのジャンプトリガー（First/Last）は必要になった時点で追加する（YAGNI）。
+
+## className / style は受け付けない
+
+`Pagination`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ルート要素は`<nav aria-label="Pagination">`（`aria-label`で上書き可能）
+- 現在ページのボタンには`aria-current="page"`が付与される
+- 前へ/次へボタンは境界（先頭/最終ページ）で`disabled`になる
+- Ark UI既定の英語ラベル（`"page N"`等）は可視テキストと一致せずWCAG 2.5.3（Label in Name）に抵触するため、可視テキストと同じ日本語ラベルに上書きしている
