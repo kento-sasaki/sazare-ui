@@ -1,0 +1,35 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as CardStories from './Card.stories'
+
+<Meta of={CardStories} />
+
+# Card
+
+コンテンツをまとめて囲む汎用コンテナコンポーネント。Ark UIに対応するプリミティブが無いため、`<div>` + Panda CSSのスタイルのみで実装している。
+
+<Canvas of={CardStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Card } from '@sazare-ui/components'
+
+function Example() {
+  return <Card>Card content</Card>
+}
+```
+
+## props
+
+- `children`: `ReactNode`。必須
+
+## className / style は受け付けない
+
+`Card`は`className`・`style`propを受け付けない（ADR 0012）。見出しや本文などの内部レイアウトはBox/Stackを介して合成する。
+
+## v0.1のスコープ
+
+v0.1は「広く浅く」実装する方針のため、header/body/footerのスロット分割やtone等のvariantは持たない最小構成にしている。必要になった時点で追加する。

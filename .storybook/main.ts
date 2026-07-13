@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     { directory: '../packages/components/src/feedback', titlePrefix: 'Feedback' },
     { directory: '../packages/components/src/overlay', titlePrefix: 'Overlay' },
     { directory: '../packages/components/src/navigation', titlePrefix: 'Navigation' },
+    { directory: '../packages/components/src/data-display', titlePrefix: 'Data Display' },
   ],
   addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
   framework: {

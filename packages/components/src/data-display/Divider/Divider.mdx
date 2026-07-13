@@ -1,0 +1,43 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as DividerStories from './Divider.stories'
+
+<Meta of={DividerStories} />
+
+# Divider
+
+コンテンツ間を視覚的に区切るコンポーネント。Ark UIに対応するプリミティブが無いため、`role="separator"` + `aria-orientation`属性で実装している。
+
+<Canvas of={DividerStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Divider } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <>
+      <Divider />
+      <Divider label="or" />
+      <Divider orientation="vertical" />
+    </>
+  )
+}
+```
+
+## props
+
+- `orientation`: `'horizontal' | 'vertical'`。任意。既定値は`'horizontal'`
+- `label`: `string`。任意。中央に表示するラベルテキスト
+
+## className / style は受け付けない
+
+`Divider`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ルート要素は`role="separator"` `aria-orientation={orientation}`を持つ
+- `label`はスクリーンリーダーからも通常のテキストとして読み上げられる
