@@ -116,3 +116,19 @@ export type { StepperProps, StepperStep } from './navigation/Stepper/Stepper'
 
 export { Link } from './navigation/Link/Link'
 export type { LinkProps } from './navigation/Link/Link'
+
+export { Table } from './data-display/Table/Table'
+export type {
+  TableHeaderCellProps,
+  TableRootProps,
+  TableSectionProps,
+} from './data-display/Table/Table'
+
+export { Card } from './data-display/Card/Card'
+export type { CardProps } from './data-display/Card/Card'
+
+export { Divider } from './data-display/Divider/Divider'
+export type { DividerOrientation, DividerProps } from './data-display/Divider/Divider'
+
+export { Timeline } from './data-display/Timeline/Timeline'
+export type { TimelineItem, TimelineProps } from './data-display/Timeline/Timeline'
