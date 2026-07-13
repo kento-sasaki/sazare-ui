@@ -9,6 +9,7 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { cardRecipe } from './src/data-display/Card/Card.recipe'
 import { tableRecipe } from './src/data-display/Table/Table.recipe'
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
@@ -80,6 +81,7 @@ export default defineConfig({
         heading: headingRecipe,
         text: textRecipe,
         link: linkRecipe,
+        card: cardRecipe,
       },
       slotRecipes: {
         checkbox: checkboxRecipe,
