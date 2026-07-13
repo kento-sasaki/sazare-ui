@@ -10,6 +10,7 @@ import {
 } from '@sazare-ui/tokens'
 
 import { cardRecipe } from './src/data-display/Card/Card.recipe'
+import { dividerRecipe } from './src/data-display/Divider/Divider.recipe'
 import { tableRecipe } from './src/data-display/Table/Table.recipe'
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
@@ -110,6 +111,10 @@ export default defineConfig({
         accordion: accordionRecipe,
         stepper: stepperRecipe,
         table: tableRecipe,
+        // "divider"はPanda CSSの組み込みpattern名と衝突するため、recipeのキー名のみ
+        // separatorに変える（CSSクラス名は Divider.recipe.ts 側の className: 'divider' のままでよい。
+        // switchFieldと同じ回避パターン）
+        separator: dividerRecipe,
       },
     },
   },
