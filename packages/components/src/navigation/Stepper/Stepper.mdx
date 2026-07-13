@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as StepperStories from './Stepper.stories'
+
+<Meta of={StepperStories} />
+
+# Stepper
+
+複数ステップからなる手続き（フォームウィザード等）の進捗を示すコンポーネント。`@ark-ui/react/steps`をラップしている。
+
+<Canvas of={StepperStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Stepper } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Stepper
+      steps={[{ label: 'お届け先' }, { label: 'お支払い方法' }, { label: '確認' }]}
+      onStepChange={(step) => console.log(step)}
+    />
+  )
+}
+```
+
+## props
+
+- `steps`: `{ label: string }[]`。必須。表示順に並べる
+- `step` / `defaultStep` / `onStepChange`: 制御/非制御コンポーネントとしての現在ステップ管理（0始まりのインデックス）
+- `linear`: `true`の場合、ステップ見出しの直接クリックによる先読み移動を禁止し、前へ/次へトリガーでのみ進行できる（既定`false`）
+
+## v0.1のスコープ
+
+ステップ見出し（インジケータ）と前へ/次へトリガーのみをサポートする進捗インジケータとしての利用を想定している。ステップごとに異なるフォーム等のコンテンツを出し分ける`Content`/`CompletedContent`や、進捗バー（`Progress`）は必要になった時点で追加する（YAGNI）。
+
+## className / style は受け付けない
+
+`Stepper`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ステップ見出しは`role="tab"`、`aria-selected`、`aria-current="step"`（現在ステップの`Item`）をArk UIが自動的に配線する
+- 前へ/次へトリガーは境界（先頭/最終ステップ）で`disabled`になる
