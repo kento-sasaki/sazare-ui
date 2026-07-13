@@ -36,6 +36,10 @@ export const dividerRecipe = defineSlotRecipe({
         root: {
           flexDirection: 'column',
           height: '100%',
+          // 高さを明示しない親（Storybookのプレビュー等）に置かれるとheight:100%が
+          // autoに解決されて幅0の不可視要素になってしまうため、最低限の高さを保証する。
+          // 親がheightを持つ場合はheight:100%が優先されそちらに伸びる
+          minHeight: '8',
           '&::before, &::after': {
             content: '""',
             flex: '1',
