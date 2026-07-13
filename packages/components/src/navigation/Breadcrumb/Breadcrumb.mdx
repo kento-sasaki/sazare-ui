@@ -1,0 +1,50 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as BreadcrumbStories from './Breadcrumb.stories'
+
+<Meta of={BreadcrumbStories} />
+
+# Breadcrumb
+
+現在のページ階層をナビゲーションとして示すコンポーネント。Ark UIに対応するプリミティブが無いため、セマンティックHTML（`<nav>`/`<ol>`/`<li>`）+ ARIA属性で実装している。
+
+<Canvas of={BreadcrumbStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Breadcrumb } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Breadcrumb
+      items={[
+        { label: 'Home', href: '/' },
+        { label: 'Products', href: '/products' },
+        { label: 'Detail' },
+      ]}
+    />
+  )
+}
+```
+
+## props
+
+- `items`: `{ label: string; href?: string }[]`。必須。先頭から末尾の順に表示する
+- `aria-label`: `string`。任意。ナビゲーションランドマークのアクセシブルネーム。既定値は`"Breadcrumb"`
+
+## 最後の項目は常にcurrent page
+
+`items`の最後の要素は、`href`の有無に関わらず常にリンクにせず`aria-current="page"`付きの`<span>`として描画する（WAI-ARIA APGのBreadcrumb Patternに準拠）。それ以外の要素は`href`があれば`<a>`、無ければリンクなしの`<span>`として描画する。
+
+## className / style は受け付けない
+
+`Breadcrumb`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ルート要素は`<nav aria-label="Breadcrumb">`（`aria-label`で上書き可能）
+- 最後の項目には`aria-current="page"`を付与する
+- 項目間のセパレータ（`/`）はCSSの疑似要素で表現し、スクリーンリーダーに余計なノードとして読み上げられないようにしている

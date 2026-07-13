@@ -28,6 +28,7 @@ import { selectRecipe } from './src/form/Select/Select.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
+import { breadcrumbRecipe } from './src/navigation/Breadcrumb/Breadcrumb.recipe'
 import { dialogRecipe } from './src/overlay/Dialog/Dialog.recipe'
 import { drawerRecipe } from './src/overlay/Drawer/Drawer.recipe'
 import { dropdownMenuRecipe } from './src/overlay/DropdownMenu/DropdownMenu.recipe'
@@ -90,6 +91,7 @@ export default defineConfig({
         switchField: switchRecipe,
         banner: bannerRecipe,
         toast: toastRecipe,
+        breadcrumb: breadcrumbRecipe,
         dialog: dialogRecipe,
         drawer: drawerRecipe,
         dropdownMenu: dropdownMenuRecipe,
