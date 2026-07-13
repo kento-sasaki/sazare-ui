@@ -12,6 +12,7 @@ import {
 import { cardRecipe } from './src/data-display/Card/Card.recipe'
 import { dividerRecipe } from './src/data-display/Divider/Divider.recipe'
 import { tableRecipe } from './src/data-display/Table/Table.recipe'
+import { timelineRecipe } from './src/data-display/Timeline/Timeline.recipe'
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
@@ -115,6 +116,7 @@ export default defineConfig({
         // separatorに変える（CSSクラス名は Divider.recipe.ts 側の className: 'divider' のままでよい。
         // switchFieldと同じ回避パターン）
         separator: dividerRecipe,
+        timeline: timelineRecipe,
       },
     },
   },

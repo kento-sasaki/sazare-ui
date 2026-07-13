@@ -1,0 +1,43 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TimelineStories from './Timeline.stories'
+
+<Meta of={TimelineStories} />
+
+# Timeline
+
+時系列の出来事を並べて表示するコンポーネント。Ark UIに対応するプリミティブが無いため、セマンティックHTML（`<ol>`/`<li>`）+ Panda CSSのマーカー・接続線スタイルで実装している。
+
+<Canvas of={TimelineStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Timeline } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Timeline
+      items={[
+        { title: '登録', timestamp: '2026-01-01', description: 'アカウントを作成した' },
+        { title: '承認', timestamp: '2026-01-05' },
+      ]}
+    />
+  )
+}
+```
+
+## props
+
+- `items`: `{ title: string; description?: string; timestamp?: string }[]`。必須。先頭から末尾の順に表示する
+
+## className / style は受け付けない
+
+`Timeline`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ルート要素は`<ol>`（順序付きリスト）で、各項目は`<li>`
+- マーカー（丸印）と接続線は装飾目的のためスクリーンリーダーには読み上げに影響しない通常のインライン要素として描画する
