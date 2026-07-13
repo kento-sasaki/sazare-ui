@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as AccordionStories from './Accordion.stories'
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+見出しをクリックして本文の開閉を切り替えるコンポーネント。`@ark-ui/react/accordion`をラップしている。
+
+<Canvas of={AccordionStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Accordion } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Accordion
+      items={[
+        { value: 'shipping', label: '配送について', content: '通常3〜5営業日でお届けします。' },
+        { value: 'returns', label: '返品について', content: '商品到着から14日以内であれば返品できます。' },
+      ]}
+    />
+  )
+}
+```
+
+## props
+
+- `items`: `{ value: string; label: string; content: ReactNode; disabled?: boolean }[]`。必須。表示順に並べる
+- `value` / `defaultValue` / `onValueChange`: 制御/非制御コンポーネントとしての展開項目管理（`string[]`）
+- `multiple`: 複数項目を同時に展開できるか（既定`false`）
+- `collapsible`: 展開済みの項目を閉じられるか（既定`false`）
+
+## className / style は受け付けない
+
+`Accordion`は`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- 見出しは`<button aria-expanded>`、本文は`role="region"`＋`aria-labelledby`でArk UIが自動的に配線する
+- 非展開時の本文は`hidden`属性で隠される
+- キーボード操作（矢印キーでの見出し間移動）はArk UI標準の挙動

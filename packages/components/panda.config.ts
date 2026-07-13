@@ -28,6 +28,7 @@ import { selectRecipe } from './src/form/Select/Select.recipe'
 import { switchRecipe } from './src/form/Switch/Switch.recipe'
 import { textareaRecipe } from './src/form/Textarea/Textarea.recipe'
 import { textInputRecipe } from './src/form/TextInput/TextInput.recipe'
+import { accordionRecipe } from './src/navigation/Accordion/Accordion.recipe'
 import { breadcrumbRecipe } from './src/navigation/Breadcrumb/Breadcrumb.recipe'
 import { paginationRecipe } from './src/navigation/Pagination/Pagination.recipe'
 import { tabsRecipe } from './src/navigation/Tabs/Tabs.recipe'
@@ -100,6 +101,7 @@ export default defineConfig({
         tooltip: tooltipRecipe,
         tabs: tabsRecipe,
         pagination: paginationRecipe,
+        accordion: accordionRecipe,
       },
     },
   },
