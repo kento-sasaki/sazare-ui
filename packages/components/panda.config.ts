@@ -9,6 +9,7 @@ import {
   spacing,
 } from '@sazare-ui/tokens'
 
+import { tableRecipe } from './src/data-display/Table/Table.recipe'
 import { badgeRecipe } from './src/feedback/Badge/Badge.recipe'
 import { bannerRecipe } from './src/feedback/Banner/Banner.recipe'
 import { spinnerRecipe } from './src/feedback/Spinner/Spinner.recipe'
@@ -106,6 +107,7 @@ export default defineConfig({
         pagination: paginationRecipe,
         accordion: accordionRecipe,
         stepper: stepperRecipe,
+        table: tableRecipe,
       },
     },
   },

@@ -1,0 +1,54 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+
+import * as TableStories from './Table.stories'
+
+<Meta of={TableStories} />
+
+# Table
+
+表形式のデータを表示するコンポーネント。Ark UIに対応するプリミティブが無いため、セマンティックHTML（`<table>`/`<thead>`/`<tbody>`/`<tr>`/`<th>`/`<td>`）+ ARIA属性で実装している。`Table.Root`/`Head`/`Body`/`Row`/`HeaderCell`/`Cell`のコンポウンドコンポーネントとして提供する。
+
+<Canvas of={TableStories.Default} />
+
+<Controls />
+
+## 使い方
+
+```tsx
+import { Table } from '@sazare-ui/components'
+
+function Example() {
+  return (
+    <Table.Root aria-label="Users">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Name</Table.HeaderCell>
+          <Table.HeaderCell>Email</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>Alice</Table.Cell>
+          <Table.Cell>alice@example.com</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  )
+}
+```
+
+## props
+
+- `Table.Root`: `children`（必須）、`aria-label`（任意。テーブルのアクセシブルネーム）
+- `Table.Head` / `Table.Body` / `Table.Row` / `Table.Cell`: `children`（必須）
+- `Table.HeaderCell`: `children`（必須）、`scope`（任意。`'col' | 'row'`、既定値は`'col'`）
+
+## className / style は受け付けない
+
+`Table.Root`をはじめ全てのサブコンポーネントは`className`・`style`propを受け付けない（ADR 0012）。
+
+## アクセシビリティ
+
+- ネイティブの`<table>`/`<thead>`/`<tbody>`/`<tr>`/`<th>`/`<td>`要素を使用するため、スクリーンリーダーは標準のテーブルナビゲーションで読み上げる
+- `Table.HeaderCell`は既定で`scope="col"`（列見出し）。行見出しには`scope="row"`を明示的に指定する
+- `Table.Root`の`aria-label`でテーブル全体のアクセシブルネームを付与できる
