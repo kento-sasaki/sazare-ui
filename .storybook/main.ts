@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
   stories: [
+    { directory: '../packages/components/src/foundations', titlePrefix: 'Foundations' },
     { directory: '../packages/components/src/typography', titlePrefix: 'Typography' },
     { directory: '../packages/components/src/layout', titlePrefix: 'Layout' },
     { directory: '../packages/components/src/form', titlePrefix: 'Form' },

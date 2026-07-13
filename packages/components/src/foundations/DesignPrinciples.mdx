@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Design Principles" />
+
+# デザイン原則
+
+sazare-ui が採用しているデザインシステムの原則をまとめる。一般的なデザインシステムに求められる要素（トークン体系・コンポーネント設計原則・アクセシビリティ基準・ドキュメント運用）を調査し（[docs/design-system-research.md](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/design-system-research.md)）、sazare-ui のゴール（[mabiki](https://github.com/kento-sasaki/mabiki) での実利用開始）に照らして取捨選択した結論がこのページである。個別の実装判断の比較検討はリンク先のADRを参照。
+
+## トークン体系
+
+- トークンは **Primitive → Semantic** の2層モデルとする。具体的な値（Primitive）と、意味づけられた用途（Semantic、例: `colors.action.solid` / `colors.text.link`）を分離する。調査した参考実装（Sansan / SmartHR / DADS）のいずれもこの2層モデルを採用しており、業界標準的な構成といえる
+- デザイントークンに対応するpropsは、任意のCSS値ではなく**トークンキーの列挙型のみ**を許容する → [ADR 0011](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0011-token-constrained-props.md)
+- 装飾色トークンは主要コンシューマー（mabiki）の色相を参照しつつ、命名は汎用的に保つ（特定コンシューマー固有の概念を持ち込まない）→ [ADR 0013](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0013-decorative-color-token-sourcing.md)
+- W3C Design Tokens Community Group（DTCG）形式のような、ツール間相互運用を前提としたフォーマットへの準拠はスコープ外とする（詳細は下記「スコープ外」参照）
+
+## コンポーネント設計原則
+
+- **ヘッドレスUI（Ark UI）+ ゼロランタイムスタイリング（Panda CSS）** で構成する → [ADR 0001](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0001-headless-ui-and-styling-stack.md)
+- 意味的な構造（例: 見出しレベル `as`）と見た目のサイズ（`size`）を分離する → [ADR 0010](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0010-typography-component-api-pattern.md)
+- `className` / `style` を公開propsから排除し、レイアウトの合成は `Box` / `Stack` を介する → [ADR 0012](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0012-no-classname-style-props.md)
+- 「難しくしない」「一貫性がある」「汎用性がある」の3つを設計判断の指針とする（Sansan One Design Systemの原則を踏襲。sazare-uiのゴールにも合致するため採用）
+
+## アクセシビリティ基準
+
+- 適合レベルの目標を **WCAG 2.2 Level AA** とする。調査した参考実装（DADS / SmartHR）もWCAG準拠を明示しており、Level AAは実務上の標準ターゲットとして広く採用されている
+- Storybook a11y addon（axe-core）による自動検査をコンポーネント単位で実施する → [ADR 0007](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0007-testing-strategy.md)
+- 各コンポーネントのmdxに「アクセシビリティ」節を設ける運用を踏襲する（DADSの各要素ページの構成にならう。例: [Heading.mdx](https://github.com/kento-sasaki/sazare-ui/blob/main/packages/components/src/typography/Heading/Heading.mdx)）
+
+## ドキュメント運用
+
+- Storybookをコンポーネントカタログ・ドキュメントの単一のSSoTとする。個別の `*.spec.md` は作らない → [ADR 0008](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0008-docs-structure.md)
+- カテゴリ別サブディレクトリ + `titlePrefix` でサイドバーを整理する → [ADR 0009](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0009-storybook-sidebar-organization.md)
+- 意思決定はADRとして `docs/adr/` に記録する。このページはその「結論」を集約する上位ドキュメントであり、詳細な比較検討は個別ADRに委ねる（本ページ自体は新規ADRとしては作成しない）
+
+## スコープ外
+
+一般的なデザインシステムに見られる要素のうち、以下は現在のゴール（mabikiでの実利用開始）に照らして採用しない。将来ゴールが変わった際に見直す前提。
+
+- **多言語対応（i18n）/ RTL**: mabikiは日本語単一言語での実利用を前提とするため、現時点ではスコープ外とする
+- **テーマ切替（ダーク/ライトモード等）**: mabikiの現在の実利用要件に含まれないため見送る
+- **マルチフレームワーク対応**: sazare-uiはReact専用として設計しており、Vue/Svelte等への対応は行わない → [ADR 0001](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0001-headless-ui-and-styling-stack.md)
+- **W3C DTCG形式への完全準拠**: Style Dictionary等の外部変換パイプラインを必要とする運用は、npm経由でReactコンポーネントとして配布する現在の配布モデル（[ADR 0002](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0002-package-distribution-model.md)）には過剰であるため見送る。トークンはTypeScriptオブジェクトとして直接定義・配布する
+- **E2Eテスト（Playwright）**: v0.1では見送る → [ADR 0007](https://github.com/kento-sasaki/sazare-ui/blob/main/docs/adr/0007-testing-strategy.md)
