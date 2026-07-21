@@ -27,7 +27,13 @@
     "mabiki",
     "Chakra",
     "Astryx",
-    "Segoe"
+    "Segoe",
+    "Sansan",
+    "WCAG",
+    "textlint",
+    "DTCG",
+    "spui",
+    "Penpot"
   ],
   "flagWords": [],
   "ignorePaths": [
