@@ -4,7 +4,7 @@
 
 - sazare-ui は React の UI ライブラリであり、デザインシステムである
 - [mabiki](https://github.com/kento-sasaki/mabiki) という個人開発のアプリでこのデザインシステムを使う
-- デザインシステムとしての詳細な原則（トークン体系・コンポーネント設計原則・アクセシビリティ基準・ドキュメント運用）は Storybook の `Foundations > Design Principles`（`packages/components/src/foundations/DesignPrinciples.mdx`）にまとめている
+- デザインシステムとしての価値観・原則、および主要な技術的結論は Storybook の `Design Principles`（[DesignPrinciples.mdx](./DesignPrinciples.mdx)）にまとめている
 
 ## 技術スタック
 

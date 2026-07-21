@@ -5,3 +5,4 @@ styled-system/
 coverage/
 .husky/_/
 .cspellcache
+tmp/
